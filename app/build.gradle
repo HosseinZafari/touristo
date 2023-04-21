@@ -1,0 +1,80 @@
+plugins {
+    id 'com.android.application'
+    id 'org.jetbrains.kotlin.android'
+}
+
+android {
+    namespace 'com.github.hosseinzafari.touristo'
+    compileSdk 33
+
+    defaultConfig {
+        applicationId "com.github.hosseinzafari.touristo"
+        minSdk 24
+        targetSdk 33
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        vectorDrawables {
+            useSupportLibrary true
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+    buildFeatures {
+        compose true
+    }
+    composeOptions {
+        kotlinCompilerExtensionVersion '1.2.0'
+    }
+    packagingOptions {
+        resources {
+            excludes += '/META-INF/{AL2.0,LGPL2.1}'
+        }
+    }
+}
+
+dependencies {
+    implementation Deps.core_KTX
+    implementation Deps.lifecycle_runtime_ktx
+    implementation Deps.activity_compose
+    implementation Deps.compose_ui_ui
+    implementation Deps.compose_ui_ui_tooling_preview
+    implementation Deps.compose_material3
+    testImplementation Deps.junit
+    androidTestImplementation Deps.junit_test
+    androidTestImplementation Deps.test_espresso_core
+    androidTestImplementation Deps.compose_ui_ui_test_junit4
+    debugImplementation Deps.compose_ui_ui_tooling
+    debugImplementation Deps.compose_ui_ui_test_manifest
+
+    // for logging in application
+    implementation Deps.timber
+
+    // for logging in application
+    implementation Deps.timber
+
+    //Compose Navigation
+    implementation Deps.navigation_compose
+
+    //Compose run-time
+    implementation Deps.compose_runtime
+    implementation Deps.navigation_compose
+
+    implementation Deps.runtime_livedata
+    implementation Deps.material_icons_extended
+    implementation project(':assets')
+
+}

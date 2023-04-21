@@ -1,0 +1,1 @@
+M:\dev\workspace\Touristo\buildSrc\build\classes\kotlin\main\Deps$Version.class;M:\dev\workspace\Touristo\buildSrc\build\classes\kotlin\main\Deps.class
