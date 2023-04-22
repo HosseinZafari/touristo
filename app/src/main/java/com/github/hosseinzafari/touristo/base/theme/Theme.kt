@@ -1,4 +1,4 @@
-package com.github.hosseinzafari.touristo.ui.theme
+package com.github.hosseinzafari.touristo.base.theme
 
 import android.app.Activity
 import android.os.Build
