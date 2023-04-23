@@ -40,6 +40,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.github.hosseinzafari.touristo.L
 import com.github.hosseinzafari.touristo.base.theme.*
 import com.github.hosseinzafari.touristo.base.ui.RTL
 import com.github.hosseinzafari.touristo.base.ui.innerShadow
@@ -111,7 +112,7 @@ fun LoginScreen() {
                             tint = Color.White
                         )
                         Text(
-                            text = "کویر مرکزی ، ایران",
+                            text = L.login_header_pin,
                             style = MaterialTheme.typography.titleSmall,
                             modifier = Modifier.padding(2.dp),
                             color = Color.White,
@@ -130,7 +131,7 @@ fun LoginScreen() {
             ) {
                 Column {
                     Text(
-                        text = "ورود",
+                        text = L.login_title,
                         color = MaterialTheme.colorScheme.secondary,
                         fontWeight = FontWeight.ExtraBold,
                         style = MaterialTheme.typography.displaySmall,
@@ -142,7 +143,7 @@ fun LoginScreen() {
                         value = emailState.value,
                         onValueChange = { emailState.value = it },
                         placeholder = {
-                            Text(text = "ایمیل خود را وارد کنید")
+                            Text(text = L.login_email_textfield)
                         },
                         keyboardOptions = KeyboardOptions(
                             keyboardType = KeyboardType.Email
@@ -166,7 +167,7 @@ fun LoginScreen() {
                         value = passwordState.value,
                         onValueChange = {passwordState.value = it },
                         placeholder = {
-                            Text(text = "رمز عبور")
+                            Text(text = L.login_password_textfield)
                         },
                         singleLine = true,
                         isError = false,
@@ -195,7 +196,7 @@ fun LoginScreen() {
                             .padding(16.dp, 16.dp),
                     ) {
                         Text(
-                            "ورود به حساب",
+                            text = L.login_enter_button,
                             style = MaterialTheme.typography.labelLarge,
                             color = md_theme_light_secondary,
                             modifier = Modifier.padding(vertical = 8.dp)
@@ -211,12 +212,12 @@ fun LoginScreen() {
                     horizontalArrangement = Arrangement.Center,
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    Text(text = "کاربر جدید هستید ؟ ", style = MaterialTheme.typography.bodySmall)
+                    Text(text = L.login_is_new_user, style = MaterialTheme.typography.bodySmall)
                     Text(
                         modifier = Modifier.clickable {
                             Timber.tag("test").i("clicked register")
                         },
-                        text = "اینجا ثبت نام کنید",
+                        text = L.login_register_here,
                         style = MaterialTheme.typography.bodySmall,
                         fontWeight = FontWeight.Bold
                     )

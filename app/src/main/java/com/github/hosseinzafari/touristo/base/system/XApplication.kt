@@ -8,6 +8,7 @@ import timber.log.Timber
 * useful for set automatically setting to Application context and ONCE manage them
 * */
 abstract class XApp : Application() {
+    abstract var lang : XLang
 
     override fun onCreate() {
         super.onCreate()

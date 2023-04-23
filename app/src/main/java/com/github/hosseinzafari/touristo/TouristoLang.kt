@@ -1,5 +1,7 @@
 package com.github.hosseinzafari.touristo
 
+import com.github.hosseinzafari.touristo.base.system.XLang
+
 /**
  * @author Hossein Zafari
  * @email ho3einzafari@gmail.com
@@ -7,7 +9,7 @@ package com.github.hosseinzafari.touristo
  * @project Touristo
  */
 
-interface TouristoLang {
+interface TouristoLang : XLang {
     val app_name: String
 
     val login_title: String
