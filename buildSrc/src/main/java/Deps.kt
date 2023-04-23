@@ -1,3 +1,4 @@
+import Deps.Version.accompanist_controller
 import Deps.Version.constraint_compose
 import Deps.Version.nav_version
 
@@ -24,7 +25,7 @@ object Deps {
         const val material_icons_extended = compose_version
         const val runtime_livedata = "1.3.3"
         const val appollo_graphql = "3.7.4"
-
+        const val accompanist_controller = "0.30.1"
     /*    const val ui_tooling = "1.2.1"
         const val compose_foundation = "1.1.0-rc03"
         const val material_icons_core = "1.2.1"
@@ -58,6 +59,7 @@ object Deps {
     const val material_icons_extended =  "androidx.compose.material:material-icons-extended:${Version.material_icons_extended}"
     const val runtime_livedata = "androidx.compose.runtime:runtime-livedata:${Version.runtime_livedata}"
 
+    const val appcompanist_controller = "com.google.accompanist:accompanist-systemuicontroller:${Version.accompanist_controller}"
    /* const val ui_tooling = "androidx.compose.ui:ui-tooling:${Version.ui_tooling}"
     const val compose_foundation = "androidx.compose.foundation:foundation:${Version.compose_foundation}"
     const val material_icons_core = "androidx.compose.material:material-icons-core:${Version.material_icons_core}"

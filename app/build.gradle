@@ -76,6 +76,10 @@ dependencies {
 
     implementation Deps.runtime_livedata
     implementation Deps.material_icons_extended
+
+    // accompanist
+    implementation Deps.appcompanist_controller
+
     implementation project(':assets')
 
 }
