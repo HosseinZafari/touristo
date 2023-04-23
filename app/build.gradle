@@ -37,7 +37,7 @@ android {
         compose true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion '1.2.0'
+        kotlinCompilerExtensionVersion '1.4.2'
     }
     packagingOptions {
         resources {
@@ -53,6 +53,7 @@ dependencies {
     implementation Deps.compose_ui_ui
     implementation Deps.compose_ui_ui_tooling_preview
     implementation Deps.compose_material3
+    implementation Deps.compose_material3_window_size_class
     testImplementation Deps.junit
     androidTestImplementation Deps.junit_test
     androidTestImplementation Deps.test_espresso_core
