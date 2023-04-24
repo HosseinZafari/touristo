@@ -4,3 +4,4 @@ import com.github.hosseinzafari.touristo.assets.R
 
 val logo_primary = R.drawable.logo
 val login_header = R.drawable.login_header
+val signup_header = R.drawable.signup_header

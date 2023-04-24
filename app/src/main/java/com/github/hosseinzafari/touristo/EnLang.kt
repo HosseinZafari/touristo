@@ -24,4 +24,22 @@ object EnLang : TouristoLang{
         get() = "You Haven't any Account ? "
     override val login_register_here: String
         get() = "Register Here"
+    override val signup_title: String
+        get() = "Signup"
+    override val signup_header_pin: String
+        get() = "Takhte Jamshid , Iran Shiraz"
+    override val signup_email_textfield: String
+        get() = "Enter your email"
+    override val signup_name_textfield: String
+        get() = "Enter your name"
+    override val signup_replay_password_textfield: String
+        get() = "Replay password"
+    override val signup_password_textfield: String
+        get() = "Enter your password"
+    override val signup_enter_button: String
+        get() = "Create Account"
+    override val signup_is_old_user: String
+        get() = "You have already an account ? "
+    override val signup_login_here: String
+        get() = "Login Here"
 }

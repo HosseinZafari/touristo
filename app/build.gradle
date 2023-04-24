@@ -61,6 +61,9 @@ dependencies {
     debugImplementation Deps.compose_ui_ui_tooling
     debugImplementation Deps.compose_ui_ui_test_manifest
 
+    implementation Deps.constraint_compose
+
+
     // for logging in application
     implementation Deps.timber
 
