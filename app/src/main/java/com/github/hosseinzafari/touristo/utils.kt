@@ -1,5 +1,6 @@
 package com.github.hosseinzafari.touristo
 
+import android.content.Context
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
@@ -29,3 +30,7 @@ fun ChangeSystemBarsColor(
         onDispose {}
     }
 }
+
+
+// easy cast to TouristApplication
+fun App(context: Context) = if (context is TouristApplication) context else null

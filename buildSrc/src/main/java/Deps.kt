@@ -26,6 +26,8 @@ object Deps {
         const val runtime_livedata = "1.3.3"
         const val appollo_graphql = "3.7.4"
         const val accompanist_controller = "0.30.1"
+        const val hilt = "2.44"
+        const val realm = "10.10.1"
     /*    const val ui_tooling = "1.2.1"
         const val compose_foundation = "1.1.0-rc03"
         const val material_icons_core = "1.2.1"
@@ -58,8 +60,11 @@ object Deps {
     const val compose_runtime = "androidx.compose.runtime:runtime:${Version.compose_runtime}"
     const val material_icons_extended =  "androidx.compose.material:material-icons-extended:${Version.material_icons_extended}"
     const val runtime_livedata = "androidx.compose.runtime:runtime-livedata:${Version.runtime_livedata}"
-
     const val appcompanist_controller = "com.google.accompanist:accompanist-systemuicontroller:${Version.accompanist_controller}"
+    const val hilt_android  = "com.google.dagger:hilt-android:${Version.hilt}"
+    const val hilt_compiler = "com.google.dagger:hilt-compiler:${Version.hilt}"
+    const val realm = "io.realm:realm-gradle-plugin:${Version.realm}"
+
    /* const val ui_tooling = "androidx.compose.ui:ui-tooling:${Version.ui_tooling}"
     const val compose_foundation = "androidx.compose.foundation:foundation:${Version.compose_foundation}"
     const val material_icons_core = "androidx.compose.material:material-icons-core:${Version.material_icons_core}"
