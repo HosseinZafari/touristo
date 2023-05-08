@@ -12,4 +12,5 @@ sealed class Route (
 ){
     object Login : Route (name = "login")
     object Signup : Route (name = "signup")
+    object Home : Route (name = "home")
 }

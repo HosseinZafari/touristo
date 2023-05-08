@@ -3,6 +3,7 @@ plugins {
     id 'org.jetbrains.kotlin.android'
     id 'org.jetbrains.kotlin.kapt'
     id 'com.google.dagger.hilt.android'
+
 }
 apply plugin: 'realm-android'
 
@@ -52,6 +53,7 @@ android {
 dependencies {
     implementation Deps.core_KTX
     implementation Deps.lifecycle_runtime_ktx
+    implementation Deps.lifecycle_runtime_compose
     implementation Deps.activity_compose
     implementation Deps.compose_ui_ui
     implementation Deps.compose_ui_ui_tooling_preview
@@ -64,6 +66,8 @@ dependencies {
     debugImplementation Deps.compose_ui_ui_tooling
     debugImplementation Deps.compose_ui_ui_test_manifest
 
+
+    implementation Deps.coroutine
     implementation Deps.constraint_compose
 
 
@@ -88,10 +92,11 @@ dependencies {
 
     // hilt
     implementation Deps.hilt_android
+    implementation Deps.hilt_nav
     kapt Deps.hilt_compiler
 
-    // realm db
-   // implementation Deps.realm
+    // datastore like sharedpref
+    implementation Deps.datastore
 
 
     implementation project(':assets')

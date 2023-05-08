@@ -1,6 +1,4 @@
-package com.github.hosseinzafari.touristo
-
-import com.github.hosseinzafari.touristo.base.system.XLang
+package com.github.hosseinzafari.touristo.core.lang
 
 /**
  * @author Hossein Zafari
@@ -9,7 +7,7 @@ import com.github.hosseinzafari.touristo.base.system.XLang
  * @project Touristo
  */
 
-object FaLang : TouristoLang  {
+object FaLang : TouristoLang {
     override val app_name: String
         get() = "توریستو"
     override val login_title: String

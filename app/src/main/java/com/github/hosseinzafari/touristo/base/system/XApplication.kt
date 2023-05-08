@@ -1,6 +1,10 @@
 package com.github.hosseinzafari.touristo.base.system
 
 import android.app.Application
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.Preferences
+import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.cancel
 import timber.log.Timber
 
 /*
@@ -12,6 +16,10 @@ abstract class XApp : Application() {
     abstract var lang : XLang
     // db is a database general config for the app (Room , Realm , etc ...)
     abstract var db: XDB
+    // datastore local cache info
+    abstract val datastore: DataStore<Preferences>
+    // appScope is our coroutine scope in application state
+    val appScope = MainScope()
 
     override fun onCreate() {
         super.onCreate()
@@ -24,5 +32,13 @@ abstract class XApp : Application() {
     * */
     abstract fun initDependencies()
 
+    /*
+    * Clean or cancel all of our process
+    * */
+    override fun onLowMemory() {
+        super.onLowMemory()
+        Timber.i("Application onLowMemory [${packageName}] - Cancel appScope Process ")
+        appScope.cancel()
+    }
 
 }

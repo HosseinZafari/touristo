@@ -6,8 +6,9 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.github.hosseinzafari.touristo.presentation.screens.LoginScreen
+import com.github.hosseinzafari.touristo.presentation.screens.login.LoginScreen
 import com.github.hosseinzafari.touristo.presentation.screens.SignupScreen
+import com.github.hosseinzafari.touristo.presentation.screens.home.HomeScreen
 
 /**
  * @author Hossein Zafari
@@ -37,7 +38,14 @@ fun TouristoNavHost(
                 onNavigateToSignup = {
                     navController.navigate(Route.Signup.name)
                 } ,
+                onNavigateToHome = {
+                    navController.navigate(Route.Home.name)
+                }
             )
+        }
+
+        composable(Route.Home.name) {
+            HomeScreen( )
         }
     }
 

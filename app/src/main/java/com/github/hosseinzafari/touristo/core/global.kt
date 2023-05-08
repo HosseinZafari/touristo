@@ -1,5 +1,8 @@
 package com.github.hosseinzafari.touristo
 
+import com.github.hosseinzafari.touristo.core.lang.FaLang
+import com.github.hosseinzafari.touristo.core.lang.TouristoLang
+
 /**
  * @author Hossein Zafari
  * @email ho3einzafari@gmail.com
@@ -9,4 +12,3 @@ package com.github.hosseinzafari.touristo
  
 // easy access to lang resource (default is farsi (persian) language)
 var L: TouristoLang = FaLang
-

@@ -1,4 +1,4 @@
-package com.github.hosseinzafari.touristo
+package com.github.hosseinzafari.touristo.core.lang
 
 /**
  * @author Hossein Zafari
@@ -7,7 +7,7 @@ package com.github.hosseinzafari.touristo
  * @project Touristo
  */
 
-object EnLang : TouristoLang{
+object EnLang : TouristoLang {
     override val app_name: String
         get() = "Touristo"
     override val login_title: String

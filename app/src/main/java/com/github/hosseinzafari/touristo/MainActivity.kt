@@ -20,6 +20,7 @@ class MainActivity : XComponentActivity() {
         setContent {
             TouristoPresentation()
         }
+
     }
 }
 

@@ -1,6 +1,5 @@
 package com.github.hosseinzafari.touristo.presentation.screens
 
-import android.util.Log
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.KeyboardOptions
@@ -10,8 +9,8 @@ import androidx.compose.material.icons.outlined.Email
 import androidx.compose.material.icons.outlined.Password
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
@@ -27,8 +26,11 @@ import com.github.hosseinzafari.touristo.base.theme.md_theme_light_secondary
 import com.github.hosseinzafari.touristo.base.ui.RTL
 import com.github.hosseinzafari.touristo.presentation.components.AuthHeader
 import com.github.hosseinzafari.touristo.presentation.components.TouristoFrame
+import com.github.hosseinzafari.touristo.presentation.screens.signup.SignupViewModel
 import com.queezo.app.assets.signup_header
-import timber.log.Timber
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.github.hosseinzafari.touristo.presentation.screens.signup.SignupAction
+import com.github.hosseinzafari.touristo.presentation.screens.signup.SignupEffect
 
 /**
  * @author Hossein Zafari
@@ -43,11 +45,23 @@ import timber.log.Timber
 fun SignupScreen(
     onNavigateToLogin: () -> Unit = {},
     onNavigateToHome: () -> Unit = {},
+    signupViewModel: SignupViewModel = viewModel() ,
 ) {
-    val nameState = rememberSaveable { mutableStateOf("") }
-    val emailState = rememberSaveable { mutableStateOf("") }
-    val passwordState = rememberSaveable { mutableStateOf("") }
-    val replayPassword = rememberSaveable { mutableStateOf("") }
+
+    val processor = signupViewModel.processor
+    val state = processor.subscriberState.collectAsState()
+
+
+    LaunchedEffect(key1 = state.value.effects) {
+        when(state.value.effects) {
+            is SignupEffect.NavigateToLogin -> {
+                onNavigateToLogin()
+            }
+
+            else -> {}
+        }
+    }
+
 
     TouristoFrame(
         backgroundColor = MilkColor,
@@ -80,8 +94,8 @@ fun SignupScreen(
                     Spacer(modifier = Modifier.height(30.dp))
 
                     OutlinedTextField(
-                        value = nameState.value,
-                        onValueChange = { nameState.value = it },
+                        value = state.value.name,
+                        onValueChange = { processor.sendAction(SignupAction.OnChangeName(it))},
                         placeholder = {
                             Text(text = L.signup_name_textfield)
                         },
@@ -104,8 +118,8 @@ fun SignupScreen(
                     Spacer(modifier = Modifier.height(8.dp))
 
                     OutlinedTextField(
-                        value = emailState.value,
-                        onValueChange = { emailState.value = it },
+                        value = state.value.email,
+                        onValueChange = {  processor.sendAction(SignupAction.OnChangeEmail(it))},
                         placeholder = {
                             Text(text = L.signup_email_textfield)
                         },
@@ -128,8 +142,8 @@ fun SignupScreen(
                     Spacer(modifier = Modifier.height(8.dp))
 
                     OutlinedTextField(
-                        value = passwordState.value,
-                        onValueChange = { passwordState.value = it },
+                        value = state.value.password,
+                        onValueChange = { processor.sendAction(SignupAction.OnChangePassword(it))},
                         placeholder = {
                             Text(text = L.signup_password_textfield)
                         },
@@ -154,8 +168,8 @@ fun SignupScreen(
                     Spacer(modifier = Modifier.height(8.dp))
 
                     OutlinedTextField(
-                        value = replayPassword.value,
-                        onValueChange = { replayPassword.value = it },
+                        value = state.value.replayPassword,
+                        onValueChange = { processor.sendAction(SignupAction.OnChangeRePassword(it))},
                         placeholder = {
                             Text(text = L.signup_replay_password_textfield)
                         },
@@ -181,7 +195,9 @@ fun SignupScreen(
 
 
                     Button(
-                        onClick = {},
+                        onClick = {
+                            processor.sendAction(SignupAction.Submit)
+                        },
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(16.dp, 16.dp),
@@ -206,7 +222,7 @@ fun SignupScreen(
                     Text(text = L.signup_is_old_user, style = MaterialTheme.typography.bodySmall)
                     Text(
                         modifier = Modifier.clickable {
-                            onNavigateToLogin()
+                            processor.sendAction(SignupAction.LoginOnClick)
                         },
                         text = L.signup_login_here,
                         style = MaterialTheme.typography.bodySmall,
@@ -216,8 +232,6 @@ fun SignupScreen(
 
             }
         }
-
-
     }
 }
 
