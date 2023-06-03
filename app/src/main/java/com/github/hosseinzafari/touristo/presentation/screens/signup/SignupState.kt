@@ -16,5 +16,5 @@ data class SignupState(
     val password: String,
     val replayPassword: String,
     override val effects: SignupEffect?,
-    override val status: XStatus,
+    override var status: XStatus,
 ) : XState<SignupEffect>

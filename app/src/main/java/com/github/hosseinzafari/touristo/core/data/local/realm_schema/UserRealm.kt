@@ -14,7 +14,7 @@ import org.bson.types.ObjectId
 
 open class UserRealm (
     @PrimaryKey()
-    var id: String = ObjectId().toHexString() ,
+    var id: String? = ObjectId().toHexString() ,
     var name: String? = null  ,
     var email: String? = null,
     var password: String? = null,
@@ -22,4 +22,5 @@ open class UserRealm (
 ): RealmObject()
 
 
-fun UserRealm.toUser() = User(id,name , email, profileUrl)
+fun UserRealm.toUser() = User(id , name , email , password , profileUrl)
+fun User.toUserRealm() = UserRealm(id ,name , email, profileUrl)

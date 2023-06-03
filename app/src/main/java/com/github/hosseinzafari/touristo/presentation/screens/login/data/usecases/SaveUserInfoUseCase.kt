@@ -1,7 +1,7 @@
 package com.github.hosseinzafari.touristo.presentation.screens.login.data.usecases
 
 import com.github.hosseinzafari.touristo.base.system.data_layer.XUseCase
-import com.github.hosseinzafari.touristo.presentation.screens.login.data.domain.LoginDomain
+import com.github.hosseinzafari.touristo.presentation.screens.login.data.LoginDomain
 import javax.inject.Inject
 
 /**

@@ -24,6 +24,12 @@ object FaLang : TouristoLang {
         get() = "حساب کاربری ندارید ؟ "
     override val login_register_here: String
         get() = "ثبت نام"
+    override val login_wrong_email_or_password: String
+        get() = "رمز عبور یا ایمیل مورد نظر شما صحیح نیست!"
+    override val login_empty_email_or_password: String
+        get() = "لطفا ایمیل یا رمز عبور را خالی وارد نکنید."
+    override val login_submit_error: String
+        get() = "مشکلی در ورود به حساب شما به وجود آمده"
     override val signup_title: String
         get() = "ایجاد حساب کاربری"
     override val signup_header_pin: String
@@ -42,4 +48,14 @@ object FaLang : TouristoLang {
         get() = "حساب کاربری دارید ؟ "
     override val signup_login_here: String
         get() = "وارد شوید"
+    override val signup_empty_edit_texts: String
+        get() = "لطفا هیچ فیلدی را خالی نگذارید"
+    override val signup_password_not_equals: String
+        get() = "رمزعبور با تکرار رمزعبور یکسان نیست"
+    override val signup_password_less_length: String
+        get() = "حداقل تعداد کارکتر های رمزعبور 5 است"
+    override val signup_user_is_exists: String
+        get() = "حسابی با این ایمیل قبلا ساخته شده است"
+    override val signup_submit_error: String
+        get() = "مشکلی در ثبت نام شما به وجود آمده"
 }

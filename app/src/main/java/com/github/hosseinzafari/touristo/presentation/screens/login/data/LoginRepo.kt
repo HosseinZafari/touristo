@@ -1,10 +1,7 @@
-package com.github.hosseinzafari.touristo.presentation.screens.login.data.repository
+package com.github.hosseinzafari.touristo.presentation.screens.login.data
 
 import com.github.hosseinzafari.touristo.core.data.data_model.User
-import com.github.hosseinzafari.touristo.presentation.screens.login.data.datasource.LoginLocalDataSource
-import com.github.hosseinzafari.touristo.presentation.screens.login.data.domain.LoginDomain
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.StateFlow
 import javax.inject.Inject
 
 /**

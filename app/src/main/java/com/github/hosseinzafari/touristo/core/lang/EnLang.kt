@@ -24,6 +24,12 @@ object EnLang : TouristoLang {
         get() = "You Haven't any Account ? "
     override val login_register_here: String
         get() = "Register Here"
+    override val login_wrong_email_or_password: String
+        get() = "Your email or password is wrong"
+    override val login_empty_email_or_password: String
+        get() = "Please fill all of the fields"
+    override val login_submit_error: String
+        get() = "We have some issue in login"
     override val signup_title: String
         get() = "Signup"
     override val signup_header_pin: String
@@ -42,4 +48,14 @@ object EnLang : TouristoLang {
         get() = "You have already an account ? "
     override val signup_login_here: String
         get() = "Login Here"
+    override val signup_empty_edit_texts: String
+        get() = "Fill all of the fields"
+    override val signup_password_not_equals: String
+        get() = "Password and replay not equal"
+    override val signup_user_is_exists: String
+        get() = "Already created account with this email"
+    override val signup_submit_error: String
+        get() = "We have some issue in signup"
+    override val signup_password_less_length: String
+        get() = "Minimum password character is 5"
 }

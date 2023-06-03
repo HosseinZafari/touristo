@@ -1,5 +1,7 @@
 package com.github.hosseinzafari.touristo.base.system.mvi
 
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 
@@ -22,11 +24,30 @@ abstract class XProcessor<E : XEffect, A : XAction, S : XState<E>>(initialVal: S
         get() = _state
     abstract val action: (S, A) -> Unit
 
+
     fun setState(mState: S) {
         _state.tryEmit(mState)
     }
 
     fun sendAction(mAction: A) {
         action(subscriberState.value, mAction)
+    }
+
+
+    @Composable
+    fun SubscribeEffect(
+        state: S,
+        statusBlock: suspend (XStatus) -> Unit,
+        effectsBlock: suspend (E) -> Unit,
+    ) {
+        LaunchedEffect(key1 = state.status) {
+            statusBlock(state.status)
+        }
+
+        LaunchedEffect(key1 = state.effects) {
+            state.effects?.let{
+                effectsBlock(it)
+            }
+        }
     }
 }

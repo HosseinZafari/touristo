@@ -30,4 +30,8 @@ class AppSettingImpl @Inject constructor(
             it[DataStoreKeys.migratedFakeDataKey] = migrated
         }
     }
+
+    override suspend fun isUserLogined() = dataStore.data.map {
+        it[DataStoreKeys.isLogin] ?: false
+    }.first()
 }

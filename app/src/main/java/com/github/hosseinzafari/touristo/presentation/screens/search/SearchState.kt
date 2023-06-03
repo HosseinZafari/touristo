@@ -1,4 +1,4 @@
-package com.github.hosseinzafari.touristo.presentation.screens.login
+package com.github.hosseinzafari.touristo.presentation.screens.search
 
 import com.github.hosseinzafari.touristo.base.system.mvi.XState
 import com.github.hosseinzafari.touristo.base.system.mvi.XStatus
@@ -6,14 +6,13 @@ import com.github.hosseinzafari.touristo.base.system.mvi.XStatus
 /**
  * @author Hossein Zafari
  * @email ho3einzafari@gmail.com
- * @created 28/04/2023 - 4:58 PM
+ * @created 02/06/2023 - 2:51 PM
  * @project Touristo
  */
 
-
-data class LoginState(
-    val email: String,
-    val password: String,
-    override val effects: LoginEffect?,
+data class SearchState(
+    val text: String ,
+    val data: List<String> ,
     override var status: XStatus,
-) : XState<LoginEffect>
+    override val effects: SearchEffect?
+) : XState<SearchEffect>

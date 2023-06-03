@@ -8,8 +8,9 @@ package com.github.hosseinzafari.touristo.core.data.data_model
  */
 
 data class User (
-    val id: String?  ,
-    val name: String?,
-    val email: String?,
-    val profileUrl: String?,
+    var id: String?  ,
+    var name: String?,
+    var email: String?,
+    var password: String?,
+    var profileUrl: String?,
 )

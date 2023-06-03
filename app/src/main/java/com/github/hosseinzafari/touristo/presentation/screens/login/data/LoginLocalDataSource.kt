@@ -1,4 +1,4 @@
-package com.github.hosseinzafari.touristo.presentation.screens.login.data.datasource
+package com.github.hosseinzafari.touristo.presentation.screens.login.data
 
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
@@ -7,10 +7,7 @@ import com.github.hosseinzafari.touristo.core.data.local.DataStoreKeys
 import com.github.hosseinzafari.touristo.core.data.data_model.User
 import com.github.hosseinzafari.touristo.core.data.local.realm_schema.UserRealm
 import com.github.hosseinzafari.touristo.core.data.local.realm_schema.toUser
-import com.github.hosseinzafari.touristo.presentation.screens.login.data.domain.LoginDomain
 import io.realm.Realm
-import io.realm.kotlin.executeTransactionAwait
-import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.*
 import javax.inject.Inject
 

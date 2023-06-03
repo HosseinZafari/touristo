@@ -14,6 +14,6 @@ package com.github.hosseinzafari.touristo.base.system.mvi
 * Our States in a screen , States used in compositions of composable functions
 * */
 interface XState<E : XEffect> {
-    val status: XStatus
+    var status: XStatus
     val effects: E?
 }

@@ -29,6 +29,13 @@ fun TouristoNavHost(
             SignupScreen(
                 onNavigateToLogin = {
                     navController.navigate(Route.Login.name)
+                } ,
+                onNavigateToHome = {
+                    navController.navigate(Route.Home.name) {
+                        popUpTo(navController.graph.id){
+                            inclusive = true
+                        }
+                    }
                 }
             )
         }
@@ -39,7 +46,11 @@ fun TouristoNavHost(
                     navController.navigate(Route.Signup.name)
                 } ,
                 onNavigateToHome = {
-                    navController.navigate(Route.Home.name)
+                    navController.navigate(Route.Home.name) {
+                        popUpTo(navController.graph.id){
+                            inclusive = true
+                        }
+                    }
                 }
             )
         }

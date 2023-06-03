@@ -13,4 +13,6 @@ import kotlinx.coroutines.flow.Flow
 interface AppSettingDomain : XDomain {
     suspend fun isMigratedFakeData():  Boolean
     suspend fun setMigratedFakeData(migrated: Boolean)
+
+    suspend fun isUserLogined(): Boolean
 }

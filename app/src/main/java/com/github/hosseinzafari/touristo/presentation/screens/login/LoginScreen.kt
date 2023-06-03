@@ -1,7 +1,6 @@
 package com.github.hosseinzafari.touristo.presentation.screens.login
 
 import android.util.Log
-import android.widget.Toast
 import androidx.compose.animation.*
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -11,17 +10,14 @@ import androidx.compose.material.icons.outlined.Email
 import androidx.compose.material.icons.outlined.Password
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.github.hosseinzafari.touristo.L
 import com.github.hosseinzafari.touristo.base.system.mvi.XStatus
 import com.github.hosseinzafari.touristo.base.theme.*
@@ -41,38 +37,41 @@ fun LoginScreen(
 ) {
     val processor = loginViewModel.processor
     val state = processor.subscriberState.collectAsState()
-
     val snackbarHostState = remember {SnackbarHostState()}
 
-    LaunchedEffect(key1 = state.value.effects) {
-        // navigate to another screen
-        val effect = state.value.effects
-        Log.i("Test" , "effect happend is ${effect}")
-        when (effect) {
-            LoginEffect.NavigateToSignup -> {
-                onNavigateToSignup()
+    processor.SubscribeEffect(
+        state = state.value ,
+        statusBlock = {
+            Log.i("Test" , "status happend is ${it}")
+            when (it) {
+                is XStatus.Error -> {
+                    snackbarHostState.showSnackbar(it.msg)
+                    processor.setState(state.value.copy(status = XStatus.Idle))
+                }
+                else -> {}
             }
-            LoginEffect.NavigateToHome -> {
-                onNavigateToHome()
+        } ,
+        effectsBlock = {
+            // navigate to another screen
+            Log.i("Test" , "effect happend is ${it}")
+            when (it) {
+                LoginEffect.NavigateToSignup -> {
+                    onNavigateToSignup()
+                }
+                LoginEffect.NavigateToHome -> {
+                    onNavigateToHome()
+                }
             }
-            else -> {}
-        }
-    }
 
-    LaunchedEffect(key1 = state.value.status) {
-        // navigate to another screen
-        val status = state.value.status
-        when (status) {
-            is XStatus.Error -> {
-                snackbarHostState.showSnackbar(status.msg)
-            }
-            else -> {}
+            processor.setState(state.value.copy(effects = null))
         }
-    }
+    )
 
 
     Scaffold (
-        modifier = Modifier.fillMaxSize().navigationBarsPadding()  ,
+        modifier = Modifier
+            .fillMaxSize()
+            .navigationBarsPadding()  ,
         snackbarHost = { SnackbarHost(snackbarHostState) } ,
         contentWindowInsets = WindowInsets(0 , 0 , 0 ,0)
     ) {
@@ -187,38 +186,45 @@ fun LoginScreen(
 
                     }
 
-                    Row(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(bottom = 32.dp),
-                        horizontalArrangement = Arrangement.Center,
-                        verticalAlignment = Alignment.CenterVertically
+                    Column(
+                        verticalArrangement = Arrangement.SpaceBetween,
                     ) {
-                        Text(text = L.login_is_new_user, style = MaterialTheme.typography.bodySmall)
-                        Text(
-                            modifier = Modifier.clickable {
-                                processor.sendAction(LoginAction.SignupOnClick)
-                            },
-                            text = L.login_register_here,
-                            style = MaterialTheme.typography.bodySmall,
-                            fontWeight = FontWeight.Bold
-                        )
-                    }
-                }
-
-                when (state.value.status) {
-                    is XStatus.Loading -> {
-                        LinearProgressIndicator(
+                        Row(
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .height(4.dp), color = MaterialTheme.colorScheme.primary
-                        )
+                                .padding(bottom = 32.dp),
+                            horizontalArrangement = Arrangement.Center,
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            Text(
+                                text = L.login_is_new_user,
+                                style = MaterialTheme.typography.bodySmall
+                            )
+                            Text(
+                                modifier = Modifier.clickable {
+                                    processor.sendAction(LoginAction.SignupOnClick)
+                                },
+                                text = L.login_register_here,
+                                style = MaterialTheme.typography.bodySmall,
+                                fontWeight = FontWeight.Bold
+                            )
+                        }
+
+
+                        if (state.value.status == XStatus.Loading) {
+                            LinearProgressIndicator(
+                                modifier = Modifier.fillMaxWidth(),
+                                color = MaterialTheme.colorScheme.primary
+                            )
+                            Spacer(modifier = Modifier.height(6.dp))
+                        } else {
+                            Spacer(modifier = Modifier.height(10.dp))
+                        }
                     }
 
-                    else -> {
-                        Spacer(modifier = Modifier.height(4.dp))
-                    }
+
                 }
+
             }
         }
     }
