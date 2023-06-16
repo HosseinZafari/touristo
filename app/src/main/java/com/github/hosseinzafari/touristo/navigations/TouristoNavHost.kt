@@ -3,12 +3,18 @@ package com.github.hosseinzafari.touristo.navigations
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import com.github.hosseinzafari.touristo.presentation.screens.login.LoginScreen
 import com.github.hosseinzafari.touristo.presentation.screens.SignupScreen
+import com.github.hosseinzafari.touristo.presentation.screens.comment.CommentScreen
+import com.github.hosseinzafari.touristo.presentation.screens.favorite.FavoriteScreen
 import com.github.hosseinzafari.touristo.presentation.screens.home.HomeScreen
+import com.github.hosseinzafari.touristo.presentation.screens.location_description.LocationDescScreen
+import com.github.hosseinzafari.touristo.presentation.screens.search.SearchScreen
 
 /**
  * @author Hossein Zafari
@@ -56,8 +62,70 @@ fun TouristoNavHost(
         }
 
         composable(Route.Home.name) {
-            HomeScreen( )
+            HomeScreen(
+                onNavigateToSearch = {
+                     navController.navigate(Route.Search.name + "/$it")
+                } ,
+                onNavigateToLocationDesc = {
+                    navController.navigate(Route.Description.name + "/$it")
+                } ,
+            )
         }
+
+        composable(
+            route = Route.Search.name + "/{id}" ,
+            arguments = listOf(navArgument("id") {
+                type = NavType.IntType
+            })
+        ) {
+            val id = it.arguments?.getInt("id")
+            SearchScreen(
+                destId = id!! ,
+                onNavigateToHome = {
+                   navController.navigate(Route.Home.name)
+                } ,
+                onNavigateToLocationCard = {
+                   navController.navigate(Route.Description.name + "/$it")
+                } ,
+            )
+        }
+
+        composable(
+            route = Route.Comment.name + "/{id}" ,
+            arguments = listOf(navArgument("id") {
+                type = NavType.IntType
+            })
+        ) {
+            val id = it.arguments?.getInt("id")
+            CommentScreen(
+                locationItemId = id
+            )
+        }
+
+        composable(Route.Favorite.name) {
+            FavoriteScreen()
+        }
+
+        composable(
+            route = Route.Description.name + "/{id}" ,
+            arguments = listOf(navArgument("id") {
+                type = NavType.IntType
+            }) ,
+        ) {
+            val id = it.arguments?.getInt("id")
+
+            LocationDescScreen(
+                descId = id!! ,
+                onNavigateToComment = {
+                    navController.navigate(Route.Comment.name + "/$it")
+                } ,
+                onNavigateToBack = {
+                    navController.popBackStack()
+                }
+            )
+        }
+
+
     }
 
 }

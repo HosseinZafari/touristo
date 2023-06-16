@@ -29,10 +29,11 @@ fun BestDestinationCard(
     @DrawableRes resId: Int ,
     province: String ,
     country: String ,
+    onClick: () -> Unit ,
 ) {
     Card(
         modifier = modifier,
-        onClick = {} ,
+        onClick =  onClick,
         colors = CardDefaults.cardColors(containerColor = Color(0xffefefef)) ,
         shape = RoundedCornerShape(30.dp) ,
     ) {

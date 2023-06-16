@@ -1,5 +1,6 @@
 package com.github.hosseinzafari.touristo.core.data.local.fake_data
 
+import com.github.hosseinzafari.touristo.core.data.data_model.User
 import com.github.hosseinzafari.touristo.core.data.local.realm_schema.UserRealm
 
 /**
@@ -19,6 +20,10 @@ data class  FakeUser (
 
 fun FakeUser.toUserRealm() = UserRealm(id = id , name = name , email = email, password = password , profileUrl = profileUrl)
 fun Collection<FakeUser>.toUserRealm() = this.map { it.toUserRealm() }
+
+fun FakeUser.toUser() = User(id , name , email , password,profileUrl)
+fun Collection<FakeUser>.toUser() = this.map { it.toUser() }
+
 
 val fakeUsers = listOf(
     FakeUser(
@@ -64,3 +69,5 @@ val fakeUsers = listOf(
         profileUrl = "",
     ) ,
 )
+
+

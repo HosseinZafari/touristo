@@ -89,6 +89,7 @@ dependencies {
 
     // accompanist
     implementation Deps.appcompanist_controller
+    implementation Deps.appcompanist_placeholder
 
     // hilt
     implementation Deps.hilt_android

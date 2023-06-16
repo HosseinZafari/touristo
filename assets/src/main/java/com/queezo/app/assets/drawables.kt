@@ -9,3 +9,4 @@ val card_1_1 = R.drawable.card_1_1
 val card_1_2 = R.drawable.card_1_2
 val card_2_1 = R.drawable.card_2_1
 val card_2_2 = R.drawable.card_2_2
+val avatar = R.drawable.avatar

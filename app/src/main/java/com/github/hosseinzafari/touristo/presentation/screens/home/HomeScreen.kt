@@ -1,39 +1,33 @@
 package com.github.hosseinzafari.touristo.presentation.screens.home
 
-import android.graphics.fonts.FontStyle
-import androidx.compose.foundation.Image
+import android.util.Log
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.*
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.drawWithContent
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.RectangleShape
-import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
+import com.github.hosseinzafari.touristo.base.system.mvi.XStatus
 import com.github.hosseinzafari.touristo.base.theme.TouristoTheme
 import com.github.hosseinzafari.touristo.base.ui.RTL
+import com.github.hosseinzafari.touristo.core.data.data_model.categories
 import com.github.hosseinzafari.touristo.presentation.components.*
-import com.queezo.app.assets.card_1_1
+import com.google.accompanist.placeholder.material3.placeholder
 import com.queezo.app.assets.card_1_2
-import com.queezo.app.assets.card_2_1
-import com.queezo.app.assets.card_2_2
 
 /**
  * @author Hossein Zafari
@@ -44,10 +38,37 @@ import com.queezo.app.assets.card_2_2
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalLayoutApi::class)
 @Composable
-fun HomeScreen() {
-    val tabsIndexState = remember { mutableStateOf(0) }
-    val tabsTitle = listOf("جنگل", "دریا", "کوه", "ساحل")
+fun HomeScreen(
+    viewModel: HomeViewModel = hiltViewModel(),
+    onNavigateToLocationDesc: (Int) -> Unit , 
+    onNavigateToSearch: (Int) -> Unit ,
+) {
+    val processor = viewModel.processor
+    val state = processor.subscriberState.collectAsState()
 
+    processor.SubscribeEffect(
+        state = state.value,
+        statusBlock = {
+        },
+        effectsBlock = {
+            when(it) {
+                is HomeEffect.NavigateToLocationDesc -> {
+                    onNavigateToLocationDesc(it.locationID)
+                }
+
+                is HomeEffect.NavigateToSearch -> {
+                    onNavigateToSearch(it.locationID)
+                }
+            }
+        }
+    )
+
+    LaunchedEffect(key1 = 0) {
+        processor.sendAction(HomeAction.GetData(0))
+    }
+
+
+    val tabsIndexState = remember { mutableStateOf(0) }
     val snackbarHostState = remember { SnackbarHostState() }
 
     Scaffold(
@@ -78,7 +99,9 @@ fun HomeScreen() {
                             .padding(end = 16.dp)
                             .background(color = Color(0xffeeeeee), shape = CircleShape),
                     ) {
-                        IconButton(onClick = { }) {
+                        IconButton(onClick = {
+                            processor.sendAction(HomeAction.ClickOnSearchButton(0))
+                        }) {
                             Icon(
                                 imageVector = Icons.Default.Search,
                                 contentDescription = "Search Box"
@@ -96,7 +119,7 @@ fun HomeScreen() {
                     }
 
                 ) {
-                    tabsTitle.forEachIndexed { index, value ->
+                    categories.forEachIndexed { index, value ->
 
                         Tab(
                             modifier = Modifier.drawWithContent {
@@ -111,10 +134,14 @@ fun HomeScreen() {
                                 }
                             },
                             selected = tabsIndexState.value == index,
-                            onClick = { tabsIndexState.value = index },
+                            onClick = {
+                                Log.i("Test", "tab clicked $index")
+                                tabsIndexState.value = index
+                                processor.sendAction(HomeAction.ChangeCurrentTab(tabsIndexState.value))
+                            },
                             text = {
                                 Text(
-                                    text = value,
+                                    text = value.title,
                                     maxLines = 1,
                                     overflow = TextOverflow.Ellipsis,
                                     style = MaterialTheme.typography.titleLarge,
@@ -129,39 +156,52 @@ fun HomeScreen() {
 
 
                 LazyRow {
-                    item {
-                        Spacer(modifier = Modifier.width(16.dp))
-                        LocationCard(
-                            resId = card_1_1,
-                            name = "جنگل ماسوله",
-                            location = "مازندران ، ایران",
-                            likeCount = 56,
-                            onClick = {}
-                        )
-                        Spacer(modifier = Modifier.width(16.dp))
+                    if (state.value.status == XStatus.Loading) {
+                        repeat(3) {
+                            item {
+                                Spacer(modifier = Modifier.width(16.dp))
+                                LocationCard(
+                                    modifier = Modifier
+                                        .widthIn(min = 200.dp, max = 280.dp)
+                                        .heightIn(min = 300.dp, max = 500.dp)
+                                        .placeholder(
+                                            visible = true,
+                                            shape = RoundedCornerShape(50.dp)
+                                        ),
+                                    resId = card_1_2,
+                                    name = "",
+                                    location = "",
+                                    likeCount = 0,
+                                    onClick = { }
+                                )
+                                Spacer(modifier = Modifier.width(16.dp))
+                            }
+                        }
+                    } else {
+
+                        if (state.value.locationData.size > 0) {
+                            items(state.value.locationData) {
+                                Spacer(modifier = Modifier.width(16.dp))
+                                LocationCard(
+                                    resId = it.resID,
+                                    name = it.name,
+                                    location = it.location.name + " , ایران",
+                                    likeCount = it.likeCount,
+                                    onClick = {
+                                        processor.sendAction(HomeAction.ClickOnCardItem(it.id))
+                                    }
+                                )
+                                Spacer(modifier = Modifier.width(16.dp))
+                            }
+                        } else {
+                            item {
+                                Spacer(modifier = Modifier.width(16.dp))
+                                Text(text = "رکوردی با این فیلتر وجود ندارد.")
+                                Spacer(modifier = Modifier.width(16.dp))
+                            }
+                        }
                     }
-                    item {
-                        Spacer(modifier = Modifier.width(16.dp))
-                        LocationCard(
-                            resId = card_1_2,
-                            name = "جنگل فردوس",
-                            location = "گیلان ، ایران",
-                            likeCount = 16,
-                            onClick = {}
-                        )
-                        Spacer(modifier = Modifier.width(16.dp))
-                    }
-                    item {
-                        Spacer(modifier = Modifier.width(16.dp))
-                        LocationCard(
-                            resId = card_2_1,
-                            name = "دماوند",
-                            location = "تهران ، ایران",
-                            likeCount = 80,
-                            onClick = {}
-                        )
-                        Spacer(modifier = Modifier.width(16.dp))
-                    }
+
                 }
 
                 Spacer(modifier = Modifier.height(16.dp))
@@ -176,14 +216,46 @@ fun HomeScreen() {
                     Spacer(modifier = Modifier.height(8.dp))
 
                     LazyRow {
-                        item {
-                            BestDestinationCard(resId = card_1_2, province = "گیلان", country  =  "ایران")
-                            Spacer(modifier = Modifier.width(16.dp))
-                        }
+                        if(state.value.status == XStatus.Loading) {
+                            repeat(3) {
+                                item {
+                                    BestDestinationCard(
+                                        modifier = Modifier.height(100.dp).placeholder(
+                                            visible = true,
+                                            shape = RoundedCornerShape(50.dp)
+                                        ),
+                                        resId = card_1_2,
+                                        province = "",
+                                        country = "",
+                                        onClick = {}
+                                    )
+                                    Spacer(modifier = Modifier.width(16.dp))
+                                }
+                            }
+                        } else {
+                            if (state.value.destinationData.size > 0) {
+                                items(state.value.destinationData) {
+                                    BestDestinationCard(
+                                        resId = it.resID,
+                                        province = it.location.name,
+                                        country = "ایران",
+                                        onClick = {
+                                            processor.sendAction(
+                                                HomeAction.ClickOnMostDestinationCard(
+                                                    it.location.id
+                                                )
+                                            )
+                                        }
+                                    )
+                                    Spacer(modifier = Modifier.width(16.dp))
 
-                        item {
-                            BestDestinationCard(resId = card_2_2, province = "مازندران", country  =  "ایران")
-                            Spacer(modifier = Modifier.width(16.dp))
+                                }
+                            } else {
+                                item {
+                                    Text(text = "مقصد در حال حاضر وجود ندارد")
+                                    Spacer(modifier = Modifier.width(16.dp))
+                                }
+                            }
                         }
                     }
                 }
@@ -199,7 +271,7 @@ fun HomeScreen() {
 fun ScreenHomePreview() {
     TouristoTheme {
         RTL {
-            HomeScreen()
+            HomeScreen(onNavigateToLocationDesc = {} , onNavigateToSearch = {})
         }
     }
 }

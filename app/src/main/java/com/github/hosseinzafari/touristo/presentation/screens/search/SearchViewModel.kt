@@ -1,8 +1,13 @@
 package com.github.hosseinzafari.touristo.presentation.screens.search
 
-import com.github.hosseinzafari.touristo.base.system.mvi.XProcessor
+import android.util.Log
+import androidx.lifecycle.viewModelScope
 import com.github.hosseinzafari.touristo.base.system.mvi.XStatus
+import com.github.hosseinzafari.touristo.core.data.data_model.LocationData
+import com.github.hosseinzafari.touristo.core.data.data_model.provinceData
 import com.github.hosseinzafari.touristo.presentation.screens.login.XViewModel
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 /**
  * @author Hossein Zafari
@@ -11,32 +16,72 @@ import com.github.hosseinzafari.touristo.presentation.screens.login.XViewModel
  * @project Touristo
  */
 
-class SearchViewModel : XViewModel<SearchEffect , SearchAction , SearchState>() {
+class SearchViewModel : XViewModel<SearchEffect, SearchAction, SearchState>() {
     override val processor = processor(
-        initialState = SearchState(text = "" ,
-            data = listOf() ,
-            status = XStatus.Idle ,
-            effects = null ,
-        ) ,
+        initialState = SearchState(
+            text = "",
+            data = listOf(),
+            selectedProvince = null,
+            status = XStatus.Idle,
+            effects = null,
+        ),
         actionReducer = ::reducer
     )
 
 
-    private fun reducer(oldState: SearchState , searchAction: SearchAction ) {
-        when(searchAction) {
+    private fun reducer(oldState: SearchState, action: SearchAction) {
+        when (action) {
             is SearchAction.OnSearchChanged -> {
-                processor.setState(oldState.copy(text = searchAction.text))
+                processor.setState(oldState.copy(text = action.text))
             }
+
 
             is SearchAction.Submit -> {
-                
+                processor.setState(
+                    oldState.copy(
+                        status = XStatus.Loading
+                    )
+                )
+
+                viewModelScope.launch {
+                    delay(2000L)
+                    processor.setState(oldState.copy(
+                        data = LocationData.filter {
+                            it.name.contains(oldState.text) || it.location.name.contains(oldState.text)
+                        } ,
+                        status = XStatus.Idle
+                    ))
+                }
             }
 
-             is SearchAction.ClickOnLocationCard -> {
+            is SearchAction.GetSelectedProvince -> {
+                Log.i("Test"  , "GetSelectedProvince ${action.provinceID}")
+                processor.setState(
+                    oldState.copy(
+                        status = XStatus.Loading
+                    )
+                )
 
+                viewModelScope.launch {
+                    processor.setState(
+                        oldState.copy(
+                            selectedProvince = provinceData.filter {
+                                action.provinceID == it.id
+                            }.firstOrNull() ,
+                            status = XStatus.Idle
+                        )
+                    )
+                }
             }
 
-            else -> {}
+            is SearchAction.ClickOnLocationCard -> {
+                processor.setState(
+                    oldState.copy(
+                        effects = SearchEffect.NavigateToLocationCardItem(action.locationID)
+                    )
+                )
+            }
+
         }
     }
 }

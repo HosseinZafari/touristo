@@ -31,7 +31,7 @@ class MainActivity @Inject constructor() : XComponentActivity() {
         WindowCompat.setDecorFitsSystemWindows(window , false)
 
         lifecycleScope.launch(Dispatchers.IO) {
-            val destination = if (logic.isUserLogined()) Route.Home else Route.Login
+            val destination = if (logic.isUserLogined()) Route.Home else Route.Home
 
             withContext(Dispatchers.Main) {
                 setContent {

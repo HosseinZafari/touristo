@@ -13,4 +13,9 @@ sealed class Route (
     object Login : Route (name = "login")
     object Signup : Route (name = "signup")
     object Home : Route (name = "home")
+    object Description : Route (name = "desc")
+    object Favorite : Route (name = "favorite")
+    object Search : Route (name = "search")
+    object Comment : Route (name = "comment")
+
 }
