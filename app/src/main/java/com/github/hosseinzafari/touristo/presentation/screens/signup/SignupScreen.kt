@@ -69,8 +69,7 @@ fun SignupScreen(
             }
         },
         effectsBlock = {
-            val effect = state.value.effects
-            when (effect) {
+            when (it) {
                 is SignupEffect.NavigateToLogin -> {
                     onNavigateToLogin()
                 }
@@ -79,7 +78,6 @@ fun SignupScreen(
                     onNavigateToHome()
                 }
 
-                else -> {}
             }
 
             processor.setState(state.value.copy(effects = null))

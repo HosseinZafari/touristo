@@ -4,12 +4,14 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Send
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -24,10 +26,13 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.github.hosseinzafari.touristo.base.system.mvi.XStatus
 import com.github.hosseinzafari.touristo.base.theme.TouristoTheme
 import com.github.hosseinzafari.touristo.base.ui.RTL
 import com.github.hosseinzafari.touristo.presentation.components.TitleBold
 import com.github.hosseinzafari.touristo.presentation.components.TouristoFrame
+import com.github.hosseinzafari.touristo.presentation.screens.favorite.BookmarkAction
+import com.google.accompanist.placeholder.material3.placeholder
 import com.queezo.app.assets.avatar
 
 /**
@@ -41,22 +46,24 @@ import com.queezo.app.assets.avatar
 @Composable
 fun CommentScreen(
     viewModel: CommentViewModel = hiltViewModel(),
-    locationItemId: Int? ,
+    locationItemId: Int,
 ) {
 
     val processor = viewModel.processor
     val state = processor.subscriberState.collectAsState()
     val snackbarHostState = remember { SnackbarHostState() }
 
-
+    LaunchedEffect(key1 = 0) {
+        processor.sendAction(CommentAction.GetData(locationItemId))
+    }
     processor.SubscribeEffect(
         state = state.value,
         statusBlock = {
 
-        } ,
+        },
         effectsBlock = {
 
-        } ,
+        },
     )
 
 
@@ -64,7 +71,7 @@ fun CommentScreen(
         modifier = Modifier
             .fillMaxSize()
             .navigationBarsPadding(),
-        contentWindowInsets = WindowInsets(16.dp , 16.dp , 16.dp, 16.dp),
+        contentWindowInsets = WindowInsets(16.dp, 16.dp, 16.dp, 16.dp),
         snackbarHost = { SnackbarHost(snackbarHostState) }
     ) {
         TouristoFrame(
@@ -82,122 +89,112 @@ fun CommentScreen(
                 modifier = Modifier.fillMaxSize()
             ) {
 
+                Spacer(modifier = Modifier.height(16.dp))
                 TitleBold(text = "نظرات")
                 Spacer(modifier = Modifier.height(8.dp))
                 LazyColumn(modifier = Modifier.weight(9f)) {
-
-                    item(1) {
-                        Column (
-                            modifier = Modifier
-                                .padding(8.dp)
-                                .background(
-                                    color = Color.LightGray.copy(alpha = 0.5f),
-                                    shape = RoundedCornerShape(16.dp)
-                                )
-                        ) {
-                            Row(
-                                modifier = Modifier.fillMaxWidth().padding(8.dp) ,
-                                verticalAlignment = Alignment.CenterVertically ,
-                            ) {
-                                Image(
+                    if (state.value.status == XStatus.Loading) {
+                        repeat(3) {
+                            item {
+                                Box(
                                     modifier = Modifier
-                                        .height(50.dp)
-                                        .width(50.dp)
-                                        .clip(CircleShape) ,
-                                    painter = painterResource(id = avatar),
-                                    contentDescription = "avatar image",
-                                    contentScale = ContentScale.Crop ,
+                                        .padding(8.dp)
+                                        .fillMaxWidth()
+                                        .height(200.dp)
+                                        .placeholder(
+                                            visible = true,
+                                            shape = RoundedCornerShape(16.dp)
+                                        )
                                 )
+                                Spacer(modifier = Modifier.height(8.dp))
+                            }
+                        }
+                    } else if (state.value.data.size > 0) {
+                        items(state.value.data) {
+                            Column(
+                                modifier = Modifier
+                                    .padding(8.dp)
+                                    .background(
+                                        color = Color.LightGray.copy(alpha = 0.5f),
+                                        shape = RoundedCornerShape(16.dp)
+                                    )
+                            ) {
+                                Row(
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .padding(8.dp),
+                                    verticalAlignment = Alignment.CenterVertically,
+                                ) {
+                                    Image(
+                                        modifier = Modifier
+                                            .height(50.dp)
+                                            .width(50.dp)
+                                            .clip(CircleShape),
+                                        painter = painterResource(id = avatar),
+                                        contentDescription = "avatar image",
+                                        contentScale = ContentScale.Crop,
+                                    )
 
-                                Spacer(modifier = Modifier.width(8.dp))
+                                    Spacer(modifier = Modifier.width(8.dp))
 
-                                Text(text = "حسین ظفری" , style = MaterialTheme.typography.titleMedium)
+                                    Text(
+                                        text = it.user.name!!,
+                                        style = MaterialTheme.typography.titleMedium
+                                    )
+                                }
+
+                                Spacer(modifier = Modifier.height(4.dp))
+                                Text(
+                                    modifier = Modifier.padding(8.dp),
+                                    text =  it.text,
+                                    style = MaterialTheme.typography.bodySmall,
+                                    textAlign = TextAlign.Justify,
+                                    lineHeight = 24.sp,
+                                    letterSpacing = 2.sp,
+                                )
                             }
 
-                            Spacer(modifier = Modifier.height(4.dp))
-                            Text(
-                                modifier = Modifier.padding(8.dp) ,
-                                text = "لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است" ,
-                                style = MaterialTheme.typography.bodySmall ,
-                                textAlign = TextAlign.Justify,
-                                lineHeight = 24.sp ,
-                                letterSpacing = 2.sp ,
-                            )
+                            Spacer(modifier = Modifier.height(8.dp))
+
                         }
-
-                        Spacer(modifier = Modifier.height(8.dp))
-
-                    }
-
-                    item(2) {
-                        Column (
-                            modifier = Modifier
-                                .padding(8.dp)
-                                .background(
-                                    color = Color.LightGray.copy(alpha = 0.5f),
-                                    shape = RoundedCornerShape(16.dp)
-                                )
-                        ) {
-                            Row(
-                                modifier = Modifier.fillMaxWidth().padding(8.dp) ,
-                                verticalAlignment = Alignment.CenterVertically ,
-                            ) {
-                                Image(
-                                    modifier = Modifier
-                                        .height(50.dp)
-                                        .width(50.dp)
-                                        .clip(CircleShape) ,
-                                    painter = painterResource(id = avatar),
-                                    contentDescription = "avatar image" ,
-                                    contentScale = ContentScale.Crop ,
-                                )
-
-                                Spacer(modifier = Modifier.width(8.dp))
-
-                                Text(text = "حسین ظفری" , style = MaterialTheme.typography.titleMedium)
+                    } else {
+                        item {
+                            Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                                Text(text = "هیچ نظری بر روی این مکان ثبت نشده" , style = MaterialTheme.typography.titleMedium)
+                                Spacer(modifier = Modifier.height(8.dp))
                             }
-
-                            Spacer(modifier = Modifier.height(4.dp))
-                            Text(
-                                modifier = Modifier.padding(8.dp) ,
-                                text = "لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است" ,
-                                style = MaterialTheme.typography.bodySmall ,
-                                textAlign = TextAlign.Justify,
-                                lineHeight = 24.sp ,
-                                letterSpacing = 2.sp ,
-                            )
                         }
-
-                        Spacer(modifier = Modifier.height(8.dp))
-
                     }
-
 
                 }
 
-                Row (
+                Row(
                     modifier = Modifier
                         .weight(1f)
-                        .fillMaxWidth() ,
-                    horizontalArrangement = Arrangement.SpaceBetween ,
-                    verticalAlignment = Alignment.CenterVertically ,
+                        .fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically,
                 ) {
 
                     TextField(
-                      modifier = Modifier.weight(8f) ,
-                      value = state.value.comment,
-                      onValueChange = {
-                          processor.sendAction(CommentAction.OnChangeComment(it))
-                      }
+                        modifier = Modifier.weight(8f),
+                        value = state.value.comment,
+                        onValueChange = {
+                            processor.sendAction(CommentAction.OnChangeComment(it))
+                        }
                     )
 
                     Spacer(modifier = Modifier.width(8.dp))
                     IconButton(
-                        modifier = Modifier.weight(2f) ,
+                        modifier = Modifier.weight(2f),
                         onClick = {
-                        processor.sendAction(CommentAction.Submit)
-                    }) {
-                        Icon(modifier = Modifier.rotate(180f) ,imageVector = Icons.Default.Send , contentDescription = "send")
+                            processor.sendAction(CommentAction.Submit(locationItemId))
+                        }) {
+                        Icon(
+                            modifier = Modifier.rotate(180f),
+                            imageVector = Icons.Default.Send,
+                            contentDescription = "send"
+                        )
                     }
 
                 }
@@ -215,7 +212,7 @@ fun CommentScreen(
 fun CommentScreenPreview() {
     TouristoTheme {
         RTL {
-            CommentScreen(locationItemId = null)
+            CommentScreen(locationItemId = 0)
         }
     }
 }

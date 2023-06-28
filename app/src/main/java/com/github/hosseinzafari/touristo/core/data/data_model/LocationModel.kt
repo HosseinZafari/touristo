@@ -1,5 +1,6 @@
 package com.github.hosseinzafari.touristo.core.data.data_model
 
+import android.net.Uri
 import com.github.hosseinzafari.touristo.core.data.local.fake_data.fakeUsers
 import com.github.hosseinzafari.touristo.core.data.local.fake_data.toUser
 import com.queezo.app.assets.card_1_1
@@ -22,12 +23,13 @@ data class LocationModel(
     var location: ProvinceModel,
     var likeCount: Int,
     var categoryModel: CategoryModel,
-    var comments: List<CommentModel>,
+    var comments: MutableList<CommentModel>,
+    var imageUri: Uri? = null ,
 )
 
 
-val LocationData: List<LocationModel> by lazy {
-    listOf(
+val LocationData: MutableList<LocationModel> by lazy {
+    mutableListOf(
         LocationModel(
             1,
             "لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است و برای شرایط فعلی تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد کتابهای زیادی در شصت و سه درصد گذشته حال و آینده شناخت فراوان جامعه و متخصصان را می طلبد تا با نرم افزارها شناخت بیشتری را برای طراحان رایانه ای علی الخصوص طراحان خلاقی و فرهنگ پیشرو در زبان فارسی ایجاد کرد",
@@ -36,7 +38,7 @@ val LocationData: List<LocationModel> by lazy {
             provinceData.filter { it.name == "مازندران" }.first(),
             54,
             categories.filter { it.title == "جنگل" }.first(),
-            listOf(
+            mutableListOf(
                 CommentModel(1, fakeUsers.toUser().get(0), "بسیار عالی بود متشکرم"),
                 CommentModel(
                     2,
@@ -64,7 +66,7 @@ val LocationData: List<LocationModel> by lazy {
             2,
             "لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است و برای شرایط فعلی تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد کتابهای زیادی در شصت و سه درصد گذشته حال و آینده شناخت فراوان جامعه و متخصصان را می طلبد تا با نرم افزارها شناخت بیشتری را برای طراحان رایانه ای علی الخصوص طراحان خلاقی و فرهنگ پیشرو در زبان فارسی ایجاد کرد"
             ,card_1_2, "دشت مغان", provinceData.filter { it.name == "مازندران" }.first(), 58,
-            categories.filter { it.title == "جنگل" }.first(), listOf(
+            categories.filter { it.title == "جنگل" }.first(), mutableListOf(
                 CommentModel(
                     6,
                     fakeUsers.toUser().get(4),
@@ -90,7 +92,7 @@ val LocationData: List<LocationModel> by lazy {
         LocationModel(
             3,"لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است و برای شرایط فعلی تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد کتابهای زیادی در شصت و سه درصد گذشته حال و آینده شناخت فراوان جامعه و متخصصان را می طلبد تا با نرم افزارها شناخت بیشتری را برای طراحان رایانه ای علی الخصوص طراحان خلاقی و فرهنگ پیشرو در زبان فارسی ایجاد کرد"
             , card_2_1, "بندر چابهار", provinceData.filter { it.name == "فارس" }.first(), 80,
-            categories.filter { it.title == "دریا" }.first(), listOf(
+            categories.filter { it.title == "دریا" }.first(), mutableListOf(
                 CommentModel(10, fakeUsers.toUser().get(5), "مردمان مهان نواز جنوب عالی هستن"),
                 CommentModel(11, fakeUsers.toUser().get(1), "بندر داره مدرن تر میشه خدارشکر"),
                 CommentModel(
@@ -102,7 +104,7 @@ val LocationData: List<LocationModel> by lazy {
         ),
         LocationModel(
             4, "لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است و برای شرایط فعلی تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد کتابهای زیادی در شصت و سه درصد گذشته حال و آینده شناخت فراوان جامعه و متخصصان را می طلبد تا با نرم افزارها شناخت بیشتری را برای طراحان رایانه ای علی الخصوص طراحان خلاقی و فرهنگ پیشرو در زبان فارسی ایجاد کرد" ,card_2_2, "دریاچه چیتگر", provinceData.filter { it.name == "البرز" }.first(), 20,
-            categories.filter { it.title == "دریا" }.first(), listOf(
+            categories.filter { it.title == "دریا" }.first(), mutableListOf(
                 CommentModel(
                     13,
                     fakeUsers.toUser().get(0),

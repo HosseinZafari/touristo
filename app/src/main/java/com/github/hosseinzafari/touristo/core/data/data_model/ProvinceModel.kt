@@ -12,6 +12,18 @@ data class ProvinceModel (
     var name: String ,
 )
 
+fun ProvinceModel.toMap() = Pair(id , name)
+fun List<ProvinceModel>.toMap() : Map<Int,String>  {
+    val map = mutableMapOf<Int,String>()
+    onEach {
+        map.put(it.id , it.name)
+    }
+
+    return map
+}
+
+
+
 
 val provinceData = listOf(
     ProvinceModel(1 , "تهران") ,

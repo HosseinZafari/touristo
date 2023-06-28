@@ -30,6 +30,10 @@ sealed class HomeEffect : XEffect {
         val locationID: Int
     ): HomeEffect()
 
+
+    object  NavigateToBookmark : HomeEffect()
+    object  NavigateToAddLocation : HomeEffect()
+
 }
 
 sealed class HomeAction: XAction {
@@ -40,6 +44,9 @@ sealed class HomeAction: XAction {
     data class ClickOnMostDestinationCard(
         val id: Int
     ) : HomeAction()
+
+    object ClickOnBookmarkButton : HomeAction()
+    object ClickOnFloatingActionButton : HomeAction()
 
     data class ClickOnSearchButton (
         val id: Int

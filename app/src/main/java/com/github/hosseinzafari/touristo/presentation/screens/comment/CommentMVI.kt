@@ -4,6 +4,7 @@ import com.github.hosseinzafari.touristo.base.system.mvi.XAction
 import com.github.hosseinzafari.touristo.base.system.mvi.XEffect
 import com.github.hosseinzafari.touristo.base.system.mvi.XState
 import com.github.hosseinzafari.touristo.base.system.mvi.XStatus
+import com.github.hosseinzafari.touristo.core.data.data_model.CommentModel
 
 /**
  * @author Hossein Zafari
@@ -13,7 +14,7 @@ import com.github.hosseinzafari.touristo.base.system.mvi.XStatus
  */
 
 data class CommentState(
-    val data: List<String> ,
+    val data: List<CommentModel> ,
     val comment: String ,
     override var status: XStatus,
     override val effects: CommentEffect?
@@ -21,11 +22,18 @@ data class CommentState(
 
 
 sealed class CommentEffect : XEffect {
-    object NavigateToHome: CommentEffect()
+    object NavigateToBack: CommentEffect()
+
 }
 
 sealed class CommentAction : XAction {
-    object Submit: CommentAction()
+    data class  Submit(
+        val id : Int
+    ): CommentAction()
+    data class GetData(
+        val id: Int
+    ): CommentAction()
+
     data class  OnChangeComment(
         val text: String
     ) : CommentAction()

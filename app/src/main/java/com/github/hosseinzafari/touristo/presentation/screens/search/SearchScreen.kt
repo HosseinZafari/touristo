@@ -81,6 +81,8 @@ fun SearchScreen(
                 }
 
             }
+            processor.setState(state.value.copy(effects = null))
+
         },
     )
 
@@ -180,6 +182,7 @@ fun SearchScreen(
                                     name = it.name,
                                     location = it.location.name + ", ایران",
                                     likeCount = it.likeCount,
+                                    imageUri = it.imageUri,
                                     onClick = {
                                       processor.sendAction(SearchAction.ClickOnLocationCard(it.id))
                                     } ,

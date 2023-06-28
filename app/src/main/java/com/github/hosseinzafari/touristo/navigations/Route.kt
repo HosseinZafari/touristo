@@ -17,5 +17,6 @@ sealed class Route (
     object Favorite : Route (name = "favorite")
     object Search : Route (name = "search")
     object Comment : Route (name = "comment")
+    object AddLocation : Route (name = "add_location")
 
 }

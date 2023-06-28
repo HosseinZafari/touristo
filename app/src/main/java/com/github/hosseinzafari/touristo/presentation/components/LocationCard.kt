@@ -1,5 +1,6 @@
 package com.github.hosseinzafari.touristo.presentation.components
 
+import android.net.Uri
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -19,6 +20,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import coil.compose.rememberAsyncImagePainter
 
 /**
  * @author Hossein Zafari
@@ -35,9 +37,10 @@ fun LocationCard(
         .widthIn(min = 200.dp, max = 280.dp)
         .heightIn(min = 300.dp, max = 500.dp),
     @DrawableRes resId: Int,
-    likeCount: Int ,
-    name: String ,
-    location: String ,
+    likeCount: Int,
+    name: String,
+    location: String,
+    imageUri: Uri? = null,
     onClick: () -> Unit,
 ) {
     Card(
@@ -48,7 +51,7 @@ fun LocationCard(
         Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.BottomCenter) {
             Image(
                 modifier = Modifier.fillMaxSize(),
-                painter = painterResource(resId),
+                painter = if(imageUri == null) painterResource(resId) else rememberAsyncImagePainter(imageUri) ,
                 contentDescription = null,
                 contentScale = ContentScale.Crop
             )

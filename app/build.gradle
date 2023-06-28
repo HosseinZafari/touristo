@@ -98,6 +98,7 @@ dependencies {
 
     // datastore like sharedpref
     implementation Deps.datastore
+    implementation Deps.coil_compose
 
 
     implementation project(':assets')

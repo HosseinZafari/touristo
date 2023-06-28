@@ -23,6 +23,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import coil.compose.rememberAsyncImagePainter
 import com.github.hosseinzafari.touristo.base.system.mvi.XStatus
 import com.github.hosseinzafari.touristo.base.theme.TouristoTheme
 import com.github.hosseinzafari.touristo.base.ui.RTL
@@ -67,8 +68,10 @@ fun LocationDescScreen(
                 is LocationDescEffect.NavigateToComment-> {
                     onNavigateToComment(it.descId)
                 }
-
             }
+
+            processor.setState(state.value.copy(effects = null))
+
         },
     )
 
@@ -115,7 +118,8 @@ fun LocationDescScreen(
                     } else if(state.value.data != null) {
                         Image(
                             modifier = Modifier.fillMaxSize() ,
-                            painter = painterResource(state.value.data!!.resID) , contentDescription = "cover image" ,
+                            painter = if(state.value.data!!.imageUri == null) painterResource(state.value.data!!.resID) else rememberAsyncImagePainter(state.value.data!!.imageUri) ,
+                           contentDescription = "cover image" ,
                             contentScale = ContentScale.Crop
                         )
                     }
@@ -138,19 +142,25 @@ fun LocationDescScreen(
                                     shape = RoundedCornerShape(50.dp) ,
                                 )
                             ) {
-                                IconButton(onClick = {
+                                IconButton(
+                                    enabled = state.value.status != XStatus.Loading ,
+                                    onClick = {
                                     processor.sendAction(LocationDescAction.ClickOnLikeButton )
                                 }) {
                                     Icon(imageVector = if(state.value.liked) Icons.Outlined.Favorite else Icons.Outlined.FavoriteBorder , tint = Color.Gray,  contentDescription = null)
                                 }
 
-                                IconButton(onClick = {
+                                IconButton(
+                                    enabled = state.value.status != XStatus.Loading ,
+                                    onClick = {
                                     processor.sendAction(LocationDescAction.ClickOnBookmarkButton )
                                 }) {
                                     Icon(imageVector = if(state.value.bookmarked) Icons.Outlined.Bookmark  else Icons.Outlined.BookmarkBorder , tint = Color.Gray, contentDescription = "bookamrk")
                                 }
 
-                                IconButton(onClick = {
+                                IconButton(
+                                    enabled = state.value.status != XStatus.Loading ,
+                                    onClick = {
                                     processor.sendAction(LocationDescAction.ClickOnCommentButton )
                                 }) {
                                     Icon(imageVector = Icons.Outlined.Comment , tint = Color.Gray,contentDescription = "bookamrk")

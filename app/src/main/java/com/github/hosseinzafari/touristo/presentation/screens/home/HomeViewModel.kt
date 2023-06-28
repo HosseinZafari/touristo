@@ -63,6 +63,10 @@ class HomeViewModel @Inject constructor() : XViewModel<HomeEffect , HomeAction ,
                 processor.setState(oldState.copy(effects = HomeEffect.NavigateToLocationDesc(action.id)))
             }
 
+            is HomeAction.ClickOnBookmarkButton -> {
+                processor.setState(oldState.copy(effects = HomeEffect.NavigateToBookmark))
+            }
+
             is HomeAction.ClickOnMostDestinationCard -> {
                 Log.i("Test" , "ClickOnMostDestinationCard ${action.id}")
                 processor.setState(oldState.copy(effects = HomeEffect.NavigateToSearch(action.id)))
@@ -70,6 +74,9 @@ class HomeViewModel @Inject constructor() : XViewModel<HomeEffect , HomeAction ,
 
             is HomeAction.ClickOnSearchButton -> {
                 processor.setState(oldState.copy(effects = HomeEffect.NavigateToSearch(action.id)))
+            }
+            HomeAction.ClickOnFloatingActionButton -> {
+                processor.setState(oldState.copy(effects = HomeEffect.NavigateToAddLocation))
             }
         }
     }

@@ -8,7 +8,9 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Search
+import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -42,6 +44,8 @@ fun HomeScreen(
     viewModel: HomeViewModel = hiltViewModel(),
     onNavigateToLocationDesc: (Int) -> Unit , 
     onNavigateToSearch: (Int) -> Unit ,
+    onNavigateToBookmark: () -> Unit ,
+    onNavigateToAddLocation: () -> Unit ,
 ) {
     val processor = viewModel.processor
     val state = processor.subscriberState.collectAsState()
@@ -59,7 +63,18 @@ fun HomeScreen(
                 is HomeEffect.NavigateToSearch -> {
                     onNavigateToSearch(it.locationID)
                 }
+
+                is HomeEffect.NavigateToBookmark ->  {
+                    onNavigateToBookmark()
+                }
+
+                is HomeEffect.NavigateToAddLocation ->  {
+                    onNavigateToAddLocation()
+                }
+
             }
+
+            processor.setState(state.value.copy(effects = null))
         }
     )
 
@@ -73,6 +88,13 @@ fun HomeScreen(
 
     Scaffold(
         snackbarHost = { SnackbarHost(snackbarHostState) },
+        floatingActionButton = {
+            FloatingActionButton(onClick = {
+                processor.sendAction(HomeAction.ClickOnFloatingActionButton)
+            }) {
+                Icon(imageVector = Icons.Default.Add , contentDescription = "add a location")
+            }
+        }
     ) {
         TouristoFrame(
             modifier = Modifier
@@ -84,7 +106,6 @@ fun HomeScreen(
                 )
         ) {
 
-
             Column {
                 Row(
                     modifier = Modifier.fillMaxWidth(),
@@ -94,18 +115,37 @@ fun HomeScreen(
                     TitleExtraBold(
                         modifier = Modifier.padding(16.dp), text = "کاوش"
                     )
-                    Box(
-                        modifier = Modifier
-                            .padding(end = 16.dp)
-                            .background(color = Color(0xffeeeeee), shape = CircleShape),
-                    ) {
-                        IconButton(onClick = {
-                            processor.sendAction(HomeAction.ClickOnSearchButton(0))
-                        }) {
-                            Icon(
-                                imageVector = Icons.Default.Search,
-                                contentDescription = "Search Box"
-                            )
+                    Row {
+                        Box(
+                            modifier = Modifier
+                                .padding(end = 16.dp)
+                                .background(color = Color(0xffeeeeee), shape = CircleShape),
+                        ) {
+                            IconButton(onClick = {
+                                processor.sendAction(HomeAction.ClickOnSearchButton(0))
+                            }) {
+                                Icon(
+                                    imageVector = Icons.Default.Search,
+                                    contentDescription = "Search Box"
+                                )
+                            }
+                        }
+
+                        Spacer(modifier = Modifier.width(8.dp))
+
+                        Box(
+                            modifier = Modifier
+                                .padding(end = 16.dp)
+                                .background(color = Color(0xffeeeeee), shape = CircleShape),
+                        ) {
+                            IconButton(onClick = {
+                                processor.sendAction(HomeAction.ClickOnBookmarkButton)
+                            }) {
+                                Icon(
+                                    imageVector = Icons.Default.Star,
+                                    contentDescription = "Bookmark Box"
+                                )
+                            }
                         }
                     }
                 }
@@ -135,7 +175,6 @@ fun HomeScreen(
                             },
                             selected = tabsIndexState.value == index,
                             onClick = {
-                                Log.i("Test", "tab clicked $index")
                                 tabsIndexState.value = index
                                 processor.sendAction(HomeAction.ChangeCurrentTab(tabsIndexState.value))
                             },
@@ -187,6 +226,7 @@ fun HomeScreen(
                                     name = it.name,
                                     location = it.location.name + " , ایران",
                                     likeCount = it.likeCount,
+                                    imageUri = it.imageUri,
                                     onClick = {
                                         processor.sendAction(HomeAction.ClickOnCardItem(it.id))
                                     }
@@ -220,10 +260,12 @@ fun HomeScreen(
                             repeat(3) {
                                 item {
                                     BestDestinationCard(
-                                        modifier = Modifier.height(100.dp).placeholder(
-                                            visible = true,
-                                            shape = RoundedCornerShape(50.dp)
-                                        ),
+                                        modifier = Modifier
+                                            .height(100.dp)
+                                            .placeholder(
+                                                visible = true,
+                                                shape = RoundedCornerShape(50.dp)
+                                            ),
                                         resId = card_1_2,
                                         province = "",
                                         country = "",
@@ -271,7 +313,7 @@ fun HomeScreen(
 fun ScreenHomePreview() {
     TouristoTheme {
         RTL {
-            HomeScreen(onNavigateToLocationDesc = {} , onNavigateToSearch = {})
+            HomeScreen(onNavigateToLocationDesc = {} , onNavigateToSearch = {} , onNavigateToBookmark = {} , onNavigateToAddLocation = {})
         }
     }
 }
