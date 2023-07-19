@@ -33,6 +33,7 @@ object Deps {
         const val coroutine = "1.3.9"
         const val datastore = "1.0.0"
         const val coil_compose = "2.4.0"
+        const val firebase_bom = "32.2.0"
 
     /*    const val ui_tooling = "1.2.1"
         const val compose_foundation = "1.1.0-rc03"
@@ -76,6 +77,8 @@ object Deps {
     const val datastore = "androidx.datastore:datastore-preferences:${Version.datastore}"
     const val hilt_nav = "androidx.hilt:hilt-navigation-compose:${Version.hilt_nav}"
     const val coil_compose = "io.coil-kt:coil-compose:${Version.coil_compose}"
+    const val firebase_bom = "com.google.firebase:firebase-bom:${Version.firebase_bom}"
+    const val firebase_analytics = "com.google.firebase:firebase-analytics"
 
    /* const val ui_tooling = "androidx.compose.ui:ui-tooling:${Version.ui_tooling}"
     const val compose_foundation = "androidx.compose.foundation:foundation:${Version.compose_foundation}"
