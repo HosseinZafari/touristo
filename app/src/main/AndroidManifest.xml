@@ -12,23 +12,36 @@
     android:dataExtractionRules="@xml/data_extraction_rules"
     android:fullBackupContent="@xml/backup_rules"
     android:icon="@mipmap/ic_launcher"
-    android:name=".TouristApplication"
+    android:name=".core.TouristApplication"
     android:label="@string/app_name"
     android:supportsRtl="true"
     android:theme="@style/Theme.Touristo"
     tools:targetApi="31">
+
     <activity
-      android:name=".MainActivity"
+      android:name=".core.MainActivity"
       android:windowSoftInputMode="adjustResize"
       android:exported="true"
       android:label="@string/app_name"
       android:theme="@style/Theme.Touristo">
+
+      <intent-filter android:label="Signup Verify">
+        <action android:name="android.intent.action.VIEW" />
+        <category android:name="android.intent.category.DEFAULT" />
+        <category android:name="android.intent.category.BROWSABLE" />
+        <!-- Accepts URIs that begin with "http://touristo-app.ir/auth” -->
+        <data android:scheme="app"
+          android:host="touristo.auth" />
+      </intent-filter>
+
       <intent-filter>
         <action android:name="android.intent.action.MAIN" />
 
         <category android:name="android.intent.category.LAUNCHER" />
       </intent-filter>
     </activity>
+
+
   </application>
 
 </manifest>

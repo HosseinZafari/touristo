@@ -3,7 +3,6 @@ package com.github.hosseinzafari.touristo.presentation.screens.search
 import android.util.Log
 import androidx.lifecycle.viewModelScope
 import com.github.hosseinzafari.touristo.base.system.mvi.XStatus
-import com.github.hosseinzafari.touristo.core.data.data_model.LocationData
 import com.github.hosseinzafari.touristo.core.data.data_model.provinceData
 import com.github.hosseinzafari.touristo.presentation.screens.login.XViewModel
 import kotlinx.coroutines.delay
@@ -45,12 +44,12 @@ class SearchViewModel : XViewModel<SearchEffect, SearchAction, SearchState>() {
 
                 viewModelScope.launch {
                     delay(2000L)
-                    processor.setState(oldState.copy(
+                   /* processor.setState(oldState.copy(
                         data = LocationData.filter {
                             it.name.contains(oldState.text) || it.location.name.contains(oldState.text)
                         } ,
                         status = XStatus.Idle
-                    ))
+                    ))*/
                 }
             }
 

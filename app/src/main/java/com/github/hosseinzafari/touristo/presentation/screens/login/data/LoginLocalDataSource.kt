@@ -5,9 +5,6 @@ import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
 import com.github.hosseinzafari.touristo.core.data.local.DataStoreKeys
 import com.github.hosseinzafari.touristo.core.data.data_model.User
-import com.github.hosseinzafari.touristo.core.data.local.realm_schema.UserRealm
-import com.github.hosseinzafari.touristo.core.data.local.realm_schema.toUser
-import io.realm.Realm
 import kotlinx.coroutines.flow.*
 import javax.inject.Inject
 
@@ -23,7 +20,7 @@ class LoginLocalDataSource @Inject constructor(
 ) : LoginDomain {
 
     override suspend fun findUser(email: String, password: String): Flow<User?> = flow {
-        val realm = Realm.getDefaultInstance()
+        /*val realm = Realm.getDefaultInstance()
         var user: User? = null
         realm.executeTransaction {
             user = realm.where(UserRealm::class.java)
@@ -35,7 +32,7 @@ class LoginLocalDataSource @Inject constructor(
 
         emit(user)
 
-        realm.close()
+        realm.close()*/
     }
 
     override suspend fun saveUserInfo(
@@ -45,12 +42,6 @@ class LoginLocalDataSource @Inject constructor(
         isLogin: Boolean ,
         loginAuthTime: String
     ) {
-        dataStore.edit {
-            it[DataStoreKeys.idKey] = id
-            it[DataStoreKeys.nameKey] = name
-            it[DataStoreKeys.emailKey] = email
-            it[DataStoreKeys.isLogin] = isLogin
-            it[DataStoreKeys.loginAuthTimeKey] = loginAuthTime
-        }
+
     }
 }

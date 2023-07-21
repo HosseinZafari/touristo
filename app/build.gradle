@@ -3,9 +3,8 @@ plugins {
     id 'org.jetbrains.kotlin.android'
     id 'org.jetbrains.kotlin.kapt'
     id 'com.google.dagger.hilt.android'
-    id 'com.google.gms.google-services'
+    id 'org.jetbrains.kotlin.plugin.serialization' version '1.8.10'
 }
-apply plugin: 'realm-android'
 
 android {
     namespace 'com.github.hosseinzafari.touristo'
@@ -22,6 +21,12 @@ android {
         vectorDrawables {
             useSupportLibrary true
         }
+
+        Properties properties = new Properties()
+        properties.load(project.rootProject.file("local.properties").newDataInputStream())
+
+        buildConfigField "String" , "API_KEY" , "\"${properties.getProperty("API_KEY")}\""
+        buildConfigField "String" , "URL" , "\"${properties.getProperty("URL")}\""
     }
 
     buildTypes {
@@ -70,13 +75,11 @@ dependencies {
     implementation Deps.coroutine
     implementation Deps.constraint_compose
 
-    // firebase configs
-    implementation platform(Deps.firebase_bom)
-    implementation Deps.firebase_analytics
+    // supabase configs
+    implementation platform(Deps.supabase_bom)
+    implementation Deps.supabase_postgres
+    implementation Deps.ktor_clinet_engine
 
-
-    // for logging in application
-    implementation Deps.timber
 
     // for logging in application
     implementation Deps.timber

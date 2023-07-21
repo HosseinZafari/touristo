@@ -1,4 +1,4 @@
-package com.github.hosseinzafari.touristo.core.lang
+package com.github.hosseinzafari.touristo.lang
 
 import com.github.hosseinzafari.touristo.base.system.XLang
 

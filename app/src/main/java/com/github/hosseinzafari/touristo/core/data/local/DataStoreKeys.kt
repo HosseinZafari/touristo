@@ -11,10 +11,8 @@ import androidx.datastore.preferences.core.stringPreferencesKey
  */
 
 object DataStoreKeys {
-    val idKey = stringPreferencesKey("id")
-    val nameKey = stringPreferencesKey("name")
-    val emailKey = stringPreferencesKey("email")
-    val isLogin = booleanPreferencesKey("is_login")
-    val loginAuthTimeKey = stringPreferencesKey("login_auth_time")
-    val migratedFakeDataKey = booleanPreferencesKey("migrated_fake_data")
+    val id = stringPreferencesKey("id")
+    val name = stringPreferencesKey("name")
+    val email = stringPreferencesKey("email")
+    val isLoggedIn = booleanPreferencesKey("is_logged_in")
 }

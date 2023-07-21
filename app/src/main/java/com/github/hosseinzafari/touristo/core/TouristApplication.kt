@@ -1,30 +1,20 @@
-package com.github.hosseinzafari.touristo
+package com.github.hosseinzafari.touristo.core
 
-import android.util.Log
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStore
+import com.github.hosseinzafari.touristo.L
 import com.github.hosseinzafari.touristo.base.system.*
-import com.github.hosseinzafari.touristo.core.data.local.fake_data.fakeUsers
-import com.github.hosseinzafari.touristo.core.data.local.usecases.*
-import com.github.hosseinzafari.touristo.core.lang.FaLang
+import com.github.hosseinzafari.touristo.lang.FaLang
 import dagger.hilt.android.HiltAndroidApp
-import io.realm.Realm
-import io.realm.RealmConfiguration
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.launch
-import javax.inject.Inject
 
 
 @HiltAndroidApp
 class TouristApplication : XApp() {
-    @Inject
-    lateinit var logic: TouristoAppLogic
 
     override var lang: XLang = FaLang
     override var db = object : XDB {
-        override val dbName = "realm_db_1"
+        override val dbName = "db_1"
         override val version = 1L
     }
 
@@ -45,18 +35,10 @@ class TouristApplication : XApp() {
     override fun initDependencies() {
         initLibs()
         initLang()
-        migrateFakeData()
     }
 
-    private fun migrateFakeData() {
-        appScope.launch(Dispatchers.IO) {
-            logic.migrateFakeData()
-        }
-
-    }
 
     private fun initLibs() {
-        Realm.init(this)
     }
 
     private fun initLang() {

@@ -38,7 +38,7 @@ class LocationDescViewModel @Inject constructor() : XViewModel<LocationDescEffec
 
                 viewModelScope.launch {
                     delay(2000L)
-                    processor.setState(oldState.copy(
+                    /*processor.setState(oldState.copy(
                         data = LocationData.filter {
                             it.id == action.id
                         }.firstOrNull() ,
@@ -53,7 +53,7 @@ class LocationDescViewModel @Inject constructor() : XViewModel<LocationDescEffec
                             if (it == null) false else true
                         } ,
                         status = XStatus.Idle ,
-                    ))
+                    ))*/
                 }
             }
 

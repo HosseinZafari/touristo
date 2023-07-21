@@ -1,5 +1,7 @@
 package com.github.hosseinzafari.touristo.core.data.data_model
 
+import kotlinx.serialization.Serializable
+
 /**
  * @author Hossein Zafari
  * @email ho3einzafari@gmail.com
@@ -7,6 +9,7 @@ package com.github.hosseinzafari.touristo.core.data.data_model
  * @project Touristo
  */
 
+@Serializable
 data class User (
     var id: String?  ,
     var name: String?,

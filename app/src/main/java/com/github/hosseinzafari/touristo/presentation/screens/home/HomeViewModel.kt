@@ -3,7 +3,6 @@ package com.github.hosseinzafari.touristo.presentation.screens.home
 import android.util.Log
 import androidx.lifecycle.viewModelScope
 import com.github.hosseinzafari.touristo.base.system.mvi.XStatus
-import com.github.hosseinzafari.touristo.core.data.data_model.LocationData
 import com.github.hosseinzafari.touristo.presentation.screens.login.XViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -36,13 +35,13 @@ class HomeViewModel @Inject constructor() : XViewModel<HomeEffect , HomeAction ,
                 processor.setState(oldState.copy(status = XStatus.Loading))
                 viewModelScope.launch  {
                     delay(2000L) // simulate for loading
-                    processor.setState(oldState.copy(
+                    /*processor.setState(oldState.copy(
                         locationData = LocationData.filter {
                            it.categoryModel.id == action.id
                         } ,
                         destinationData =  LocationData.subList(1 , 3) ,
                         status = XStatus.Idle ,
-                    ))
+                    ))*/
                 }
             }
 
@@ -50,12 +49,12 @@ class HomeViewModel @Inject constructor() : XViewModel<HomeEffect , HomeAction ,
                 processor.setState(oldState.copy(status = XStatus.Loading))
                 viewModelScope.launch  {
                     delay(2000L) // simulate for loading
-                    processor.setState(oldState.copy(
+                    /*processor.setState(oldState.copy(
                         locationData = LocationData.filter {
                             it.categoryModel.id == action.id
                         } ,
                         status = XStatus.Idle ,
-                    ))
+                    ))*/
                 }
             }
 

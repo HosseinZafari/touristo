@@ -12,8 +12,6 @@ import kotlinx.coroutines.flow.Flow
  */
  
 interface SignupDomain : XDomain {
-    suspend fun alreadyUserExists(email: String): Flow<Boolean>
-    suspend fun signup(user: User): Flow<User>
-    suspend fun saveUserInfo(id: String, name: String, email: String, isLogin: Boolean , loginAuthTime: String)
+    suspend fun signup(email: String , password: String , name: String ): Flow< User>
 
 }

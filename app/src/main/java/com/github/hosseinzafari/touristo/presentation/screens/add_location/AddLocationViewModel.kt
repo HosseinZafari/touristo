@@ -3,7 +3,6 @@ package com.github.hosseinzafari.touristo.presentation.screens.add_location
 import androidx.lifecycle.viewModelScope
 import com.github.hosseinzafari.touristo.base.system.mvi.XProcessor
 import com.github.hosseinzafari.touristo.base.system.mvi.XStatus
-import com.github.hosseinzafari.touristo.core.data.data_model.LocationData
 import com.github.hosseinzafari.touristo.core.data.data_model.LocationModel
 import com.github.hosseinzafari.touristo.core.data.data_model.ProvinceModel
 import com.github.hosseinzafari.touristo.core.data.data_model.provinceData
@@ -61,7 +60,7 @@ class AddLocationViewModel @Inject constructor(): XViewModel<AddLocationEffect, 
 
                 viewModelScope.launch {
                     delay(2000L)
-                    LocationData.add(LocationModel((Math.random() * 10000 + 80).toInt() ,
+                    /*LocationData.add(LocationModel((Math.random() * 10000 + 80).toInt() ,
                         oldState.description ,
                         card_1_2 ,
                         oldState.name ,
@@ -70,7 +69,7 @@ class AddLocationViewModel @Inject constructor(): XViewModel<AddLocationEffect, 
                         oldState.category!! ,
                         mutableListOf() ,
                         imageUri = oldState.pictureUrl
-                    ))
+                    ))*/
 
                     processor.setState(oldState.copy(status = XStatus.Idle , effects = AddLocationEffect.NavigateToHome))
                 }

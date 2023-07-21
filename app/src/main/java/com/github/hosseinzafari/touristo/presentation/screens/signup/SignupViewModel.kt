@@ -5,16 +5,14 @@ import androidx.lifecycle.viewModelScope
 import com.github.hosseinzafari.touristo.L
 import com.github.hosseinzafari.touristo.base.system.mvi.XStatus
 import com.github.hosseinzafari.touristo.core.data.data_model.User
+import com.github.hosseinzafari.touristo.core.data.local.usecases.SaveUserUseCase
 import com.github.hosseinzafari.touristo.presentation.screens.login.XViewModel
-import com.github.hosseinzafari.touristo.presentation.screens.signup.data.usecases.IsExistsUserUseCase
-import com.github.hosseinzafari.touristo.presentation.screens.signup.data.usecases.SaveUserInfoUseCase
 import com.github.hosseinzafari.touristo.presentation.screens.signup.data.usecases.SingupUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
-import java.util.*
+import timber.log.Timber
 import javax.inject.Inject
 
 /**
@@ -28,8 +26,7 @@ import javax.inject.Inject
 @HiltViewModel
 class SignupViewModel @Inject constructor(
     val signupUseCase: SingupUseCase ,
-    val isExistsUserUseCase: IsExistsUserUseCase ,
-    val saveUserInfoUseCase: SaveUserInfoUseCase ,
+    val saveUserUseCase: SaveUserUseCase ,
 ) : XViewModel<SignupEffect, SignupAction, SignupState>() {
 
     override val processor = processor(
@@ -78,7 +75,6 @@ class SignupViewModel @Inject constructor(
 
                 viewModelScope.launch(Dispatchers.IO) {
                     processor.setState(oldState.copy(status = XStatus.Loading))
-                    delay(1000L) // fake loading (simulation)
                     submit(oldState)
                 }
             }
@@ -86,19 +82,14 @@ class SignupViewModel @Inject constructor(
     }
 
     private suspend fun submit(state: SignupState) {
-        if(isExistsUserUseCase(state.email).first()) {
-            processor.setState(state.copy(status = XStatus.Error(L.signup_user_is_exists)))
-            return
-        }
-
         try {
-            val user = signupUseCase(User(id = null , name = state.name , email = state.email , password = state.password , profileUrl = null)).first()
-            saveUserInfoUseCase(user.id!! , user.name!! , user.email!! , true , Date().toString())
+            val user = signupUseCase(state.email , state.password , state.name).first()
+            saveUserUseCase(user.id!! , user.email!! , user.name!!)
             processor.setState(state.copy(effects = SignupEffect.NavigateToHome , status = XStatus.Idle))
-        } catch (err: Exception) {
+        } catch(exc: Exception) {
+            Log.i("Test","signupSubmit exception #")
+            Log.i("Test","signupSubmit exception: $exc")
             processor.setState(state.copy(status = XStatus.Error(L.signup_submit_error)))
         }
-
-
     }
 }

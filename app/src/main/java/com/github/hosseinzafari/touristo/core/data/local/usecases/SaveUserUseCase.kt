@@ -7,13 +7,13 @@ import javax.inject.Inject
 /**
  * @author Hossein Zafari
  * @email ho3einzafari@gmail.com
- * @created 04/05/2023 - 1:56 PM
+ * @created 21/07/2023 - 1:35 PM
  * @project Touristo
  */
 
-class SetMigratedFakeDataUseCase @Inject constructor(
-    override val domain: AppSettingDomain
-) : XUseCase<AppSettingDomain>() {
+class SaveUserUseCase @Inject constructor(override val domain: AppSettingDomain) :
+    XUseCase<AppSettingDomain>() {
 
-    operator suspend fun invoke(migrated: Boolean) = domain.setMigratedFakeData(migrated)
+    operator suspend fun invoke(id: String , email: String, name: String) = domain.saveUser(id , email, name)
+
 }

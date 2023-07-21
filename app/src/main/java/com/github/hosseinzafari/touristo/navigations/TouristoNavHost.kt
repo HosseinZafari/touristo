@@ -1,5 +1,6 @@
 package com.github.hosseinzafari.touristo.navigations
 
+import android.content.Intent
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
@@ -8,6 +9,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import androidx.navigation.navDeepLink
 import com.github.hosseinzafari.touristo.presentation.screens.login.LoginScreen
 import com.github.hosseinzafari.touristo.presentation.screens.SignupScreen
 import com.github.hosseinzafari.touristo.presentation.screens.add_location.AddLocationScreen
@@ -32,7 +34,7 @@ fun TouristoNavHost(
 ) {
 
     NavHost(navController = navController, modifier = modifier , startDestination = startDestination.name) {
-        composable(Route.Signup.name) {
+        composable(route = Route.Signup.name) {
             SignupScreen(
                 onNavigateToLogin = {
                     navController.navigate(Route.Login.name)

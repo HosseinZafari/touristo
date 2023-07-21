@@ -2,15 +2,10 @@ package com.github.hosseinzafari.touristo.presentation.screens.comment
 
 import androidx.lifecycle.viewModelScope
 import com.github.hosseinzafari.touristo.base.system.mvi.XStatus
-import com.github.hosseinzafari.touristo.core.data.data_model.CommentModel
-import com.github.hosseinzafari.touristo.core.data.data_model.LocationData
-import com.github.hosseinzafari.touristo.core.data.local.fake_data.fakeUsers
-import com.github.hosseinzafari.touristo.core.data.local.fake_data.toUser
 import com.github.hosseinzafari.touristo.presentation.screens.login.XViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import java.lang.Integer.parseInt
 import javax.inject.Inject
 
 /**
@@ -43,7 +38,7 @@ class CommentViewModel @Inject constructor() :
                 if (oldState.comment.isBlank()) {
                     return
                 }
-                LocationData.filter {
+                /*LocationData.filter {
                     action.id == it.id
                 }.first()
                     .comments
@@ -53,7 +48,7 @@ class CommentViewModel @Inject constructor() :
                             fakeUsers.get(0).toUser(),
                             oldState.comment
                         )
-                    )
+                    )*/
 
                 processor.setState(oldState.copy(comment = ""))
                 processor.sendAction(CommentAction.GetData(action.id))
@@ -63,13 +58,13 @@ class CommentViewModel @Inject constructor() :
                 processor.setState(oldState.copy(status = XStatus.Loading))
                 viewModelScope.launch {
                     delay(1000L)
-                    processor.setState(oldState.copy(
+                    /*processor.setState(oldState.copy(
                         data = LocationData.filter {
                             it.id == action.id
                         }.flatMap { it.comments },
                         status = XStatus.Idle
                     )
-                    )
+                    )*/
                 }
 
             }
