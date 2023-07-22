@@ -1,6 +1,7 @@
 package com.github.hosseinzafari.touristo.navigations
 
 import android.content.Intent
+import android.util.Log
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
@@ -10,6 +11,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import androidx.navigation.navDeepLink
+import com.github.hosseinzafari.touristo.presentation.screens.Loading.AuthVerificationScreen
 import com.github.hosseinzafari.touristo.presentation.screens.login.LoginScreen
 import com.github.hosseinzafari.touristo.presentation.screens.SignupScreen
 import com.github.hosseinzafari.touristo.presentation.screens.add_location.AddLocationScreen
@@ -30,18 +32,32 @@ import com.github.hosseinzafari.touristo.presentation.screens.search.SearchScree
 fun TouristoNavHost(
     modifier: Modifier = Modifier,
     navController: NavHostController = rememberNavController(),
-    startDestination : Route = Route.Login,
+    startDestination: String = Route.Login.name,
+    intent: Intent? = null,
 ) {
 
-    NavHost(navController = navController, modifier = modifier , startDestination = startDestination.name) {
-        composable(route = Route.Signup.name) {
+    NavHost(
+        navController = navController,
+        modifier = modifier,
+        startDestination = startDestination
+    ) {
+
+        composable(route = Route.Signup.name + "?msg={msg}", arguments = listOf(navArgument("msg") {
+            type = NavType.StringType
+            defaultValue = null
+            nullable = true
+        })) {
+
+            val msg = it.arguments?.getString("msg")
+
             SignupScreen(
+                msg = msg  ,
                 onNavigateToLogin = {
                     navController.navigate(Route.Login.name)
-                } ,
+                },
                 onNavigateToHome = {
                     navController.navigate(Route.Home.name) {
-                        popUpTo(navController.graph.id){
+                        popUpTo(navController.graph.id) {
                             inclusive = true
                         }
                     }
@@ -53,10 +69,27 @@ fun TouristoNavHost(
             LoginScreen(
                 onNavigateToSignup = {
                     navController.navigate(Route.Signup.name)
-                } ,
+                },
                 onNavigateToHome = {
                     navController.navigate(Route.Home.name) {
-                        popUpTo(navController.graph.id){
+                        popUpTo(navController.graph.id) {
+                            inclusive = true
+                        }
+                    }
+                }
+            )
+        }
+
+        composable(Route.AuthVerification.name) {
+            Log.i("Test" , "AuthVerification composable")
+            AuthVerificationScreen(
+                intent = intent,
+                onNavigateToSignup = {
+                    navController.navigate(Route.Signup.name + "?msg=$it")
+                },
+                onNavigateToHome = {
+                    navController.navigate(Route.Home.name) {
+                        popUpTo(navController.graph.id) {
                             inclusive = true
                         }
                     }
@@ -68,13 +101,13 @@ fun TouristoNavHost(
             HomeScreen(
                 onNavigateToSearch = {
                     navController.navigate(Route.Search.name + "/$it")
-                } ,
+                },
                 onNavigateToLocationDesc = {
                     navController.navigate(Route.Description.name + "/$it")
-                } ,
+                },
                 onNavigateToBookmark = {
                     navController.navigate(Route.Favorite.name)
-                } ,
+                },
                 onNavigateToAddLocation = {
                     navController.navigate(Route.AddLocation.name)
                 }
@@ -82,27 +115,27 @@ fun TouristoNavHost(
         }
 
         composable(
-            route = Route.Search.name + "/{id}" ,
+            route = Route.Search.name + "/{id}",
             arguments = listOf(navArgument("id") {
                 type = NavType.IntType
             })
         ) {
             val id = it.arguments?.getInt("id")
             SearchScreen(
-                destId = id!! ,
+                destId = id!!,
                 onNavigateToHome = {
-                    if(navController.previousBackStackEntry != null) {
+                    if (navController.previousBackStackEntry != null) {
                         navController.navigateUp()
                     }
-                } ,
+                },
                 onNavigateToLocationCard = {
-                   navController.navigate(Route.Description.name + "/$it")
-                } ,
+                    navController.navigate(Route.Description.name + "/$it")
+                },
             )
         }
 
         composable(
-            route = Route.Comment.name + "/{id}" ,
+            route = Route.Comment.name + "/{id}",
             arguments = listOf(navArgument("id") {
                 type = NavType.IntType
             })
@@ -116,10 +149,10 @@ fun TouristoNavHost(
         composable(Route.Favorite.name) {
             BookmarkScreen(
                 onNavigateToBack = {
-                    if(navController.previousBackStackEntry != null) {
+                    if (navController.previousBackStackEntry != null) {
                         navController.navigateUp()
                     }
-                } ,
+                },
                 onNavigateToLocationDesc = {
                     navController.navigate(Route.Description.name + "/$it")
                 }
@@ -135,20 +168,20 @@ fun TouristoNavHost(
         }
 
         composable(
-            route = Route.Description.name + "/{id}" ,
+            route = Route.Description.name + "/{id}",
             arguments = listOf(navArgument("id") {
                 type = NavType.IntType
-            }) ,
+            }),
         ) {
             val id = it.arguments?.getInt("id")
 
             LocationDescScreen(
-                descId = id!! ,
+                descId = id!!,
                 onNavigateToComment = {
                     navController.navigate(Route.Comment.name + "/$it")
-                } ,
+                },
                 onNavigateToBack = {
-                    if(navController.previousBackStackEntry != null) {
+                    if (navController.previousBackStackEntry != null) {
                         navController.navigateUp()
                     }
                 }

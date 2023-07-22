@@ -31,6 +31,7 @@ object Deps {
         const val coil_compose = "2.4.0"
         const val supabase = "1.1.1"
         const val ktor = "2.3.2"
+        const val splashscreen = "1.0.0"
 
     /*    const val ui_tooling = "1.2.1"
         const val compose_foundation = "1.1.0-rc03"
@@ -77,6 +78,7 @@ object Deps {
     const val supabase_bom = "io.github.jan-tennert.supabase:bom:${Version.supabase}"
     const val supabase_postgres = "io.github.jan-tennert.supabase:postgrest-kt"
     const val ktor_clinet_engine = "io.ktor:ktor-client-okhttp:${Version.ktor}"
+    const val splashscreen = "androidx.core:core-splashscreen:${Version.splashscreen}"
 
    /* const val ui_tooling = "androidx.compose.ui:ui-tooling:${Version.ui_tooling}"
     const val compose_foundation = "androidx.compose.foundation:foundation:${Version.compose_foundation}"

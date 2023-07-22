@@ -47,6 +47,7 @@ import com.github.hosseinzafari.touristo.presentation.screens.signup.SignupEffec
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalLayoutApi::class)
 @Composable
 fun SignupScreen(
+    msg : String? = null ,
     onNavigateToLogin: () -> Unit = {},
     onNavigateToHome: () -> Unit = {},
     signupViewModel: SignupViewModel = hiltViewModel(),
@@ -55,6 +56,12 @@ fun SignupScreen(
     val processor = signupViewModel.processor
     val state = processor.subscriberState.collectAsState()
     val snackbarHostState = remember { SnackbarHostState() }
+
+    LaunchedEffect(key1 = 0){
+        msg?.let {
+            snackbarHostState.showSnackbar(message = it)
+        }
+    }
 
     processor.SubscribeEffect(
         state = state.value,

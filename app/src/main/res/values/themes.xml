@@ -2,4 +2,10 @@
 <resources>
 
   <style name="Theme.Touristo" parent="android:Theme.Material.Light.NoActionBar" />
+
+  <style name="Theme.Touristo.Starting" parent="Theme.SplashScreen">
+    <item name="windowSplashScreenAnimatedIcon">@drawable/logo</item>
+    <item name="postSplashScreenTheme">@style/Theme.Touristo</item>
+    <item name="windowSplashScreenBackground">@color/ic_launcher_background</item>
+  </style>
 </resources>

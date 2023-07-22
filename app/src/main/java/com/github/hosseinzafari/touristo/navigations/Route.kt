@@ -18,5 +18,6 @@ sealed class Route (
     object Search : Route (name = "search")
     object Comment : Route (name = "comment")
     object AddLocation : Route (name = "add_location")
+    object AuthVerification : Route (name = "auth_verify")
 
 }

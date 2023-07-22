@@ -15,6 +15,6 @@ import javax.inject.Inject
 @HiltViewModel
 class MainViewModel @Inject constructor(): ViewModel() {
     var navController: NavHostController? = null
-
+    var splashScreenVisible: Boolean = true
 
 }
