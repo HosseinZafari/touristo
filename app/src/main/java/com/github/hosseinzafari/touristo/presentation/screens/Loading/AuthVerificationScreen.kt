@@ -95,7 +95,7 @@ fun AuthVerificationScreen(
         ) {
 
             Column(modifier = Modifier.fillMaxSize() , verticalArrangement = Arrangement.Center , horizontalAlignment = Alignment.CenterHorizontally) {
-                CircularProgressIndicator()
+                CircularProgressIndicator(color = Color.Gray)
                 Spacer(modifier = Modifier.height(38.dp))
                 Text(text = "در حال بررسی صحت حساب کاربری..." , style = MaterialTheme.typography.titleMedium , fontWeight = FontWeight.ExtraLight)
             }

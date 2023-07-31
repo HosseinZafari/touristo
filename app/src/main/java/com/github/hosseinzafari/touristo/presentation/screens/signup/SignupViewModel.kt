@@ -4,15 +4,14 @@ import android.util.Log
 import androidx.lifecycle.viewModelScope
 import com.github.hosseinzafari.touristo.L
 import com.github.hosseinzafari.touristo.base.system.mvi.XStatus
-import com.github.hosseinzafari.touristo.core.data.data_model.User
 import com.github.hosseinzafari.touristo.core.data.local.usecases.SaveUserUseCase
 import com.github.hosseinzafari.touristo.presentation.screens.login.XViewModel
 import com.github.hosseinzafari.touristo.presentation.screens.signup.data.usecases.SingupUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
+import io.github.jan.supabase.exceptions.RestException
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
-import timber.log.Timber
 import javax.inject.Inject
 
 /**
@@ -83,12 +82,19 @@ class SignupViewModel @Inject constructor(
 
     private suspend fun submit(state: SignupState) {
         try {
-            val user = signupUseCase(state.email , state.password , state.name).first()
-            saveUserUseCase(user.id!! , user.email!! , user.name!!)
-            processor.setState(state.copy(effects = SignupEffect.NavigateToHome , status = XStatus.Idle))
-        } catch(exc: Exception) {
-            Log.i("Test","signupSubmit exception #")
-            Log.i("Test","signupSubmit exception: $exc")
+            signupUseCase(state.email, state.password, state.name).first()
+          /*  saveUserUseCase(user.id!!, user.email!!, user.name!!)
+            processor.setState(
+                state.copy(
+                    effects = SignupEffect.NavigateToHome,
+                    status = XStatus.Idle
+                )
+            )*/
+        } catch (exc: RestException) {
+            Log.i("Test", "signupSubmit exception: $exc")
+            processor.setState(state.copy(status = XStatus.Error(L.signup_submit_checking_email)))
+        } catch (exc: Exception) {
+            Log.i("Test", "signupSubmit exception: $exc")
             processor.setState(state.copy(status = XStatus.Error(L.signup_submit_error)))
         }
     }

@@ -1,6 +1,6 @@
 package com.github.hosseinzafari.touristo.presentation.screens.home
 
-import android.util.Log
+import android.net.Uri
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyRow
@@ -26,7 +26,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.github.hosseinzafari.touristo.base.system.mvi.XStatus
 import com.github.hosseinzafari.touristo.base.theme.TouristoTheme
 import com.github.hosseinzafari.touristo.base.ui.RTL
-import com.github.hosseinzafari.touristo.core.data.data_model.categories
+import com.github.hosseinzafari.touristo.core.data.dto.provinceData
 import com.github.hosseinzafari.touristo.presentation.components.*
 import com.google.accompanist.placeholder.material3.placeholder
 import com.queezo.app.assets.card_1_2
@@ -42,10 +42,10 @@ import com.queezo.app.assets.card_1_2
 @Composable
 fun HomeScreen(
     viewModel: HomeViewModel = hiltViewModel(),
-    onNavigateToLocationDesc: (Int) -> Unit , 
-    onNavigateToSearch: (Int) -> Unit ,
-    onNavigateToBookmark: () -> Unit ,
-    onNavigateToAddLocation: () -> Unit ,
+    onNavigateToLocationDesc: (Int) -> Unit,
+    onNavigateToSearch: (Int) -> Unit,
+    onNavigateToBookmark: () -> Unit,
+    onNavigateToAddLocation: () -> Unit,
 ) {
     val processor = viewModel.processor
     val state = processor.subscriberState.collectAsState()
@@ -55,7 +55,7 @@ fun HomeScreen(
         statusBlock = {
         },
         effectsBlock = {
-            when(it) {
+            when (it) {
                 is HomeEffect.NavigateToLocationDesc -> {
                     onNavigateToLocationDesc(it.locationID)
                 }
@@ -64,11 +64,11 @@ fun HomeScreen(
                     onNavigateToSearch(it.locationID)
                 }
 
-                is HomeEffect.NavigateToBookmark ->  {
+                is HomeEffect.NavigateToBookmark -> {
                     onNavigateToBookmark()
                 }
 
-                is HomeEffect.NavigateToAddLocation ->  {
+                is HomeEffect.NavigateToAddLocation -> {
                     onNavigateToAddLocation()
                 }
 
@@ -83,7 +83,6 @@ fun HomeScreen(
     }
 
 
-    val tabsIndexState = remember { mutableStateOf(0) }
     val snackbarHostState = remember { SnackbarHostState() }
 
     Scaffold(
@@ -92,7 +91,7 @@ fun HomeScreen(
             FloatingActionButton(onClick = {
                 processor.sendAction(HomeAction.ClickOnFloatingActionButton)
             }) {
-                Icon(imageVector = Icons.Default.Add , contentDescription = "add a location")
+                Icon(imageVector = Icons.Default.Add, contentDescription = "add a location")
             }
         }
     ) {
@@ -150,44 +149,77 @@ fun HomeScreen(
                     }
                 }
 
-                ScrollableTabRow(
-                    selectedTabIndex = tabsIndexState.value,
-                    contentColor = Color.DarkGray,
-                    divider = {},
-                    indicator = {
-                        Box {}
-                    }
-
-                ) {
-                    categories.forEachIndexed { index, value ->
-
-                        Tab(
-                            modifier = Modifier.drawWithContent {
-                                drawContent()
-                                if (tabsIndexState.value == index) {
-                                    drawLine(
-                                        color = Color.DarkGray,
-                                        start = Offset(size.width, 0f),
-                                        end = Offset(size.width / 1.5f, 0f),
-                                        strokeWidth = 25f
-                                    )
-                                }
-                            },
-                            selected = tabsIndexState.value == index,
-                            onClick = {
-                                tabsIndexState.value = index
-                                processor.sendAction(HomeAction.ChangeCurrentTab(tabsIndexState.value))
-                            },
-                            text = {
-                                Text(
-                                    text = value.title,
-                                    maxLines = 1,
-                                    overflow = TextOverflow.Ellipsis,
-                                    style = MaterialTheme.typography.titleLarge,
-                                    fontWeight = if (tabsIndexState.value == index) FontWeight.Bold else FontWeight.Light
+                if(state.value.currentCategory != null) {
+                    ScrollableTabRow(
+                        selectedTabIndex = state.value.currentCategory!!.id,
+                        contentColor = Color.DarkGray,
+                        divider = {},
+                        indicator = {
+                            Box {}
+                        }
+                    ) {
+                        val categories = state.value.categoryData
+                        if (categories.size > 0) {
+                            categories.forEachIndexed { index, value ->
+                                Tab(
+                                    modifier = Modifier.drawWithContent {
+                                        drawContent()
+                                        if (state.value.currentCategory!!.id == value.id) {
+                                            drawLine(
+                                                color = Color.DarkGray,
+                                                start = Offset(size.width, 0f),
+                                                end = Offset(size.width / 1.5f, 0f),
+                                                strokeWidth = 25f
+                                            )
+                                        }
+                                    },
+                                    selected = state.value.currentCategory!!.id == value.id,
+                                    onClick = {
+                                        processor.sendAction(HomeAction.ChangeCurrentTab(value))
+                                    },
+                                    text = {
+                                        Text(
+                                            text = value.title,
+                                            maxLines = 1,
+                                            overflow = TextOverflow.Ellipsis,
+                                            style = MaterialTheme.typography.titleLarge,
+                                            fontWeight = if (state.value.currentCategory!!.id == value.id) FontWeight.Bold else FontWeight.Light
+                                        )
+                                    }
                                 )
                             }
-                        )
+                        }
+                    }
+                } else {
+                    ScrollableTabRow(
+                        selectedTabIndex = 0,
+                        contentColor = Color.DarkGray,
+                        divider = {},
+                        indicator = {
+                            Box {}
+                        }
+                    ) {
+                        repeat(4) {
+                            Tab(
+                                modifier = Modifier.placeholder(
+                                    visible = true,
+                                    shape = RoundedCornerShape(4.dp)
+                                ),
+                                selected = true,
+                                onClick = {
+                                },
+                                text = {
+                                    Text(
+                                        text = "",
+                                        maxLines = 1,
+                                        overflow = TextOverflow.Ellipsis,
+                                        style = MaterialTheme.typography.titleLarge,
+                                    )
+                                }
+                            )
+
+                            Spacer(modifier = Modifier.width(8.dp))
+                        }
                     }
                 }
 
@@ -217,16 +249,15 @@ fun HomeScreen(
                             }
                         }
                     } else {
-
                         if (state.value.locationData.size > 0) {
                             items(state.value.locationData) {
                                 Spacer(modifier = Modifier.width(16.dp))
+                                // TODO : LOCATION CARD
                                 LocationCard(
-                                    resId = it.resID,
                                     name = it.name,
-                                    location = it.location.name + " , ایران",
+                                    location = it.provinceName + " , ایران",
                                     likeCount = it.likeCount,
-                                    imageUri = it.imageUri,
+                                    imageUri = Uri.parse(it.imageUri),
                                     onClick = {
                                         processor.sendAction(HomeAction.ClickOnCardItem(it.id))
                                     }
@@ -256,7 +287,7 @@ fun HomeScreen(
                     Spacer(modifier = Modifier.height(8.dp))
 
                     LazyRow {
-                        if(state.value.status == XStatus.Loading) {
+                        if (state.value.status == XStatus.Loading) {
                             repeat(3) {
                                 item {
                                     BestDestinationCard(
@@ -278,13 +309,15 @@ fun HomeScreen(
                             if (state.value.destinationData.size > 0) {
                                 items(state.value.destinationData) {
                                     BestDestinationCard(
-                                        resId = it.resID,
-                                        province = it.location.name,
+                                        province = it.provinceName,
                                         country = "ایران",
+                                        imageUri = Uri.parse(it.imageUri) ,
                                         onClick = {
                                             processor.sendAction(
                                                 HomeAction.ClickOnMostDestinationCard(
-                                                    it.location.id
+                                                    provinceData.filter {province ->
+                                                        province.name == it.provinceName
+                                                    }.first().id
                                                 )
                                             )
                                         }
@@ -313,7 +346,10 @@ fun HomeScreen(
 fun ScreenHomePreview() {
     TouristoTheme {
         RTL {
-            HomeScreen(onNavigateToLocationDesc = {} , onNavigateToSearch = {} , onNavigateToBookmark = {} , onNavigateToAddLocation = {})
+            HomeScreen(onNavigateToLocationDesc = {},
+                onNavigateToSearch = {},
+                onNavigateToBookmark = {},
+                onNavigateToAddLocation = {})
         }
     }
 }

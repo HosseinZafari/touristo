@@ -12,6 +12,6 @@ import kotlinx.coroutines.flow.Flow
  */
  
 interface SignupDomain : XDomain {
-    suspend fun signup(email: String , password: String , name: String ): Flow< User>
+    suspend fun signup(email: String , password: String , name: String ): Flow<User>
 
 }

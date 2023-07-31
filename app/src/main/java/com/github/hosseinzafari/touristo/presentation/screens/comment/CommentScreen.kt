@@ -137,8 +137,9 @@ fun CommentScreen(
 
                                     Spacer(modifier = Modifier.width(8.dp))
 
+                                    // TODO : USER NAME
                                     Text(
-                                        text = it.user.name!!,
+                                        text = it.userId + "",
                                         style = MaterialTheme.typography.titleMedium
                                     )
                                 }

@@ -2,10 +2,11 @@ package com.github.hosseinzafari.touristo.presentation.screens.login.data
 
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
-import androidx.datastore.preferences.core.edit
-import com.github.hosseinzafari.touristo.core.data.local.DataStoreKeys
 import com.github.hosseinzafari.touristo.core.data.data_model.User
-import kotlinx.coroutines.flow.*
+import io.github.jan.supabase.gotrue.GoTrue
+import io.github.jan.supabase.gotrue.providers.builtin.Email
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
 /**
@@ -17,22 +18,23 @@ import javax.inject.Inject
 
 class LoginLocalDataSource @Inject constructor(
     private val dataStore: DataStore<Preferences>,
+    private val auth: GoTrue,
 ) : LoginDomain {
 
     override suspend fun findUser(email: String, password: String): Flow<User?> = flow {
-        /*val realm = Realm.getDefaultInstance()
-        var user: User? = null
-        realm.executeTransaction {
-            user = realm.where(UserRealm::class.java)
-                .equalTo("email" , email)
-                .and()
-                .equalTo("password" , password)
-                .findFirst()?.toUser()
+        auth.loginWith(Email) {
+            this.email = email
+            this.password = password
         }
 
-        emit(user)
 
-        realm.close()*/
+        val user = auth.currentUserOrNull()
+        if (user != null) {
+            emit(User(user.id , user.userMetadata?.get("name").toString(), user.email , null , null))
+            return@flow
+        }
+
+        emit(null)
     }
 
     override suspend fun saveUserInfo(

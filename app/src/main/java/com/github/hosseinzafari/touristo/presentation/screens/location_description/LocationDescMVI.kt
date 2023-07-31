@@ -4,7 +4,7 @@ import com.github.hosseinzafari.touristo.base.system.mvi.XAction
 import com.github.hosseinzafari.touristo.base.system.mvi.XEffect
 import com.github.hosseinzafari.touristo.base.system.mvi.XState
 import com.github.hosseinzafari.touristo.base.system.mvi.XStatus
-import com.github.hosseinzafari.touristo.core.data.data_model.LocationModel
+import com.github.hosseinzafari.touristo.core.data.dto.LocationModel
 
 /**
  * @author Hossein Zafari

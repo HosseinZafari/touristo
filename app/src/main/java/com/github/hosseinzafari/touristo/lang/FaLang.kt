@@ -58,4 +58,6 @@ object FaLang : TouristoLang {
         get() = "حسابی با این ایمیل قبلا ساخته شده است"
     override val signup_submit_error: String
         get() = "مشکلی در ثبت نام شما به وجود آمده"
+    override val signup_submit_checking_email: String
+        get() = "لطفا لینک تاییدی در ایمیل خود را کلیک کنید"
 }

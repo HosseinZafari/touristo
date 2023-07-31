@@ -4,7 +4,9 @@ import com.github.hosseinzafari.touristo.base.system.mvi.XAction
 import com.github.hosseinzafari.touristo.base.system.mvi.XEffect
 import com.github.hosseinzafari.touristo.base.system.mvi.XState
 import com.github.hosseinzafari.touristo.base.system.mvi.XStatus
-import com.github.hosseinzafari.touristo.core.data.data_model.LocationModel
+import com.github.hosseinzafari.touristo.core.data.data_model.Category
+import com.github.hosseinzafari.touristo.core.data.data_model.Location
+import com.github.hosseinzafari.touristo.core.data.dto.LocationModel
 
 /**
  * @author Hossein Zafari
@@ -14,8 +16,10 @@ import com.github.hosseinzafari.touristo.core.data.data_model.LocationModel
  */
  
 data class HomeState(
-    var locationData: List<LocationModel>,
-    var destinationData: List<LocationModel> ,
+    var locationData: List<Location>,
+    var destinationData: List<Location>,
+    var categoryData: List<Category>,
+    var currentCategory: Category? ,
     override var status: XStatus,
     override val effects: HomeEffect?
 ): XState<HomeEffect>
@@ -54,7 +58,7 @@ sealed class HomeAction: XAction {
 
     data class GetData(val id: Int) : HomeAction()
 
-    data class ChangeCurrentTab(val id: Int) : HomeAction()
+    data class ChangeCurrentTab(val category: Category) : HomeAction()
 
 
 }

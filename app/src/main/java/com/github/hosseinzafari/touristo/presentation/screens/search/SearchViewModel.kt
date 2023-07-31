@@ -3,7 +3,7 @@ package com.github.hosseinzafari.touristo.presentation.screens.search
 import android.util.Log
 import androidx.lifecycle.viewModelScope
 import com.github.hosseinzafari.touristo.base.system.mvi.XStatus
-import com.github.hosseinzafari.touristo.core.data.data_model.provinceData
+import com.github.hosseinzafari.touristo.core.data.dto.provinceData
 import com.github.hosseinzafari.touristo.presentation.screens.login.XViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch

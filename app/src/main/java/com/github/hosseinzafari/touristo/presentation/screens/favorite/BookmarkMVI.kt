@@ -4,8 +4,7 @@ import com.github.hosseinzafari.touristo.base.system.mvi.XAction
 import com.github.hosseinzafari.touristo.base.system.mvi.XEffect
 import com.github.hosseinzafari.touristo.base.system.mvi.XState
 import com.github.hosseinzafari.touristo.base.system.mvi.XStatus
-import com.github.hosseinzafari.touristo.core.data.data_model.BookmarkModel
-import com.github.hosseinzafari.touristo.core.data.data_model.LocationModel
+import com.github.hosseinzafari.touristo.core.data.dto.LocationModel
 
 /**
  * @author Hossein Zafari
@@ -34,7 +33,7 @@ sealed class BookmarkEffect : XEffect {
 }
 
 data class BookmarkState(
-    var data:  List<LocationModel> ,
+    var data:  List<LocationModel>,
     override var status: XStatus,
     override val effects: BookmarkEffect?
 ) : XState<BookmarkEffect>

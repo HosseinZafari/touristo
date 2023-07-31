@@ -1,13 +1,8 @@
 package com.github.hosseinzafari.touristo.presentation.screens.add_location
 
 import androidx.lifecycle.viewModelScope
-import com.github.hosseinzafari.touristo.base.system.mvi.XProcessor
 import com.github.hosseinzafari.touristo.base.system.mvi.XStatus
-import com.github.hosseinzafari.touristo.core.data.data_model.LocationModel
-import com.github.hosseinzafari.touristo.core.data.data_model.ProvinceModel
-import com.github.hosseinzafari.touristo.core.data.data_model.provinceData
 import com.github.hosseinzafari.touristo.presentation.screens.login.XViewModel
-import com.queezo.app.assets.card_1_2
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch

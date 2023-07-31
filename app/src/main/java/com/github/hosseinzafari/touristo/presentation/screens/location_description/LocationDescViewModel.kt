@@ -2,7 +2,8 @@ package com.github.hosseinzafari.touristo.presentation.screens.location_descript
 
 import androidx.lifecycle.viewModelScope
 import com.github.hosseinzafari.touristo.base.system.mvi.XStatus
-import com.github.hosseinzafari.touristo.core.data.data_model.*
+import com.github.hosseinzafari.touristo.core.data.dto.LikeData
+import com.github.hosseinzafari.touristo.core.data.dto.LikeModel
 import com.github.hosseinzafari.touristo.presentation.screens.login.XViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
@@ -58,14 +59,14 @@ class LocationDescViewModel @Inject constructor() : XViewModel<LocationDescEffec
             }
 
             is LocationDescAction.ClickOnBookmarkButton -> {
-                BookmarkData.add(BookmarkModel(1 , 1 , oldState.data!!.id))
+//                BookmarkData.add(BookmarkModel(1 , 1 , oldState.data!!.id))
 
                 processor.setState(oldState.copy(
-                    bookmarked = BookmarkData.filter {
+                    /*bookmarked = BookmarkData.filter {
                         it.locationID == oldState.data!!.id && it.userID == 1
                     }.firstOrNull().let {
                         if (it == null) false else true
-                    }
+                    }*/
                 ))
             }
 

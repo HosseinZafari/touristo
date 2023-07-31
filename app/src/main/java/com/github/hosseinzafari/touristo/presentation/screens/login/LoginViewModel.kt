@@ -70,11 +70,10 @@ class LoginViewModel @Inject constructor(
                 processor.setState(state.copy(status = XStatus.Error(L.login_wrong_email_or_password)))
                 return
             }
-
-            saveUserInfoUseCase(id = user.id!! , name = user.name!! , email = user.email!! , isLogin = true , loginAuthTime = Date().time.toString())
-
+            Log.i("Test" , "success submit " + user)
             processor.setState(state.copy(status = XStatus.Idle , effects = LoginEffect.NavigateToHome))
         } catch (err: Exception) {
+            Log.i("Test" , "error submit " + err)
             processor.setState(state.copy(status = XStatus.Error(L.signup_submit_error)))
         }
     }

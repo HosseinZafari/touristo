@@ -1,5 +1,6 @@
 package com.github.hosseinzafari.touristo.presentation.components
 
+import android.net.Uri
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
@@ -13,6 +14,8 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import coil.compose.rememberAsyncImagePainter
+import com.queezo.app.assets.card_1_1
 import com.queezo.app.assets.card_2_2
 
 /**
@@ -26,10 +29,11 @@ import com.queezo.app.assets.card_2_2
 @Composable
 fun BestDestinationCard(
     modifier : Modifier = Modifier.height(100.dp),
-    @DrawableRes resId: Int ,
-    province: String ,
-    country: String ,
-    onClick: () -> Unit ,
+    @DrawableRes resId: Int = card_1_1,
+    province: String,
+    country: String,
+    imageUri: Uri? = null,
+    onClick: () -> Unit,
 ) {
     Card(
         modifier = modifier,
@@ -45,7 +49,7 @@ fun BestDestinationCard(
 
             Image(
                 modifier = Modifier.width(100.dp).fillMaxHeight() ,
-                painter = painterResource(resId),
+                painter = if(imageUri == null) painterResource(resId) else rememberAsyncImagePainter(imageUri),
                 contentDescription = null,
                 contentScale = ContentScale.Crop
             )

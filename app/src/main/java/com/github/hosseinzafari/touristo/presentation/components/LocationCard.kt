@@ -21,6 +21,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import coil.compose.rememberAsyncImagePainter
+import com.queezo.app.assets.card_1_1
 
 /**
  * @author Hossein Zafari
@@ -36,7 +37,7 @@ fun LocationCard(
     modifier: Modifier = Modifier
         .widthIn(min = 200.dp, max = 280.dp)
         .heightIn(min = 300.dp, max = 500.dp),
-    @DrawableRes resId: Int,
+    @DrawableRes resId: Int = card_1_1,
     likeCount: Int,
     name: String,
     location: String,

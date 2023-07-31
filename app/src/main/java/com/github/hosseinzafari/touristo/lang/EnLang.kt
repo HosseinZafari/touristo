@@ -58,4 +58,6 @@ object EnLang : TouristoLang {
         get() = "We have some issue in signup"
     override val signup_password_less_length: String
         get() = "Minimum password character is 5"
+    override val signup_submit_checking_email: String
+        get() = "Accept Link in you email"
 }

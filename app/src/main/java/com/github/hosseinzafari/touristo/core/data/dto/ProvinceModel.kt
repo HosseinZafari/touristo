@@ -1,4 +1,7 @@
-package com.github.hosseinzafari.touristo.core.data.data_model
+package com.github.hosseinzafari.touristo.core.data.dto
+
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
 /**
  * @author Hossein Zafari
@@ -6,9 +9,11 @@ package com.github.hosseinzafari.touristo.core.data.data_model
  * @created 08/06/2023 - 10:40 AM
  * @project Touristo
  */
-
+@Serializable
 data class ProvinceModel (
+    @SerialName("id")
     var id: Int ,
+    @SerialName("name")
     var name: String ,
 )
 

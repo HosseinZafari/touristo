@@ -4,6 +4,9 @@ import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import com.github.hosseinzafari.touristo.core.data.local.datasource.AppSettingImpl
 import com.github.hosseinzafari.touristo.core.data.local.domain.AppSettingDomain
+import com.github.hosseinzafari.touristo.presentation.screens.home.data.HomeDataSource
+import com.github.hosseinzafari.touristo.presentation.screens.home.data.HomeDomain
+import com.github.hosseinzafari.touristo.presentation.screens.home.data.HomeRepository
 import com.github.hosseinzafari.touristo.presentation.screens.login.data.LoginDomain
 import com.github.hosseinzafari.touristo.presentation.screens.login.data.LoginLocalDataSource
 import com.github.hosseinzafari.touristo.presentation.screens.login.data.LoginRepo
@@ -22,6 +25,11 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 object AppModule {
 
+    @Provides
+    @Singleton
+    fun provideHomeDomain(
+        homeDataSource: HomeDataSource
+    ) : HomeDomain = HomeRepository(homeDataSource)
 
     @Provides
     @Singleton

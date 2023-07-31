@@ -22,11 +22,8 @@ import com.github.hosseinzafari.touristo.base.ui.RTL
 import com.github.hosseinzafari.touristo.presentation.components.LocationCard
 import com.github.hosseinzafari.touristo.presentation.components.TitleBold
 import com.github.hosseinzafari.touristo.presentation.components.TouristoFrame
-import com.github.hosseinzafari.touristo.presentation.screens.location_description.LocationDescAction
 import com.google.accompanist.placeholder.material3.placeholder
 import com.queezo.app.assets.card_1_1
-import com.queezo.app.assets.card_1_2
-import com.queezo.app.assets.card_2_1
 
 /**
  * @author Hossein Zafari
@@ -123,10 +120,10 @@ fun BookmarkScreen(
                     } else if(state.value.data.size > 0) {
                         items(state.value.data) {
                             Spacer(modifier = Modifier.width(16.dp))
+                            // TODO : Location card
                             LocationCard(
-                                resId = it.resID,
                                 name = it.name,
-                                location = it.location.name + ", ایران",
+                                location =   ", ایران",
                                 likeCount = it.likeCount,
                                 onClick = {
                                     processor.sendAction(BookmarkAction.ClickOnLocationCard(it.id))

@@ -4,7 +4,7 @@ import com.github.hosseinzafari.touristo.base.system.mvi.XAction
 import com.github.hosseinzafari.touristo.base.system.mvi.XEffect
 import com.github.hosseinzafari.touristo.base.system.mvi.XState
 import com.github.hosseinzafari.touristo.base.system.mvi.XStatus
-import com.github.hosseinzafari.touristo.core.data.data_model.CommentModel
+import com.github.hosseinzafari.touristo.core.data.dto.CommentModel
 
 /**
  * @author Hossein Zafari
@@ -14,8 +14,8 @@ import com.github.hosseinzafari.touristo.core.data.data_model.CommentModel
  */
 
 data class CommentState(
-    val data: List<CommentModel> ,
-    val comment: String ,
+    val data: List<CommentModel>,
+    val comment: String,
     override var status: XStatus,
     override val effects: CommentEffect?
 ) : XState<CommentEffect>

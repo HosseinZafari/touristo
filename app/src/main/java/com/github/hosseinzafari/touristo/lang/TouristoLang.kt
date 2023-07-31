@@ -39,5 +39,6 @@ interface TouristoLang : XLang {
     val signup_password_less_length: String
     val signup_user_is_exists: String
     val signup_submit_error: String
+    val signup_submit_checking_email: String
 
 }

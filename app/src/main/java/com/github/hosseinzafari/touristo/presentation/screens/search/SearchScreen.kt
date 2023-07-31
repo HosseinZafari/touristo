@@ -177,10 +177,11 @@ fun SearchScreen(
                         if(state.value.data.size > 0) {
                             items(state.value.data) {
                                 Spacer(modifier = Modifier.width(16.dp))
-                                LocationCard(
+                                // TODO : LOCATION CARD
+                               /* LocationCard(
                                     resId = it.resID,
                                     name = it.name,
-                                    location = it.location.name + ", ایران",
+                                    location = it.province.name + ", ایران",
                                     likeCount = it.likeCount,
                                     imageUri = it.imageUri,
                                     onClick = {
@@ -189,7 +190,7 @@ fun SearchScreen(
                                     modifier = Modifier
                                         .widthIn(min = 150.dp, max = 250.dp)
                                         .heightIn(min = 250.dp, max = 550.dp)
-                                )
+                                )*/
                                 Spacer(modifier = Modifier.width(16.dp))
                             }
                         } else {

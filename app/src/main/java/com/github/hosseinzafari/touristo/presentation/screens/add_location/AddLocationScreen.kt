@@ -28,11 +28,9 @@ import coil.compose.rememberAsyncImagePainter
 import com.github.hosseinzafari.touristo.base.system.mvi.XStatus
 import com.github.hosseinzafari.touristo.base.theme.TouristoTheme
 import com.github.hosseinzafari.touristo.base.ui.RTL
-import com.github.hosseinzafari.touristo.core.data.data_model.categories
-import com.github.hosseinzafari.touristo.core.data.data_model.provinceData
+import com.github.hosseinzafari.touristo.core.data.dto.provinceData
 import com.github.hosseinzafari.touristo.presentation.components.TitleBold
 import com.github.hosseinzafari.touristo.presentation.components.TouristoFrame
-import com.github.hosseinzafari.touristo.presentation.screens.location_description.LocationDescEffect
 
 /**
  * @author Hossein Zafari
@@ -199,7 +197,7 @@ fun AddLocationScreen(
 
                 if (showDialogCategory) {
                     Dialog(onDismissRequest = { showDialogCategory = !showDialogCategory }) {
-                        LazyColumn (
+                       /* LazyColumn (
                             modifier = Modifier.fillMaxSize()
                         ) {
                             items(categories) {
@@ -215,7 +213,7 @@ fun AddLocationScreen(
                                 }
                                 Spacer(modifier = Modifier.height(4.dp))
                             }
-                        }
+                        }*/
                     }
                 }
 

@@ -243,6 +243,7 @@ fun SignupScreen(
 
 
                         Button(
+                            enabled = state.value.status != XStatus.Loading ,
                             onClick = {
                                 processor.sendAction(SignupAction.Submit)
                             },
@@ -256,6 +257,11 @@ fun SignupScreen(
                                 color = md_theme_light_secondary,
                                 modifier = Modifier.padding(vertical = 8.dp)
                             )
+
+                            if (state.value.status == XStatus.Loading) {
+                                Spacer(modifier = Modifier.width(16.dp))
+                                CircularProgressIndicator(modifier = Modifier.size(12.dp) , strokeWidth = 2.dp , color = Color.Gray)
+                            }
                         }
 
                     }

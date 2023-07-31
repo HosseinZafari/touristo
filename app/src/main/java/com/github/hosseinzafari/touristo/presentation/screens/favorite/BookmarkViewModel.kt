@@ -3,7 +3,7 @@ package com.github.hosseinzafari.touristo.presentation.screens.favorite
 import android.util.Log
 import androidx.lifecycle.viewModelScope
 import com.github.hosseinzafari.touristo.base.system.mvi.XStatus
-import com.github.hosseinzafari.touristo.core.data.data_model.BookmarkData
+import com.github.hosseinzafari.touristo.core.data.dto.BookmarkData
 import com.github.hosseinzafari.touristo.presentation.screens.login.XViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay

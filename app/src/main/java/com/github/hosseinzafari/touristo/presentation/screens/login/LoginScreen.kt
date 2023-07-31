@@ -12,6 +12,7 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
@@ -169,6 +170,7 @@ fun LoginScreen(
                         Spacer(modifier = Modifier.height(8.dp))
 
                         Button(
+                            enabled = state.value.status != XStatus.Loading,
                             onClick = {
                                 processor.sendAction(LoginAction.Submit)
                             },
@@ -182,6 +184,11 @@ fun LoginScreen(
                                 color = md_theme_light_secondary,
                                 modifier = Modifier.padding(vertical = 8.dp)
                             )
+
+                            if (state.value.status == XStatus.Loading) {
+                                Spacer(modifier = Modifier.width(16.dp))
+                                CircularProgressIndicator(modifier = Modifier.size(12.dp) , strokeWidth = 2.dp , color = Color.Gray)
+                            }
                         }
 
                     }

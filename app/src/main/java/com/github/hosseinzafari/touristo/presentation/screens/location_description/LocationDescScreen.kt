@@ -17,7 +17,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -118,7 +117,7 @@ fun LocationDescScreen(
                     } else if(state.value.data != null) {
                         Image(
                             modifier = Modifier.fillMaxSize() ,
-                            painter = if(state.value.data!!.imageUri == null) painterResource(state.value.data!!.resID) else rememberAsyncImagePainter(state.value.data!!.imageUri) ,
+                            painter =  rememberAsyncImagePainter(state.value.data!!.imageUri) ,
                            contentDescription = "cover image" ,
                             contentScale = ContentScale.Crop
                         )
@@ -213,8 +212,9 @@ fun LocationDescScreen(
                                     style = MaterialTheme.typography.titleLarge
                                 )
 
+                                // TODO : NAME TEXT
                                 Text(
-                                    text = state.value.data!!.location.name + " , ایران" ,
+                                    text =  " , ایران" ,
                                     color = Color.White ,
                                     style = MaterialTheme.typography.titleSmall
                                 )
