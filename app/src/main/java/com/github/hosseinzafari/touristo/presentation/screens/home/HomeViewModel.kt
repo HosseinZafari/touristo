@@ -70,13 +70,17 @@ class HomeViewModel @Inject constructor(
             is HomeAction.ChangeCurrentTab -> {
                 processor.setState(oldState.copy(currentCategory =  action.category , status = XStatus.Loading))
                 viewModelScope.launch(Dispatchers.IO)  {
-                    val locations = getLocation(action.category.id).first()
-                    processor.setState(oldState.copy(
-                        locationData =  locations,
-                        destinationData =  locations ,
-                        currentCategory =  action.category ,
-                        status = XStatus.Idle ,
-                    ))
+                    try {
+                        val locations = getLocation(action.category.id).first()
+                        processor.setState(oldState.copy(
+                            locationData =  locations,
+                            destinationData =  locations ,
+                            currentCategory =  action.category ,
+                            status = XStatus.Idle ,
+                        ))
+                    } catch(err: Exception) {
+                        Log.i("Test" , "Error in change current category " + err)
+                    }
                 }
             }
 

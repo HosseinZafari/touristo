@@ -48,3 +48,18 @@ fun LocationModel.toLocation() = Location(
 fun List<LocationModel>.toLocation(): List<Location> = map {
     it.toLocation()
 }
+
+fun Location.toLocationModel() = LocationModel(
+    id,
+    desc,
+    name,
+    provinceName,
+    likeCount,
+    category.toCategoryModel()  ,
+    userId.id + "" ,
+    imageUri,
+)
+
+fun List<Location>.toLocationModel(): List<LocationModel> = map {
+    it.toLocationModel()
+}

@@ -1,9 +1,10 @@
-package com.github.hosseinzafari.touristo.presentation.screens.favorite
+package com.github.hosseinzafari.touristo.presentation.screens.bookmark
 
 import com.github.hosseinzafari.touristo.base.system.mvi.XAction
 import com.github.hosseinzafari.touristo.base.system.mvi.XEffect
 import com.github.hosseinzafari.touristo.base.system.mvi.XState
 import com.github.hosseinzafari.touristo.base.system.mvi.XStatus
+import com.github.hosseinzafari.touristo.core.data.data_model.Location
 import com.github.hosseinzafari.touristo.core.data.dto.LocationModel
 
 /**
@@ -33,7 +34,7 @@ sealed class BookmarkEffect : XEffect {
 }
 
 data class BookmarkState(
-    var data:  List<LocationModel>,
+    var data:  List<Location>,
     override var status: XStatus,
     override val effects: BookmarkEffect?
 ) : XState<BookmarkEffect>

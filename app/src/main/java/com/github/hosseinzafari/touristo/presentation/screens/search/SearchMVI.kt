@@ -4,6 +4,7 @@ import com.github.hosseinzafari.touristo.base.system.mvi.XAction
 import com.github.hosseinzafari.touristo.base.system.mvi.XEffect
 import com.github.hosseinzafari.touristo.base.system.mvi.XState
 import com.github.hosseinzafari.touristo.base.system.mvi.XStatus
+import com.github.hosseinzafari.touristo.core.data.data_model.Location
 import com.github.hosseinzafari.touristo.core.data.dto.LocationModel
 import com.github.hosseinzafari.touristo.core.data.dto.ProvinceModel
 
@@ -32,7 +33,7 @@ sealed class SearchAction : XAction {
 
 data class SearchState(
     val text: String,
-    val data: List<LocationModel>,
+    val data: List<Location>,
     val selectedProvince: ProvinceModel?,
     override var status: XStatus,
     override val effects: SearchEffect?

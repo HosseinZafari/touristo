@@ -1,5 +1,6 @@
 package com.github.hosseinzafari.touristo.presentation.screens.search
 
+import android.net.Uri
 import android.util.Log
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyRow
@@ -28,7 +29,6 @@ import com.github.hosseinzafari.touristo.presentation.components.LocationCard
 import com.github.hosseinzafari.touristo.presentation.components.TitleBold
 import com.github.hosseinzafari.touristo.presentation.components.TouristoFrame
 import com.google.accompanist.placeholder.material3.placeholder
-import com.queezo.app.assets.card_1_1
 
 /**
  * @author Hossein Zafari
@@ -40,25 +40,25 @@ import com.queezo.app.assets.card_1_1
 @OptIn(ExperimentalLayoutApi::class, ExperimentalMaterial3Api::class)
 @Composable
 fun SearchScreen(
-    viewModel: SearchViewModel = hiltViewModel() ,
-    onNavigateToHome: () -> Unit ,
-    onNavigateToLocationCard : (Int) -> Unit ,
-    destId: Int  ,
+    viewModel: SearchViewModel = hiltViewModel(),
+    onNavigateToHome: () -> Unit,
+    onNavigateToLocationCard: (Int) -> Unit,
+    destId: Int,
 ) {
 
     val processor = viewModel.processor
     val state = processor.subscriberState.collectAsState()
     val snackbarHostState = remember { SnackbarHostState() }
 
-    LaunchedEffect(key1 =  0) {
+    LaunchedEffect(key1 = 0) {
         if (destId != 0) {
             processor.sendAction(SearchAction.GetSelectedProvince(destId))
         }
     }
 
-    LaunchedEffect(key1 =  state.value.selectedProvince) {
+    LaunchedEffect(key1 = state.value.selectedProvince) {
         val province = state.value.selectedProvince
-        Log.i("Test" , "selectedProvince $province")
+        Log.i("Test", "selectedProvince $province")
         if (destId != 0 && province != null) {
             processor.sendAction(SearchAction.OnSearchChanged(province.name))
             processor.sendAction(SearchAction.Submit)
@@ -69,9 +69,9 @@ fun SearchScreen(
     processor.SubscribeEffect(
         state = state.value,
         statusBlock = {
-        } ,
+        },
         effectsBlock = {
-            when(it) {
+            when (it) {
                 is SearchEffect.NavigateToHome -> {
                     onNavigateToHome()
                 }
@@ -91,7 +91,7 @@ fun SearchScreen(
         modifier = Modifier
             .fillMaxSize()
             .navigationBarsPadding(),
-        contentWindowInsets = WindowInsets(16.dp , 16.dp , 16.dp, 16.dp),
+        contentWindowInsets = WindowInsets(16.dp, 16.dp, 16.dp, 16.dp),
         snackbarHost = { SnackbarHost(snackbarHostState) }
     ) {
         TouristoFrame(
@@ -107,47 +107,47 @@ fun SearchScreen(
             Column(
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(2.dp) ,
+                    .padding(2.dp),
                 horizontalAlignment = Alignment.Start,
             ) {
 
-                TitleBold(modifier = Modifier.padding(vertical = 16.dp) , text = "جستجو")
+                TitleBold(modifier = Modifier.padding(vertical = 16.dp), text = "جستجو")
 
-                Row (
+                Row(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(4.dp) ,
-                    horizontalArrangement = Arrangement.Center ,
-                    verticalAlignment = Alignment.CenterVertically ,
+                        .padding(4.dp),
+                    horizontalArrangement = Arrangement.Center,
+                    verticalAlignment = Alignment.CenterVertically,
                 ) {
 
                     TextField(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(vertical = 4.dp) ,
-                        shape = RoundedCornerShape(16.dp) ,
+                            .padding(vertical = 4.dp),
+                        shape = RoundedCornerShape(16.dp),
                         value = state.value.text,
                         colors = TextFieldDefaults.textFieldColors(
-                            focusedIndicatorColor = Color.Transparent ,
-                            unfocusedIndicatorColor = Color.Transparent ,
-                            containerColor = Color(0xffefefef) ,
-                            textColor = Color.DarkGray ,
-                            placeholderColor = Color.Gray ,
-                        ) ,
-                        onValueChange = { processor.sendAction(SearchAction.OnSearchChanged(it)) } ,
+                            focusedIndicatorColor = Color.Transparent,
+                            unfocusedIndicatorColor = Color.Transparent,
+                            containerColor = Color(0xffefefef),
+                            textColor = Color.DarkGray,
+                            placeholderColor = Color.Gray,
+                        ),
+                        onValueChange = { processor.sendAction(SearchAction.OnSearchChanged(it)) },
                         placeholder = {
                             Text(text = "مقصد خود را جستجو کنید")
-                        } ,
+                        },
                         trailingIcon = {
                             IconButton(onClick = { processor.sendAction(SearchAction.Submit) }) {
-                                Icon (
+                                Icon(
                                     imageVector = Icons.Default.Search,
                                     contentDescription = "search submit"
                                 )
                             }
                         },
-                        singleLine = true ,
-                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text) ,
+                        singleLine = true,
+                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
                     )
 
                 }
@@ -156,41 +156,41 @@ fun SearchScreen(
 
 
                 LazyRow {
-                    if(state.value.status == XStatus.Loading) {
+                    if (state.value.status == XStatus.Loading) {
                         repeat(3) {
                             item {
                                 LocationCard(
-                                    resId = card_1_1,
                                     name = "",
                                     location = "",
                                     likeCount = 0,
-                                    onClick = {} ,
+                                    onClick = {},
                                     modifier = Modifier
                                         .widthIn(min = 150.dp, max = 250.dp)
                                         .heightIn(min = 250.dp, max = 550.dp)
-                                        .placeholder(visible = true , shape = RoundedCornerShape(50.dp) )
+                                        .placeholder(
+                                            visible = true,
+                                            shape = RoundedCornerShape(50.dp)
+                                        )
                                 )
                                 Spacer(modifier = Modifier.width(16.dp))
                             }
                         }
                     } else {
-                        if(state.value.data.size > 0) {
+                        if (state.value.data.size > 0) {
                             items(state.value.data) {
                                 Spacer(modifier = Modifier.width(16.dp))
-                                // TODO : LOCATION CARD
-                               /* LocationCard(
-                                    resId = it.resID,
+                                LocationCard(
                                     name = it.name,
-                                    location = it.province.name + ", ایران",
+                                    location = it.provinceName + ", ایران",
                                     likeCount = it.likeCount,
-                                    imageUri = it.imageUri,
+                                    imageUri = Uri.parse(it.imageUri),
                                     onClick = {
-                                      processor.sendAction(SearchAction.ClickOnLocationCard(it.id))
-                                    } ,
+                                        processor.sendAction(SearchAction.ClickOnLocationCard(it.id))
+                                    },
                                     modifier = Modifier
                                         .widthIn(min = 150.dp, max = 250.dp)
                                         .heightIn(min = 250.dp, max = 550.dp)
-                                )*/
+                                )
                                 Spacer(modifier = Modifier.width(16.dp))
                             }
                         } else {
@@ -199,7 +199,7 @@ fun SearchScreen(
                                     Text(
                                         modifier = Modifier.fillMaxWidth(),
                                         textAlign = TextAlign.Center,
-                                        text = "هیچ رکوردی مرتبط با این جستجو پیدا نشد" ,
+                                        text = "هیچ رکوردی مرتبط با این جستجو پیدا نشد",
                                         style = MaterialTheme.typography.titleSmall
                                     )
                                     Spacer(modifier = Modifier.width(16.dp))
@@ -220,7 +220,7 @@ fun SearchScreen(
 fun SearchScreenPreview() {
     TouristoTheme {
         RTL {
-            SearchScreen( onNavigateToHome = {} , onNavigateToLocationCard = {} , destId = 0)
+            SearchScreen(onNavigateToHome = {}, onNavigateToLocationCard = {}, destId = 0)
         }
     }
 }

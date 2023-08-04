@@ -142,19 +142,19 @@ fun LocationDescScreen(
                                 )
                             ) {
                                 IconButton(
-                                    enabled = state.value.status != XStatus.Loading ,
+                                    enabled = state.value.status != XStatus.Loading && state.value.liked != null ,
                                     onClick = {
                                     processor.sendAction(LocationDescAction.ClickOnLikeButton )
                                 }) {
-                                    Icon(imageVector = if(state.value.liked) Icons.Outlined.Favorite else Icons.Outlined.FavoriteBorder , tint = Color.Gray,  contentDescription = null)
+                                    Icon(imageVector = if(state.value.liked != null && state.value.liked!!) Icons.Outlined.Favorite else Icons.Outlined.FavoriteBorder , tint = Color.Gray,  contentDescription = null)
                                 }
 
                                 IconButton(
-                                    enabled = state.value.status != XStatus.Loading ,
+                                    enabled = state.value.status != XStatus.Loading && state.value.liked != null ,
                                     onClick = {
                                     processor.sendAction(LocationDescAction.ClickOnBookmarkButton )
                                 }) {
-                                    Icon(imageVector = if(state.value.bookmarked) Icons.Outlined.Bookmark  else Icons.Outlined.BookmarkBorder , tint = Color.Gray, contentDescription = "bookamrk")
+                                    Icon(imageVector = if(state.value.bookmarked != null && state.value.bookmarked!!) Icons.Outlined.Bookmark  else Icons.Outlined.BookmarkBorder , tint = Color.Gray, contentDescription = "bookamrk")
                                 }
 
                                 IconButton(
@@ -212,9 +212,9 @@ fun LocationDescScreen(
                                     style = MaterialTheme.typography.titleLarge
                                 )
 
-                                // TODO : NAME TEXT
+
                                 Text(
-                                    text =  " , ایران" ,
+                                    text =   state.value.data!!.provinceName + " , ایران",
                                     color = Color.White ,
                                     style = MaterialTheme.typography.titleSmall
                                 )

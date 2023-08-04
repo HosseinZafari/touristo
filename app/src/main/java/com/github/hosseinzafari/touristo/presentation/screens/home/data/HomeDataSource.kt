@@ -23,23 +23,22 @@ class HomeDataSource @Inject constructor(
 
     override suspend fun getLocationByCategoryID(id: Int) = flow {
         Log.i("Test", "Start getLocationByCategoryID() ")
-        val locations = db["location_model"].select(
-            columns = Columns.list(
-                "id",
-                "created_at",
-                "desc",
-                "name",
-                "like_count",
-                "image_uri",
-                "user_id",
-                "province_name",
-                "category_model!inner(id,title,created_at)",
-            )
-        ) { eq("category_model.id", id) }.decodeList<LocationModel>().toLocation()
 
-
-
-        emit(locations)
+        emit(
+            db["location_model"].select(
+                columns = Columns.list(
+                    "id",
+                    "created_at",
+                    "desc",
+                    "name",
+                    "like_count",
+                    "image_uri",
+                    "user_id",
+                    "province_name",
+                    "category_model!inner(id,title,created_at)",
+                )
+            ) { eq("category_model.id", id) }.decodeList<LocationModel>().toLocation()
+        )
     }
 
     override suspend fun getCategories() = flow {

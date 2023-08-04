@@ -191,36 +191,19 @@ fun HomeScreen(
                         }
                     }
                 } else {
-                    ScrollableTabRow(
-                        selectedTabIndex = 0,
-                        contentColor = Color.DarkGray,
-                        divider = {},
-                        indicator = {
-                            Box {}
-                        }
+                    Row (
+                        verticalAlignment = Alignment.CenterVertically ,
                     ) {
-                        repeat(4) {
-                            Tab(
-                                modifier = Modifier.placeholder(
-                                    visible = true,
-                                    shape = RoundedCornerShape(4.dp)
-                                ),
-                                selected = true,
-                                onClick = {
-                                },
-                                text = {
-                                    Text(
-                                        text = "",
-                                        maxLines = 1,
-                                        overflow = TextOverflow.Ellipsis,
-                                        style = MaterialTheme.typography.titleLarge,
-                                    )
-                                }
-                            )
-
+                        Spacer(modifier = Modifier.width(8.dp))
+                        repeat(7) {
+                            Box(modifier = Modifier.width(80.dp).height(50.dp).placeholder(
+                                visible = true,
+                            )) {}
                             Spacer(modifier = Modifier.width(8.dp))
                         }
+
                     }
+
                 }
 
                 Spacer(modifier = Modifier.height(16.dp))
@@ -239,7 +222,6 @@ fun HomeScreen(
                                             visible = true,
                                             shape = RoundedCornerShape(50.dp)
                                         ),
-                                    resId = card_1_2,
                                     name = "",
                                     location = "",
                                     likeCount = 0,
@@ -252,7 +234,6 @@ fun HomeScreen(
                         if (state.value.locationData.size > 0) {
                             items(state.value.locationData) {
                                 Spacer(modifier = Modifier.width(16.dp))
-                                // TODO : LOCATION CARD
                                 LocationCard(
                                     name = it.name,
                                     location = it.provinceName + " , ایران",

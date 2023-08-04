@@ -1,10 +1,14 @@
 package com.github.hosseinzafari.touristo.presentation.screens.comment
 
+import android.util.Log
 import androidx.lifecycle.viewModelScope
 import com.github.hosseinzafari.touristo.base.system.mvi.XStatus
+import com.github.hosseinzafari.touristo.presentation.screens.comment.data.usecases.AddCommentUseCase
+import com.github.hosseinzafari.touristo.presentation.screens.comment.data.usecases.GetCommentsUseCase
 import com.github.hosseinzafari.touristo.presentation.screens.login.XViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.delay
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -16,7 +20,10 @@ import javax.inject.Inject
  */
 
 @HiltViewModel
-class CommentViewModel @Inject constructor() :
+class CommentViewModel @Inject constructor(
+    val getComments: GetCommentsUseCase ,
+    val addComment: AddCommentUseCase ,
+) :
     XViewModel<CommentEffect, CommentAction, CommentState>() {
     override val processor = processor(
         initialState = CommentState(
@@ -38,33 +45,39 @@ class CommentViewModel @Inject constructor() :
                 if (oldState.comment.isBlank()) {
                     return
                 }
-                /*LocationData.filter {
-                    action.id == it.id
-                }.first()
-                    .comments
-                    .add(
-                        CommentModel(
-                            (Math.random() * 1000).toInt(),
-                            fakeUsers.get(0).toUser(),
-                            oldState.comment
-                        )
-                    )*/
 
-                processor.setState(oldState.copy(comment = ""))
-                processor.sendAction(CommentAction.GetData(action.id))
+                viewModelScope.launch(Dispatchers.IO) {
+                    try {
+                        addComment(action.id , oldState.comment)
+
+                        processor.setState(oldState.copy(comment = ""))
+                        processor.sendAction(CommentAction.GetData(action.id))
+                    } catch (err: Exception) {
+                        Log.i("Test" , "Error in adding a comment ERR: " + err)
+                        processor.setState(oldState.copy(
+                            status = XStatus.Error("خطا در برقراری ارتباط")
+                        ))
+                    }
+
+                }
             }
 
             is CommentAction.GetData -> {
                 processor.setState(oldState.copy(status = XStatus.Loading))
-                viewModelScope.launch {
-                    delay(1000L)
-                    /*processor.setState(oldState.copy(
-                        data = LocationData.filter {
-                            it.id == action.id
-                        }.flatMap { it.comments },
-                        status = XStatus.Idle
-                    )
-                    )*/
+                viewModelScope.launch(Dispatchers.IO) {
+                    try {
+                        val comments = getComments(action.id).first()
+                        processor.setState(oldState.copy(
+                            data = comments ,
+                            status = XStatus.Idle
+                        ))
+                    } catch (err: Exception) {
+                        Log.i("Test" , "Error in getting data ERR: " + err )
+                        processor.setState(oldState.copy(
+                            status = XStatus.Error("مشکل در برقراری ارتباط")
+                        ))
+                    }
+
                 }
 
             }

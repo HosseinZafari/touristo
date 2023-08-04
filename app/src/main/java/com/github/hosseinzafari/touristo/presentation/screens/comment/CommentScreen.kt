@@ -31,7 +31,6 @@ import com.github.hosseinzafari.touristo.base.theme.TouristoTheme
 import com.github.hosseinzafari.touristo.base.ui.RTL
 import com.github.hosseinzafari.touristo.presentation.components.TitleBold
 import com.github.hosseinzafari.touristo.presentation.components.TouristoFrame
-import com.github.hosseinzafari.touristo.presentation.screens.favorite.BookmarkAction
 import com.google.accompanist.placeholder.material3.placeholder
 import com.queezo.app.assets.avatar
 
@@ -137,9 +136,8 @@ fun CommentScreen(
 
                                     Spacer(modifier = Modifier.width(8.dp))
 
-                                    // TODO : USER NAME
                                     Text(
-                                        text = it.userId + "",
+                                        text = "" + it.user.name ,
                                         style = MaterialTheme.typography.titleMedium
                                     )
                                 }

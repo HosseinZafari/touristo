@@ -37,7 +37,6 @@ fun LocationCard(
     modifier: Modifier = Modifier
         .widthIn(min = 200.dp, max = 280.dp)
         .heightIn(min = 300.dp, max = 500.dp),
-    @DrawableRes resId: Int = card_1_1,
     likeCount: Int,
     name: String,
     location: String,
@@ -50,12 +49,14 @@ fun LocationCard(
         onClick = onClick,
     ) {
         Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.BottomCenter) {
-            Image(
-                modifier = Modifier.fillMaxSize(),
-                painter = if(imageUri == null) painterResource(resId) else rememberAsyncImagePainter(imageUri) ,
-                contentDescription = null,
-                contentScale = ContentScale.Crop
-            )
+            if (imageUri != null) {
+                Image(
+                    modifier = Modifier.fillMaxSize(),
+                    painter  = rememberAsyncImagePainter(imageUri) ,
+                    contentDescription = null,
+                    contentScale = ContentScale.Crop
+                )
+            }
 
             Column(
                 modifier = Modifier

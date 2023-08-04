@@ -1,5 +1,6 @@
-package com.github.hosseinzafari.touristo.presentation.screens.favorite
+package com.github.hosseinzafari.touristo.presentation.screens.bookmark
 
+import android.net.Uri
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
@@ -22,8 +23,8 @@ import com.github.hosseinzafari.touristo.base.ui.RTL
 import com.github.hosseinzafari.touristo.presentation.components.LocationCard
 import com.github.hosseinzafari.touristo.presentation.components.TitleBold
 import com.github.hosseinzafari.touristo.presentation.components.TouristoFrame
+import com.github.hosseinzafari.touristo.presentation.screens.home.HomeAction
 import com.google.accompanist.placeholder.material3.placeholder
-import com.queezo.app.assets.card_1_1
 
 /**
  * @author Hossein Zafari
@@ -104,7 +105,6 @@ fun BookmarkScreen(
                             item {
                                 Spacer(modifier = Modifier.width(16.dp))
                                 LocationCard(
-                                    resId = card_1_1,
                                     name = "",
                                     location = "",
                                     likeCount = 0,
@@ -123,8 +123,9 @@ fun BookmarkScreen(
                             // TODO : Location card
                             LocationCard(
                                 name = it.name,
-                                location =   ", ایران",
+                                location = it.provinceName + " , ایران",
                                 likeCount = it.likeCount,
+                                imageUri = Uri.parse(it.imageUri),
                                 onClick = {
                                     processor.sendAction(BookmarkAction.ClickOnLocationCard(it.id))
                                 } ,

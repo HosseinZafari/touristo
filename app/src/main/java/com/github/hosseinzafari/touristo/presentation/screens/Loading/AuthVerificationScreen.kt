@@ -15,11 +15,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.github.hosseinzafari.touristo.presentation.components.TouristoFrame
-import com.github.hosseinzafari.touristo.presentation.screens.favorite.BookmarkAction
-import com.github.hosseinzafari.touristo.presentation.screens.favorite.BookmarkEffect
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.runBlocking
-import kotlinx.coroutines.withTimeout
 
 /**
  * @author Hossein Zafari

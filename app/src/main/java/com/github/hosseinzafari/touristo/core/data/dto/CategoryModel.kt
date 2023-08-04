@@ -20,3 +20,9 @@ fun CategoryModel.toCategory() = Category(id, title)
 fun List<CategoryModel>.toCategory() = map {
     it.toCategory()
 }
+
+fun Category.toCategoryModel() = CategoryModel(id, title , "")
+
+fun List<Category>.toCategoryModel() = map {
+    it.toCategoryModel()
+}

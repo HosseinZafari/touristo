@@ -5,8 +5,12 @@ import androidx.lifecycle.viewModelScope
 import com.github.hosseinzafari.touristo.base.system.mvi.XStatus
 import com.github.hosseinzafari.touristo.core.data.dto.provinceData
 import com.github.hosseinzafari.touristo.presentation.screens.login.XViewModel
-import kotlinx.coroutines.delay
+import com.github.hosseinzafari.touristo.presentation.screens.search.data.usecases.SearchUseCase
+import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 /**
  * @author Hossein Zafari
@@ -15,7 +19,10 @@ import kotlinx.coroutines.launch
  * @project Touristo
  */
 
-class SearchViewModel : XViewModel<SearchEffect, SearchAction, SearchState>() {
+@HiltViewModel
+class SearchViewModel @Inject constructor(
+    val search: SearchUseCase ,
+) : XViewModel<SearchEffect, SearchAction, SearchState>() {
     override val processor = processor(
         initialState = SearchState(
             text = "",
@@ -42,26 +49,35 @@ class SearchViewModel : XViewModel<SearchEffect, SearchAction, SearchState>() {
                     )
                 )
 
-                viewModelScope.launch {
-                    delay(2000L)
-                   /* processor.setState(oldState.copy(
-                        data = LocationData.filter {
-                            it.name.contains(oldState.text) || it.location.name.contains(oldState.text)
-                        } ,
-                        status = XStatus.Idle
-                    ))*/
+                viewModelScope.launch(Dispatchers.IO) {
+                    try {
+                        val locations = search(oldState.text).first()
+                        processor.setState(
+                            oldState.copy(
+                                data = locations ,
+                                status = XStatus.Idle
+                            )
+                        )
+                    } catch (err: Exception) {
+                        processor.setState(
+                            oldState.copy(
+                                status = XStatus.Error("مشکل در برقراری ارتباط")
+                            )
+                        )
+                        Log.i("Test" , "Error in search Err: " + err )
+                    }
                 }
             }
 
             is SearchAction.GetSelectedProvince -> {
-                Log.i("Test"  , "GetSelectedProvince ${action.provinceID}")
+                Log.i("Test", "GetSelectedProvince ${action.provinceID}")
                 processor.setState(
                     oldState.copy(
                         status = XStatus.Loading
                     )
                 )
 
-                viewModelScope.launch {
+                viewModelScope.launch(Dispatchers.IO) {
                     processor.setState(
                         oldState.copy(
                             selectedProvince = provinceData.filter {
