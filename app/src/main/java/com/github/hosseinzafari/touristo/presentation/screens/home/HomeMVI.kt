@@ -4,6 +4,7 @@ import com.github.hosseinzafari.touristo.base.system.mvi.XAction
 import com.github.hosseinzafari.touristo.base.system.mvi.XEffect
 import com.github.hosseinzafari.touristo.base.system.mvi.XState
 import com.github.hosseinzafari.touristo.base.system.mvi.XStatus
+import com.github.hosseinzafari.touristo.core.data.data_model.BestDestination
 import com.github.hosseinzafari.touristo.core.data.data_model.Category
 import com.github.hosseinzafari.touristo.core.data.data_model.Location
 import com.github.hosseinzafari.touristo.core.data.dto.LocationModel
@@ -17,7 +18,7 @@ import com.github.hosseinzafari.touristo.core.data.dto.LocationModel
  
 data class HomeState(
     var locationData: List<Location>,
-    var destinationData: List<Location>,
+    var destinationData: List<BestDestination>,
     var categoryData: List<Category>,
     var currentCategory: Category? ,
     override var status: XStatus,

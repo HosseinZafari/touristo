@@ -1,4 +1,4 @@
-package com.github.hosseinzafari.touristo.presentation.screens.Loading
+package com.github.hosseinzafari.touristo.presentation.screens.loading
 
 import android.util.Log
 import androidx.lifecycle.viewModelScope
@@ -10,8 +10,6 @@ import io.github.jan.supabase.gotrue.gotrue
 import io.github.jan.supabase.gotrue.handleDeeplinks
 import kotlinx.coroutines.*
 import javax.inject.Inject
-import kotlin.coroutines.resume
-import kotlin.coroutines.suspendCoroutine
 
 /**
  * @author Hossein Zafari
@@ -20,11 +18,10 @@ import kotlin.coroutines.suspendCoroutine
  * @project Touristo
  */
 
-@HiltViewModel()
+@HiltViewModel
 class AuthVerificationViewModel @Inject constructor(
     val client: SupabaseClient
-) :
-    XViewModel<AuthVerificationEffect, AuthVerificationAction, AuthVerificationState>() {
+) : XViewModel<AuthVerificationEffect, AuthVerificationAction, AuthVerificationState>() {
     override val processor = processor(
         initialState = AuthVerificationState(
             status = XStatus.Loading,

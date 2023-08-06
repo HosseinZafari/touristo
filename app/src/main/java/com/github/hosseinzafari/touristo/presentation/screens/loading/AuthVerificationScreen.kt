@@ -1,4 +1,4 @@
-package com.github.hosseinzafari.touristo.presentation.screens.Loading
+package com.github.hosseinzafari.touristo.presentation.screens.loading
 
 import android.content.Intent
 import android.util.Log

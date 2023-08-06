@@ -30,6 +30,7 @@ import com.github.hosseinzafari.touristo.core.data.dto.provinceData
 import com.github.hosseinzafari.touristo.presentation.components.*
 import com.google.accompanist.placeholder.material3.placeholder
 import com.queezo.app.assets.card_1_2
+import io.ktor.client.utils.EmptyContent.status
 
 /**
  * @author Hossein Zafari
@@ -49,10 +50,18 @@ fun HomeScreen(
 ) {
     val processor = viewModel.processor
     val state = processor.subscriberState.collectAsState()
+    val snackbarHostState = remember { SnackbarHostState() }
 
     processor.SubscribeEffect(
         state = state.value,
         statusBlock = {
+            when (it) {
+                is XStatus.Error -> {
+                    snackbarHostState.showSnackbar(it.msg)
+                    processor.setState(state.value.copy(status = XStatus.Idle))
+                }
+                else -> {}
+            }
         },
         effectsBlock = {
             when (it) {
@@ -79,11 +88,10 @@ fun HomeScreen(
     )
 
     LaunchedEffect(key1 = 0) {
-        processor.sendAction(HomeAction.GetData(0))
+        processor.sendAction(HomeAction.GetData(1))
     }
 
 
-    val snackbarHostState = remember { SnackbarHostState() }
 
     Scaffold(
         snackbarHost = { SnackbarHost(snackbarHostState) },
@@ -149,7 +157,7 @@ fun HomeScreen(
                     }
                 }
 
-                if(state.value.currentCategory != null) {
+                if (state.value.currentCategory != null) {
                     ScrollableTabRow(
                         selectedTabIndex = state.value.currentCategory!!.id,
                         contentColor = Color.DarkGray,
@@ -190,34 +198,56 @@ fun HomeScreen(
                             }
                         }
                     }
-                } else {
-                    Row (
-                        verticalAlignment = Alignment.CenterVertically ,
+                } else if (state.value.status == XStatus.Loading) {
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.SpaceAround
                     ) {
-                        Spacer(modifier = Modifier.width(8.dp))
-                        repeat(7) {
-                            Box(modifier = Modifier.width(80.dp).height(50.dp).placeholder(
-                                visible = true,
-                            )) {}
-                            Spacer(modifier = Modifier.width(8.dp))
+                        repeat(3) {
+
+                            Box(
+                                modifier = Modifier
+                                    .width(80.dp)
+                                    .height(50.dp)
+                                    .placeholder(
+                                        visible = true,
+                                    )
+                            ) {}
                         }
 
                     }
 
+                } else {
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(50.dp),
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.Center
+                    ) {
+                        Text(
+                            text = "دسته بندی یافت نشد.",
+                            style = MaterialTheme.typography.titleSmall,
+                            fontWeight = FontWeight.Bold
+                        )
+                        Spacer(modifier = Modifier.width(8.dp))
+                    }
                 }
 
                 Spacer(modifier = Modifier.height(16.dp))
 
 
-                LazyRow {
-                    if (state.value.status == XStatus.Loading) {
+
+                if (state.value.status == XStatus.Loading) {
+                    LazyRow {
                         repeat(3) {
                             item {
                                 Spacer(modifier = Modifier.width(16.dp))
                                 LocationCard(
                                     modifier = Modifier
                                         .widthIn(min = 200.dp, max = 280.dp)
-                                        .heightIn(min = 300.dp, max = 500.dp)
+                                        .heightIn(min = 300.dp, max = 400.dp)
                                         .placeholder(
                                             visible = true,
                                             shape = RoundedCornerShape(50.dp)
@@ -230,30 +260,38 @@ fun HomeScreen(
                                 Spacer(modifier = Modifier.width(16.dp))
                             }
                         }
-                    } else {
-                        if (state.value.locationData.size > 0) {
-                            items(state.value.locationData) {
-                                Spacer(modifier = Modifier.width(16.dp))
-                                LocationCard(
-                                    name = it.name,
-                                    location = it.provinceName + " , ایران",
-                                    likeCount = it.likeCount,
-                                    imageUri = Uri.parse(it.imageUri),
-                                    onClick = {
-                                        processor.sendAction(HomeAction.ClickOnCardItem(it.id))
-                                    }
-                                )
-                                Spacer(modifier = Modifier.width(16.dp))
-                            }
-                        } else {
-                            item {
-                                Spacer(modifier = Modifier.width(16.dp))
-                                Text(text = "رکوردی با این فیلتر وجود ندارد.")
-                                Spacer(modifier = Modifier.width(16.dp))
-                            }
+                    }
+                } else if (state.value.locationData.size > 0) {
+                    LazyRow {
+                        items(state.value.locationData) {
+                            Spacer(modifier = Modifier.width(16.dp))
+                            LocationCard(
+                                name = it.name,
+                                location = it.provinceName + " , ایران",
+                                likeCount = it.likeCount,
+                                imageUri = Uri.parse(it.imageUri),
+                                onClick = {
+                                    processor.sendAction(HomeAction.ClickOnCardItem(it.id))
+                                }
+                            )
+                            Spacer(modifier = Modifier.width(16.dp))
                         }
                     }
-
+                } else {
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(400.dp),
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.Center
+                    ) {
+                        Text(
+                            text = "مکانی یافت نشد.",
+                            style = MaterialTheme.typography.titleSmall,
+                            fontWeight = FontWeight.Bold
+                        )
+                        Spacer(modifier = Modifier.width(8.dp))
+                    }
                 }
 
                 Spacer(modifier = Modifier.height(16.dp))
@@ -267,8 +305,9 @@ fun HomeScreen(
 
                     Spacer(modifier = Modifier.height(8.dp))
 
-                    LazyRow {
-                        if (state.value.status == XStatus.Loading) {
+
+                    if (state.value.status == XStatus.Loading) {
+                        LazyRow {
                             repeat(3) {
                                 item {
                                     BestDestinationCard(
@@ -286,41 +325,51 @@ fun HomeScreen(
                                     Spacer(modifier = Modifier.width(16.dp))
                                 }
                             }
-                        } else {
-                            if (state.value.destinationData.size > 0) {
-                                items(state.value.destinationData) {
-                                    BestDestinationCard(
-                                        province = it.provinceName,
-                                        country = "ایران",
-                                        imageUri = Uri.parse(it.imageUri) ,
-                                        onClick = {
-                                            processor.sendAction(
-                                                HomeAction.ClickOnMostDestinationCard(
-                                                    provinceData.filter {province ->
-                                                        province.name == it.provinceName
-                                                    }.first().id
-                                                )
+                        }
+                    } else if (state.value.destinationData.size > 0) {
+                        LazyRow {
+                            items(state.value.destinationData) {
+                                BestDestinationCard(
+                                    province = it.provinceName,
+                                    country = "ایران",
+                                    imageUri = Uri.parse(it.imageUri),
+                                    onClick = {
+                                        processor.sendAction(
+                                            HomeAction.ClickOnMostDestinationCard(
+                                                provinceData.filter { province ->
+                                                    province.name == it.provinceName
+                                                }.first().id
                                             )
-                                        }
-                                    )
-                                    Spacer(modifier = Modifier.width(16.dp))
+                                        )
+                                    }
+                                )
+                                Spacer(modifier = Modifier.width(16.dp))
 
-                                }
-                            } else {
-                                item {
-                                    Text(text = "مقصد در حال حاضر وجود ندارد")
-                                    Spacer(modifier = Modifier.width(16.dp))
-                                }
                             }
+                        }
+                    } else {
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .height(100.dp),
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.Center
+                        ) {
+                            Text(
+                                text = "مقصدی یافت نشد.",
+                                style = MaterialTheme.typography.titleSmall,
+                                fontWeight = FontWeight.Bold
+                            )
+                            Spacer(modifier = Modifier.width(8.dp))
                         }
                     }
                 }
-
             }
 
         }
     }
 }
+
 
 @Preview()
 @Composable

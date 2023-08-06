@@ -124,7 +124,7 @@ fun BookmarkScreen(
                             LocationCard(
                                 name = it.name,
                                 location = it.provinceName + " , ایران",
-                                likeCount = it.likeCount,
+                                likeCount = it.likeCount ,
                                 imageUri = Uri.parse(it.imageUri),
                                 onClick = {
                                     processor.sendAction(BookmarkAction.ClickOnLocationCard(it.id))

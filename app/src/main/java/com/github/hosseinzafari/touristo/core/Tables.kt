@@ -7,7 +7,18 @@ package com.github.hosseinzafari.touristo.core
  * @project Touristo
  */
 
-enum class Tables(name: String) {
-    User("user") ,
-    Location("location") ,
+enum class Tables(val text: String) {
+    User("users") ,
+    Location("location_model") ,
+    BestDestination("best_destination_model") ,
+    Like("like_model") ,
+    Comment("comment_model") ,
+    Category("category_model") ,
+    Province("province_model") ,;
+
+
+    override fun toString(): String {
+        return text
+    }
+
 }

@@ -10,7 +10,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
-import com.github.hosseinzafari.touristo.presentation.screens.Loading.AuthVerificationScreen
+import com.github.hosseinzafari.touristo.presentation.screens.loading.AuthVerificationScreen
 import com.github.hosseinzafari.touristo.presentation.screens.login.LoginScreen
 import com.github.hosseinzafari.touristo.presentation.screens.SignupScreen
 import com.github.hosseinzafari.touristo.presentation.screens.add_location.AddLocationScreen

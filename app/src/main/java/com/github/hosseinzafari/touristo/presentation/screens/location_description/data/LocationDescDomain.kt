@@ -26,6 +26,6 @@ interface LocationDescDomain : XDomain {
     suspend fun addLike(locationID: Int)
     suspend fun removeLike(locationID: Int)
 
-
+    suspend fun getLikeCount(locationID: Int): Flow<Int>
 
 }

@@ -5,6 +5,7 @@ import com.github.hosseinzafari.touristo.base.system.mvi.XAction
 import com.github.hosseinzafari.touristo.base.system.mvi.XEffect
 import com.github.hosseinzafari.touristo.base.system.mvi.XProcessor
 import com.github.hosseinzafari.touristo.base.system.mvi.XState
+import kotlinx.coroutines.CoroutineExceptionHandler
 
 /**
  * @author Hossein Zafari
@@ -21,6 +22,7 @@ import com.github.hosseinzafari.touristo.base.system.mvi.XState
 abstract class XViewModel< E : XEffect, A : XAction , S : XState<E>> : ViewModel() {
 
     abstract val processor: XProcessor<E, A, S>
+//    abstract val coroutineExceptionHandler: CoroutineExceptionHandler
 
     protected fun processor(
         initialState: S,

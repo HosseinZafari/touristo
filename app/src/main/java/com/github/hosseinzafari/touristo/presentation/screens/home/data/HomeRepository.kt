@@ -1,5 +1,6 @@
 package com.github.hosseinzafari.touristo.presentation.screens.home.data
 
+import com.github.hosseinzafari.touristo.core.data.data_model.BestDestination
 import com.github.hosseinzafari.touristo.core.data.data_model.Category
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
@@ -18,4 +19,5 @@ class HomeRepository @Inject constructor(
 
     override suspend fun getLocationByCategoryID(id: Int) = dataSource.getLocationByCategoryID(id)
     override suspend fun getCategories() = dataSource.getCategories()
+    override suspend fun getBestDestinations() = dataSource.getBestDestinations()
 }

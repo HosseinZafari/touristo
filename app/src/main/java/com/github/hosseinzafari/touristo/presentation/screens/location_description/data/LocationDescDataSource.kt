@@ -7,6 +7,7 @@ import io.github.jan.supabase.postgrest.Postgrest
 import io.github.jan.supabase.postgrest.query.Columns
 import io.github.jan.supabase.postgrest.query.Count
 import io.github.jan.supabase.postgrest.query.Returning
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
@@ -30,7 +31,6 @@ class LocationDescDataSource @Inject constructor(
                     "created_at",
                     "desc",
                     "name",
-                    "like_count",
                     "image_uri",
                     "user_id",
                     "province_name",
@@ -125,5 +125,17 @@ class LocationDescDataSource @Inject constructor(
             eq("user_id" , user.id)
             eq("location_id" , locationID)
         }
+    }
+
+    override suspend fun getLikeCount(locationID: Int) = flow {
+        val count = db["like_model"].select(count = Count.EXACT){
+            eq("location_id" , locationID)
+        }.count()
+
+        if (count == null) {
+            throw Exception("like count not found")
+        }
+
+        emit(count.toInt())
     }
 }

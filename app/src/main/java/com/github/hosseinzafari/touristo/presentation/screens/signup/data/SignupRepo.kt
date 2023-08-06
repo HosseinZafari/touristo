@@ -12,5 +12,5 @@ import javax.inject.Inject
 class SignupRepo @Inject constructor(
     private val remote: SignupDataSource,
 ) : SignupDomain {
-    override suspend fun signup(email: String, password: String, name: String)  = remote.signup(email , password , name)
+    override suspend fun signup(email: String, password: String, name: String) = remote.signup(email , password , name)
 }

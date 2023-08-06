@@ -27,6 +27,7 @@ class LocationDescRepository @Inject constructor(
 
     override suspend fun addLike(locationID: Int) = dataSource.addLike(locationID)
     override suspend fun removeLike(locationID: Int) = dataSource.removeLike(locationID)
+    override suspend fun getLikeCount(locationID: Int) = dataSource.getLikeCount(locationID)
 
 
 }

@@ -21,8 +21,6 @@ data class LocationModel(
     var name: String,
     @SerialName("province_name")
     var provinceName: String,
-    @SerialName("like_count")
-    var likeCount: Int,
     @SerialName("category_model")
     var categoryModel: CategoryModel,
     @SerialName("user_id")
@@ -32,6 +30,7 @@ data class LocationModel(
     var imageUri: String? = null,
     @SerialName("created_at")
     var createdAt: String? = null,
+    var likeCount: Int? = 0,
 )
 
 fun LocationModel.toLocation() = Location(
@@ -39,9 +38,9 @@ fun LocationModel.toLocation() = Location(
     desc,
     name,
     provinceName,
-    likeCount,
     categoryModel.toCategory()  ,
     User(userId, "" , "" , null , null),
+    if (likeCount == null) 0 else likeCount!! ,
     imageUri,
 )
 
@@ -50,14 +49,14 @@ fun List<LocationModel>.toLocation(): List<Location> = map {
 }
 
 fun Location.toLocationModel() = LocationModel(
-    id,
-    desc,
-    name,
-    provinceName,
-    likeCount,
-    category.toCategoryModel()  ,
-    userId.id + "" ,
-    imageUri,
+    id = id,
+    desc = desc,
+    name = name,
+    provinceName = provinceName,
+    categoryModel = category.toCategoryModel()  ,
+    userId = userId.id + "" ,
+    imageUri = imageUri,
+    likeCount = likeCount ,
 )
 
 fun List<Location>.toLocationModel(): List<LocationModel> = map {

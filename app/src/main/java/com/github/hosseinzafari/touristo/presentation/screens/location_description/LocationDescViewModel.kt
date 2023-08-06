@@ -3,8 +3,6 @@ package com.github.hosseinzafari.touristo.presentation.screens.location_descript
 import android.util.Log
 import androidx.lifecycle.viewModelScope
 import com.github.hosseinzafari.touristo.base.system.mvi.XStatus
-import com.github.hosseinzafari.touristo.core.data.data_model.Bookmark
-import com.github.hosseinzafari.touristo.core.data.dto.LikeModel
 import com.github.hosseinzafari.touristo.presentation.screens.location_description.data.usecases.*
 import com.github.hosseinzafari.touristo.presentation.screens.login.XViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -27,8 +25,9 @@ class LocationDescViewModel @Inject constructor(
     val isExistsLike: IsExistsLikeUseCase,
     val addLike: AddLikeUseCase,
     val addBookmark: AddBookmarkUseCase,
-    val removeBookmark: RemoveBookmarkUseCase ,
-    val removeLike: RemoveLikeUseCase ,
+    val removeBookmark: RemoveBookmarkUseCase,
+    val removeLike: RemoveLikeUseCase,
+    val likeCount: GetLikeCountUseCase,
 ) : XViewModel<LocationDescEffect, LocationDescAction, LocationDescState>() {
     override val processor = processor(
         initialState = LocationDescState(
@@ -63,11 +62,15 @@ class LocationDescViewModel @Inject constructor(
                         val isBookmarked = async {
                             isExistsBookmark(action.id).first()
                         }
+                        val like = async {
+                            likeCount(action.id).first()
+                        }
 
-
+                        val location = locationInfo.await()
+                        location.likeCount = like.await()
 
                         processor.setState(oldState.copy(
-                            data =  locationInfo.await(),
+                            data =  location,
                             liked = isLiked.await(),
                             bookmarked = isBookmarked.await(),
                             status = XStatus.Idle,
@@ -137,13 +140,19 @@ class LocationDescViewModel @Inject constructor(
                 viewModelScope.launch(Dispatchers.IO) {
                     try {
                         val locationID = oldState.data!!.id
+                        val newLocation = oldState.data
+
                         if(currentLike != null && currentLike) { // unline
                             removeLike(locationID)
+                            newLocation?.likeCount = newLocation?.likeCount!! - 1
                         } else { // like
                             addLike(locationID)
+                            newLocation?.likeCount = newLocation?.likeCount!! + 1
                         }
 
+
                         processor.setState(oldState.copy(
+                            data = newLocation ,
                             liked = isExistsLike(locationID).first() ,
                         ))
 

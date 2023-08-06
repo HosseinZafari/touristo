@@ -12,8 +12,8 @@ data class Location(
     var desc: String,
     var name: String,
     var provinceName: String,
-    var likeCount: Int,
     var category: Category,
     var userId: User ,
+    var likeCount: Int  = 0,
     var imageUri: String? = null,
 )

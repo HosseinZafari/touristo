@@ -4,15 +4,15 @@ import android.util.Log
 import androidx.lifecycle.viewModelScope
 import com.github.hosseinzafari.touristo.base.system.mvi.XStatus
 import com.github.hosseinzafari.touristo.core.data.data_model.categories
+import com.github.hosseinzafari.touristo.launchWithCatching
+import com.github.hosseinzafari.touristo.presentation.screens.home.data.usecases.GetBestDestUseCase
 import com.github.hosseinzafari.touristo.presentation.screens.home.data.usecases.GetCategoriesUseCase
 import com.github.hosseinzafari.touristo.presentation.screens.home.data.usecases.GetLocationUseCase
 import com.github.hosseinzafari.touristo.presentation.screens.login.XViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
-import io.ktor.client.utils.EmptyContent.status
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
+import io.github.jan.supabase.exceptions.HttpRequestException
+import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 /**
@@ -26,60 +26,112 @@ import javax.inject.Inject
 class HomeViewModel @Inject constructor(
     val getLocation: GetLocationUseCase,
     val getCategories: GetCategoriesUseCase,
-) : XViewModel<HomeEffect , HomeAction , HomeState>() {
+    val getBestDests: GetBestDestUseCase,
+) : XViewModel<HomeEffect, HomeAction, HomeState>() {
     override val processor = processor(
         initialState = HomeState(
-            locationData = listOf() ,
-            destinationData = listOf() ,
-            categoryData = listOf() ,
-            currentCategory = null ,
-            status = XStatus.Idle ,
-            effects = null ,
-        ) ,
+            locationData = listOf(),
+            destinationData = listOf(),
+            categoryData = listOf(),
+            currentCategory = null,
+            status = XStatus.Idle,
+            effects = null,
+        ),
         actionReducer = ::reducer
     )
 
-    private fun reducer(oldState: HomeState , action: HomeAction) {
-        when(action) {
+
+    private fun reducer(oldState: HomeState, action: HomeAction) {
+        when (action) {
             is HomeAction.GetData -> {
                 processor.setState(oldState.copy(status = XStatus.Loading))
-                viewModelScope.launch(Dispatchers.IO)  {
-
-                    try {
-                        val locations = getLocation(action.id).first()
-                        val categories = getCategories().first()
-
-                        processor.setState(oldState.copy(
-                            locationData =  locations,
-                            destinationData =  locations ,
-                            categoryData = categories ,
-                            currentCategory = categories[0],
-                            status = XStatus.Idle ,
-                        ))
-
-                        Log.i("Test" , "Locations " + locations )
-                        Log.i("Test" , "Categories " + categories )
-
-                    } catch (err: Exception) {
-                        Log.i("Test" , "Error: " + err )
-                    }
-
+                val handler = CoroutineExceptionHandler { ctx, trw ->
+                    Log.i("Test", "ERRR : " + trw.message)
+                    processor.setState(
+                        oldState.copy(
+                            locationData = listOf(),
+                            destinationData = listOf(),
+                            categoryData = listOf(),
+                            status = XStatus.Error("خطا در دریافت اطلاعات"),
+                        )
+                    )
                 }
+
+                viewModelScope.launch(Dispatchers.IO + handler) {
+                    val locationsAsync = async { getLocation(action.id).first() }
+                    val categoriesAsync = async { getCategories().first() }
+                    val destinationAsync = async { getBestDests().first() }
+
+                    val categories = categoriesAsync.await()
+
+                    processor.setState(
+                        oldState.copy(
+                            locationData = locationsAsync.await(),
+                            destinationData = destinationAsync.await(),
+                            categoryData = categories,
+                            currentCategory = categories[0],
+                            status = XStatus.Idle,
+                        )
+                    )
+                }
+//                try {
+//                } catch(err: CancellationException) {
+//                    Log.i("Test", "Error CancellationException Timeout : " + err)
+//                }
+//                catch (err: Exception) {
+//                    Log.i("Test", "Error: 1 " + err)
+//                    processor.setState(
+//                        oldState.copy(
+//                            locationData = listOf(),
+//                            destinationData = listOf(),
+//                            categoryData = listOf(),
+//                            status = XStatus.Error("خطا در دریافت اطلاعات"),
+//                        )
+//                    )
+//                } catch (err: HttpRequestException) {
+//                    Log.i("Test", "Error 2 Timeout : " + err)
+//                    processor.setState(
+//                        oldState.copy(
+//                            locationData = listOf(),
+//                            destinationData = listOf(),
+//                            categoryData = listOf(),
+//                            status = XStatus.Error("خطا در دریافت اتصال به شبکه"),
+//                        )
+//                    )
+//                }
             }
 
             is HomeAction.ChangeCurrentTab -> {
-                processor.setState(oldState.copy(currentCategory =  action.category , status = XStatus.Loading))
-                viewModelScope.launch(Dispatchers.IO)  {
+                processor.setState(
+                    oldState.copy(
+                        currentCategory = action.category,
+                        status = XStatus.Loading
+                    )
+                )
+                viewModelScope.launch(Dispatchers.IO) {
                     try {
                         val locations = getLocation(action.category.id).first()
-                        processor.setState(oldState.copy(
-                            locationData =  locations,
-                            destinationData =  locations ,
-                            currentCategory =  action.category ,
-                            status = XStatus.Idle ,
-                        ))
-                    } catch(err: Exception) {
-                        Log.i("Test" , "Error in change current category " + err)
+                        processor.setState(
+                            oldState.copy(
+                                locationData = locations,
+                                currentCategory = action.category,
+                                status = XStatus.Idle,
+                            )
+                        )
+                    } catch (err: Exception) {
+                        Log.i("Test", "Error: " + err)
+                        processor.setState(
+                            oldState.copy(
+                                status = XStatus.Error("خطا در دریافت اطلاعات"),
+                            )
+                        )
+                    } catch (err: HttpRequestException) {
+                        Log.i("Test", "Error Timeout : " + err)
+                        processor.setState(
+                            oldState.copy(
+                                status = XStatus.Error("خطا در دریافت اتصال به شبکه"),
+                            )
+                        )
                     }
                 }
             }
@@ -93,7 +145,7 @@ class HomeViewModel @Inject constructor(
             }
 
             is HomeAction.ClickOnMostDestinationCard -> {
-                Log.i("Test" , "ClickOnMostDestinationCard ${action.id}")
+                Log.i("Test", "ClickOnMostDestinationCard ${action.id}")
                 processor.setState(oldState.copy(effects = HomeEffect.NavigateToSearch(action.id)))
             }
 

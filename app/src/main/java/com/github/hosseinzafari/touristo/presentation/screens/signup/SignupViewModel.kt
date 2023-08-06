@@ -82,7 +82,7 @@ class SignupViewModel @Inject constructor(
 
     private suspend fun submit(state: SignupState) {
         try {
-            signupUseCase(state.email, state.password, state.name).first()
+            signupUseCase(state.email, state.password, state.name)
           /*  saveUserUseCase(user.id!!, user.email!!, user.name!!)
             processor.setState(
                 state.copy(
