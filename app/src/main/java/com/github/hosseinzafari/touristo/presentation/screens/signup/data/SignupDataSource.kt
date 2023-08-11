@@ -20,13 +20,10 @@ class SignupDataSource @Inject constructor(
 
     ) : SignupDomain {
 
-    override suspend fun signup(email: String, password: String, name: String) {
+    override suspend fun signup(email: String, password: String ) {
         client.signUpWith(Email) {
             this.email = email
             this.password = password
-            data = buildJsonObject {
-                put("name", name)
-            }
         }
     }
 }

@@ -14,6 +14,5 @@ import javax.inject.Inject
 class SingupUseCase @Inject constructor(
     override val domain: SignupDomain
 ) : XUseCase<SignupDomain>() {
-    suspend operator fun invoke(email: String, password: String, name: String) =
-        domain.signup(email, password, name)
+    suspend operator fun invoke(email: String, password: String ) = domain.signup(email, password )
 }

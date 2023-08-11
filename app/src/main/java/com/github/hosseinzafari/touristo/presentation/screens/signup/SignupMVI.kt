@@ -12,7 +12,6 @@ import com.github.hosseinzafari.touristo.base.system.mvi.XStatus
  * @project Touristo
  */
 sealed class SignupAction : XAction {
-    data class OnChangeName(val newText: String) : SignupAction()
     data class OnChangeEmail(val newText: String) : SignupAction()
     data class OnChangePassword(val newText: String) : SignupAction()
     data class OnChangeRePassword(val newText: String) : SignupAction()
@@ -30,7 +29,6 @@ sealed class SignupEffect : XEffect {
 
 
 data class SignupState(
-    val name: String,
     val email: String,
     val password: String,
     val replayPassword: String,

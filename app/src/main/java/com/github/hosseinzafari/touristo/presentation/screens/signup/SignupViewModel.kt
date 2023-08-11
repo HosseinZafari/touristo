@@ -30,7 +30,6 @@ class SignupViewModel @Inject constructor(
 
     override val processor = processor(
         initialState = SignupState(
-            name = "",
             email = "",
             password = "",
             replayPassword = "",
@@ -45,8 +44,6 @@ class SignupViewModel @Inject constructor(
         when (action) {
             is SignupAction.LoginOnClick ->
                 processor.setState(oldState.copy(effects = SignupEffect.NavigateToLogin))
-            is SignupAction.OnChangeName ->
-                processor.setState(oldState.copy(name = action.newText))
             is SignupAction.OnChangeEmail ->
                 processor.setState(oldState.copy(email = action.newText))
             is SignupAction.OnChangePassword ->
@@ -57,7 +54,7 @@ class SignupViewModel @Inject constructor(
             is SignupAction.Submit -> {
                 Log.i("Test", "Submit ")
 
-                if (oldState.name.isBlank() || oldState.email.isBlank() || oldState.password.isBlank() || oldState.replayPassword.isBlank()) {
+                if ( oldState.email.isBlank() || oldState.password.isBlank() || oldState.replayPassword.isBlank()) {
                     processor.setState(oldState.copy(status = XStatus.Error(L.signup_empty_edit_texts)))
                     return
                 }
@@ -82,14 +79,8 @@ class SignupViewModel @Inject constructor(
 
     private suspend fun submit(state: SignupState) {
         try {
-            signupUseCase(state.email, state.password, state.name)
-          /*  saveUserUseCase(user.id!!, user.email!!, user.name!!)
-            processor.setState(
-                state.copy(
-                    effects = SignupEffect.NavigateToHome,
-                    status = XStatus.Idle
-                )
-            )*/
+            signupUseCase(state.email, state.password )
+
         } catch (exc: RestException) {
             Log.i("Test", "signupSubmit exception: $exc")
             processor.setState(state.copy(status = XStatus.Error(L.signup_submit_checking_email)))

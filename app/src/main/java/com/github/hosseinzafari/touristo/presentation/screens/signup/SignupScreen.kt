@@ -135,29 +135,7 @@ fun SignupScreen(
 
                         Spacer(modifier = Modifier.height(30.dp))
 
-                        OutlinedTextField(
-                            value = state.value.name,
-                            onValueChange = { processor.sendAction(SignupAction.OnChangeName(it)) },
-                            placeholder = {
-                                Text(text = L.signup_name_textfield)
-                            },
-                            keyboardOptions = KeyboardOptions(
-                                keyboardType = KeyboardType.Text
-                            ),
-                            singleLine = true,
-                            isError = false,
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(horizontal = 16.dp),
-                            leadingIcon = {
-                                Icon(
-                                    Icons.Outlined.AccountBox,
-                                    "account icon",
-                                    tint = MaterialTheme.colorScheme.primary
-                                )
-                            })
 
-                        Spacer(modifier = Modifier.height(8.dp))
 
                         OutlinedTextField(
                             value = state.value.email,
