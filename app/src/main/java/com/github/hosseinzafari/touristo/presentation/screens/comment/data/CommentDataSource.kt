@@ -27,7 +27,7 @@ class CommentDataSource @Inject constructor(
         val result = db["comment_model"].select(
             Columns.list(
                 "id", "text", "location_id",
-                "users!inner(id,name,image_uri,email)",
+                "users!inner(id,name,family,desc,image_uri,email)",
             )
         ) {
             eq("location_id", locationID)

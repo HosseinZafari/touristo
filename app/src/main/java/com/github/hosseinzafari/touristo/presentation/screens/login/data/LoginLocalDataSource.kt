@@ -30,7 +30,7 @@ class LoginLocalDataSource @Inject constructor(
 
         val user = auth.currentUserOrNull()
         if (user != null) {
-            emit(User(user.id , user.userMetadata?.get("name").toString(), user.email , null , null))
+            emit(User(user.id , user.userMetadata?.get("name").toString(), "" , "" , user.email , null , null))
             return@flow
         }
 

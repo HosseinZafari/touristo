@@ -84,6 +84,10 @@ fun AddLocationScreen(
         },
     )
 
+    LaunchedEffect(key1 = 0)  {
+        processor.sendAction(AddLocationAction.GetData)
+    }
+
     Scaffold(
         modifier = Modifier
             .fillMaxSize()
@@ -197,10 +201,10 @@ fun AddLocationScreen(
 
                 if (showDialogCategory) {
                     Dialog(onDismissRequest = { showDialogCategory = !showDialogCategory }) {
-                       /* LazyColumn (
+                        LazyColumn (
                             modifier = Modifier.fillMaxSize()
                         ) {
-                            items(categories) {
+                            items(state.value.categories) {
                                 Card(
                                     modifier = Modifier.fillMaxWidth() ,
                                     colors = CardDefaults.cardColors(containerColor = Color.White),
@@ -209,11 +213,13 @@ fun AddLocationScreen(
                                         showDialogCategory = !showDialogCategory
                                     }
                                 ) {
-                                    Text(text = it.title  , modifier = Modifier.padding(18.dp).fillMaxWidth() , textAlign = TextAlign.Center)
+                                    Text(text = it.title  , modifier = Modifier
+                                        .padding(18.dp)
+                                        .fillMaxWidth() , textAlign = TextAlign.Center)
                                 }
                                 Spacer(modifier = Modifier.height(4.dp))
                             }
-                        }*/
+                        }
                     }
                 }
 
@@ -223,10 +229,10 @@ fun AddLocationScreen(
                         showDialogCategory = !showDialogCategory
                     }
                 ) {
-                    if (state.value.category == null) {
+                    if (state.value.selectedCategory == null) {
                         Text(text = "انتخاب دسته بندی مورد نظر")
                     } else {
-                        Text(text = state.value.category!!.title)
+                        Text(text = state.value.selectedCategory!!.title)
                     }
                 }
 
@@ -247,7 +253,9 @@ fun AddLocationScreen(
                                         showDialogProvince = !showDialogProvince
                                     }
                                 ) {
-                                    Text(text = it.name  , modifier = Modifier.padding(18.dp).fillMaxWidth() , textAlign = TextAlign.Center)
+                                    Text(text = it.name  , modifier = Modifier
+                                        .padding(18.dp)
+                                        .fillMaxWidth() , textAlign = TextAlign.Center)
                                 }
                                 Spacer(modifier = Modifier.height(4.dp))
                             }
@@ -261,10 +269,10 @@ fun AddLocationScreen(
                         showDialogProvince = !showDialogProvince
                     }
                 ) {
-                    if (state.value.province == null) {
+                    if (state.value.selectedProvince == null) {
                         Text(text = "انتخاب استان مورد نظر")
                     } else {
-                        Text(text = state.value.province!!.name)
+                        Text(text = state.value.selectedProvince!!.name)
                     }
                 }
 

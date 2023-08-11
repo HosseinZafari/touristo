@@ -7,7 +7,6 @@ import com.github.hosseinzafari.touristo.base.system.mvi.XStatus
 import com.github.hosseinzafari.touristo.core.data.data_model.BestDestination
 import com.github.hosseinzafari.touristo.core.data.data_model.Category
 import com.github.hosseinzafari.touristo.core.data.data_model.Location
-import com.github.hosseinzafari.touristo.core.data.dto.LocationModel
 
 /**
  * @author Hossein Zafari
@@ -36,7 +35,7 @@ sealed class HomeEffect : XEffect {
     ): HomeEffect()
 
 
-    object  NavigateToBookmark : HomeEffect()
+    object  NavigateToUserSetting : HomeEffect()
     object  NavigateToAddLocation : HomeEffect()
 
 }
@@ -50,7 +49,7 @@ sealed class HomeAction: XAction {
         val id: Int
     ) : HomeAction()
 
-    object ClickOnBookmarkButton : HomeAction()
+    object ClickOnAccountButton : HomeAction()
     object ClickOnFloatingActionButton : HomeAction()
 
     data class ClickOnSearchButton (

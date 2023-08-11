@@ -26,6 +26,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import coil.compose.rememberAsyncImagePainter
 import com.github.hosseinzafari.touristo.base.system.mvi.XStatus
 import com.github.hosseinzafari.touristo.base.theme.TouristoTheme
 import com.github.hosseinzafari.touristo.base.ui.RTL
@@ -129,7 +130,9 @@ fun CommentScreen(
                                             .height(50.dp)
                                             .width(50.dp)
                                             .clip(CircleShape),
-                                        painter = painterResource(id = avatar),
+                                        painter = rememberAsyncImagePainter(
+                                            model = it.user.profileUrl ,
+                                        ) ,
                                         contentDescription = "avatar image",
                                         contentScale = ContentScale.Crop,
                                     )
@@ -137,7 +140,7 @@ fun CommentScreen(
                                     Spacer(modifier = Modifier.width(8.dp))
 
                                     Text(
-                                        text = "" + it.user.name ,
+                                        text = "${it.user.name} ${it.user.family}" ,
                                         style = MaterialTheme.typography.titleMedium
                                     )
                                 }

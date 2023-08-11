@@ -38,7 +38,7 @@ data class CommentModelInsert(
 )
 
 
-fun CommentModel.toComment() = Comment(id, User(user.id, user.name , user.email , null , user.imageUri), text, locationID, location?.toLocation())
+fun CommentModel.toComment() = Comment(id, user.toUser(), text, locationID, location?.toLocation())
 
 
 fun List<CommentModel>.toComment() = map { it.toComment() }

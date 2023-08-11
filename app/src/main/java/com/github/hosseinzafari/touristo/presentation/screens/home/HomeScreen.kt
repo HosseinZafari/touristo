@@ -8,9 +8,9 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Search
-import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -30,7 +30,6 @@ import com.github.hosseinzafari.touristo.core.data.dto.provinceData
 import com.github.hosseinzafari.touristo.presentation.components.*
 import com.google.accompanist.placeholder.material3.placeholder
 import com.queezo.app.assets.card_1_2
-import io.ktor.client.utils.EmptyContent.status
 
 /**
  * @author Hossein Zafari
@@ -45,7 +44,7 @@ fun HomeScreen(
     viewModel: HomeViewModel = hiltViewModel(),
     onNavigateToLocationDesc: (Int) -> Unit,
     onNavigateToSearch: (Int) -> Unit,
-    onNavigateToBookmark: () -> Unit,
+    onNavigateToUserSetting: () -> Unit,
     onNavigateToAddLocation: () -> Unit,
 ) {
     val processor = viewModel.processor
@@ -73,8 +72,8 @@ fun HomeScreen(
                     onNavigateToSearch(it.locationID)
                 }
 
-                is HomeEffect.NavigateToBookmark -> {
-                    onNavigateToBookmark()
+                is HomeEffect.NavigateToUserSetting -> {
+                    onNavigateToUserSetting()
                 }
 
                 is HomeEffect.NavigateToAddLocation -> {
@@ -146,11 +145,11 @@ fun HomeScreen(
                                 .background(color = Color(0xffeeeeee), shape = CircleShape),
                         ) {
                             IconButton(onClick = {
-                                processor.sendAction(HomeAction.ClickOnBookmarkButton)
+                                processor.sendAction(HomeAction.ClickOnAccountButton)
                             }) {
                                 Icon(
-                                    imageVector = Icons.Default.Star,
-                                    contentDescription = "Bookmark Box"
+                                    imageVector = Icons.Default.AccountCircle,
+                                    contentDescription = "Account Box"
                                 )
                             }
                         }
@@ -378,7 +377,7 @@ fun ScreenHomePreview() {
         RTL {
             HomeScreen(onNavigateToLocationDesc = {},
                 onNavigateToSearch = {},
-                onNavigateToBookmark = {},
+                onNavigateToUserSetting = {},
                 onNavigateToAddLocation = {})
         }
     }

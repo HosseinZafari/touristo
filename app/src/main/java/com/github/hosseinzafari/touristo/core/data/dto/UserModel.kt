@@ -17,10 +17,14 @@ data class UserModel (
     var id: String ,
     @SerialName("name")
     var name: String? ,
+    @SerialName("family")
+    var family: String? ,
+    @SerialName("desc")
+    var desc: String? ,
     @SerialName("email")
     var email: String ,
     @SerialName("image_uri")
     var imageUri: String? ,
 )
 
-fun UserModel.toUser() = User(id , name , email , null , imageUri)
+fun UserModel.toUser() = User(id , name , family , desc ,  email , null , imageUri)

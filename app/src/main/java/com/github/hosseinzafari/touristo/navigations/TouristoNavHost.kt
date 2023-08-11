@@ -16,9 +16,11 @@ import com.github.hosseinzafari.touristo.presentation.screens.SignupScreen
 import com.github.hosseinzafari.touristo.presentation.screens.add_location.AddLocationScreen
 import com.github.hosseinzafari.touristo.presentation.screens.comment.CommentScreen
 import com.github.hosseinzafari.touristo.presentation.screens.bookmark.BookmarkScreen
+import com.github.hosseinzafari.touristo.presentation.screens.edit_user_setting.EditUserSettingScreen
 import com.github.hosseinzafari.touristo.presentation.screens.home.HomeScreen
 import com.github.hosseinzafari.touristo.presentation.screens.location_description.LocationDescScreen
 import com.github.hosseinzafari.touristo.presentation.screens.search.SearchScreen
+import com.github.hosseinzafari.touristo.presentation.screens.user_setting.UserSettingScreen
 
 /**
  * @author Hossein Zafari
@@ -79,6 +81,36 @@ fun TouristoNavHost(
             )
         }
 
+        composable(Route.UserSetting.name) {
+            UserSettingScreen(
+                onNavigateToSignup = {
+                    navController.navigate(Route.Signup.name)
+                },
+                onNavigateToBack = {
+                    if (navController.previousBackStackEntry != null) {
+                        navController.navigateUp()
+                    }
+                } ,
+                onNavigateToBookmark = {
+                    navController.navigate(Route.Favorite.name)
+                } ,
+                onNavigateToEditUserSetting = {
+                    navController.navigate(Route.EditUserSetting.name)
+                }
+            )
+        }
+
+        composable(Route.EditUserSetting.name) {
+            EditUserSettingScreen(
+                onNavigateToBack = {
+                    if (navController.previousBackStackEntry != null) {
+                        navController.navigateUp()
+                    }
+                } ,
+            )
+        }
+
+
         composable(Route.AuthVerification.name) {
             Log.i("Test" , "AuthVerification composable")
             AuthVerificationScreen(
@@ -104,8 +136,8 @@ fun TouristoNavHost(
                 onNavigateToLocationDesc = {
                     navController.navigate(Route.Description.name + "/$it")
                 },
-                onNavigateToBookmark = {
-                    navController.navigate(Route.Favorite.name)
+                onNavigateToUserSetting = {
+                    navController.navigate(Route.UserSetting.name)
                 },
                 onNavigateToAddLocation = {
                     navController.navigate(Route.AddLocation.name)

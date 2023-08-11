@@ -23,7 +23,7 @@ class HomeDataSource @Inject constructor(
     override suspend fun getLocationByCategoryID(id: Int) = flow {
         Log.i("Test", "Start getLocationByCategoryID() ")
 
-        val locations = db["location_model"].select(
+        val locations = db[Tables.Location.text].select(
             columns = Columns.list(
                 "id",
                 "created_at",
@@ -44,21 +44,21 @@ class HomeDataSource @Inject constructor(
     }
 
     private suspend fun getLikeCount(locationID: Int): Int? {
-        return db["like_model"].select(count = Count.EXACT) {
+        return db[Tables.Like.text].select(count = Count.EXACT) {
             eq("location_id", locationID)
         }.count()?.toInt()
     }
 
     override suspend fun getCategories() = flow {
         emit(
-            db["category_model"].select()
+            db[Tables.Category.text].select()
                 .decodeList<CategoryModel>()
                 .toCategory()
         )
     }
 
     override suspend fun getBestDestinations() = flow {
-            val destinations = db[Tables.BestDestination.text].select()
+        val destinations = db[Tables.BestDestination.text].select()
 
 
         Log.i("Test" , Tables.BestDestination.text + ":  detination " + destinations.body)

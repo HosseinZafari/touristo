@@ -13,6 +13,8 @@ import kotlinx.serialization.Serializable
 data class User (
     var id: String?  ,
     var name: String?,
+    var family: String? ,
+    var desc: String ? ,
     var email: String?,
     var password: String?,
     var profileUrl: String?,

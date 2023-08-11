@@ -77,6 +77,7 @@ object Deps {
     const val coil_compose = "io.coil-kt:coil-compose:${Version.coil_compose}"
     const val supabase_bom = "io.github.jan-tennert.supabase:bom:${Version.supabase}"
     const val supabase_postgres = "io.github.jan-tennert.supabase:postgrest-kt"
+    const val supabase_storage = "io.github.jan-tennert.supabase:storage-kt"
     const val ktor_clinet_engine = "io.ktor:ktor-client-okhttp:${Version.ktor}"
     const val splashscreen = "androidx.core:core-splashscreen:${Version.splashscreen}"
 

@@ -3,8 +3,6 @@ package com.github.hosseinzafari.touristo.presentation.screens.home
 import android.util.Log
 import androidx.lifecycle.viewModelScope
 import com.github.hosseinzafari.touristo.base.system.mvi.XStatus
-import com.github.hosseinzafari.touristo.core.data.data_model.categories
-import com.github.hosseinzafari.touristo.launchWithCatching
 import com.github.hosseinzafari.touristo.presentation.screens.home.data.usecases.GetBestDestUseCase
 import com.github.hosseinzafari.touristo.presentation.screens.home.data.usecases.GetCategoriesUseCase
 import com.github.hosseinzafari.touristo.presentation.screens.home.data.usecases.GetLocationUseCase
@@ -74,31 +72,7 @@ class HomeViewModel @Inject constructor(
                         )
                     )
                 }
-//                try {
-//                } catch(err: CancellationException) {
-//                    Log.i("Test", "Error CancellationException Timeout : " + err)
-//                }
-//                catch (err: Exception) {
-//                    Log.i("Test", "Error: 1 " + err)
-//                    processor.setState(
-//                        oldState.copy(
-//                            locationData = listOf(),
-//                            destinationData = listOf(),
-//                            categoryData = listOf(),
-//                            status = XStatus.Error("خطا در دریافت اطلاعات"),
-//                        )
-//                    )
-//                } catch (err: HttpRequestException) {
-//                    Log.i("Test", "Error 2 Timeout : " + err)
-//                    processor.setState(
-//                        oldState.copy(
-//                            locationData = listOf(),
-//                            destinationData = listOf(),
-//                            categoryData = listOf(),
-//                            status = XStatus.Error("خطا در دریافت اتصال به شبکه"),
-//                        )
-//                    )
-//                }
+
             }
 
             is HomeAction.ChangeCurrentTab -> {
@@ -140,8 +114,8 @@ class HomeViewModel @Inject constructor(
                 processor.setState(oldState.copy(effects = HomeEffect.NavigateToLocationDesc(action.id)))
             }
 
-            is HomeAction.ClickOnBookmarkButton -> {
-                processor.setState(oldState.copy(effects = HomeEffect.NavigateToBookmark))
+            is HomeAction.ClickOnAccountButton -> {
+                processor.setState(oldState.copy(effects = HomeEffect.NavigateToUserSetting))
             }
 
             is HomeAction.ClickOnMostDestinationCard -> {

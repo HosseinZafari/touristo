@@ -33,13 +33,29 @@ data class LocationModel(
     var likeCount: Int? = 0,
 )
 
+@Serializable
+data class LocationModelInsert(
+    @SerialName("desc")
+    var desc: String,
+    @SerialName("name")
+    var name: String,
+    @SerialName("province_name")
+    var provinceName: String,
+    @SerialName("category_id")
+    var categoryID: Int,
+    @SerialName("user_id")
+    var userId: String,
+    @SerialName("image_uri")
+    var imageUri: String,
+)
+
 fun LocationModel.toLocation() = Location(
     id,
     desc,
     name,
     provinceName,
     categoryModel.toCategory()  ,
-    User(userId, "" , "" , null , null),
+    User(userId, "" ,"", "" , "" , null , null),
     if (likeCount == null) 0 else likeCount!! ,
     imageUri,
 )

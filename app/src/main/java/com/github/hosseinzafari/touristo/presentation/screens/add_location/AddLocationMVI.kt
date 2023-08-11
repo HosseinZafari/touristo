@@ -5,6 +5,7 @@ import com.github.hosseinzafari.touristo.base.system.mvi.XAction
 import com.github.hosseinzafari.touristo.base.system.mvi.XEffect
 import com.github.hosseinzafari.touristo.base.system.mvi.XState
 import com.github.hosseinzafari.touristo.base.system.mvi.XStatus
+import com.github.hosseinzafari.touristo.core.data.data_model.Category
 import com.github.hosseinzafari.touristo.core.data.dto.CategoryModel
 import com.github.hosseinzafari.touristo.core.data.dto.ProvinceModel
 
@@ -18,11 +19,12 @@ import com.github.hosseinzafari.touristo.core.data.dto.ProvinceModel
 
 
 data class AddLocationState(
-    var province: ProvinceModel?,
-    var category: CategoryModel?,
+    var selectedProvince: ProvinceModel?,
+    var selectedCategory: Category ?,
     var name: String,
     var description: String,
     var pictureUrl: Uri?,
+    var categories: List<Category> ,
     override var status: XStatus,
     override var effects: AddLocationEffect?
 ) : XState<AddLocationEffect>
@@ -37,10 +39,11 @@ sealed class AddLocationAction: XAction {
     data class OnChangeName(val newText: String) : AddLocationAction()
     data class OnChangeDesc(val newText: String) : AddLocationAction()
     data class OnChangeProvince(val newLocation: ProvinceModel) : AddLocationAction()
-    data class OnChangeCategory(val newCategory: CategoryModel) : AddLocationAction()
+    data class OnChangeCategory(val newCategory: Category ) : AddLocationAction()
     data class OnChangePicture(val newPicture: Uri?) : AddLocationAction()
 
     object Submit : AddLocationAction()
+    object GetData : AddLocationAction()
 
 }
 

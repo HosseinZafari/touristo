@@ -20,4 +20,7 @@ sealed class Route (
     object AddLocation : Route (name = "add_location")
     object AuthVerification : Route (name = "auth_verify")
 
+    object UserSetting : Route (name = "user_setting")
+    object EditUserSetting : Route (name = "edit_user_setting")
+
 }
