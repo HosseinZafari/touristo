@@ -85,7 +85,7 @@ fun LoginScreen(
                     WindowInsets.safeDrawing.only(WindowInsetsSides.Horizontal)
                 )
             ,
-            backgroundColor = MilkColor
+            backgroundColor =  MaterialTheme.colorScheme.onPrimary
         ) {
 
             Column(
@@ -94,7 +94,7 @@ fun LoginScreen(
                 AuthHeader(
                     drawableRes = login_header,
                     locationName = L.login_header_pin,
-                    colorShadow = MilkColor,
+                    colorShadow =  MaterialTheme.colorScheme.onPrimary,
                     top = 60.dp,
                     start = 80.dp,
                 )
@@ -108,7 +108,7 @@ fun LoginScreen(
                     Column {
                         Text(
                             text = L.login_title,
-                            color = MaterialTheme.colorScheme.secondary,
+                            color = MaterialTheme.colorScheme.primary,
                             fontWeight = FontWeight.ExtraBold,
                             style = MaterialTheme.typography.titleLarge,
                         )

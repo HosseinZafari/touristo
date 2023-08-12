@@ -103,7 +103,7 @@ fun UserSettingScreen(
                 .windowInsetsPadding(
                     WindowInsets.safeDrawing.only(WindowInsetsSides.Horizontal)
                 ),
-            backgroundColor = Color.White
+
         ) {
 
             Column (

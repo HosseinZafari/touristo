@@ -82,7 +82,7 @@ fun LocationDescScreen(
         snackbarHost = { SnackbarHost(snackbarHostState) }
     ) {
         TouristoFrame(
-            backgroundColor = Color.White,
+            backgroundColor = MaterialTheme.colorScheme.onPrimary,
             modifier = Modifier
                 .fillMaxSize()
                 .padding(it)
@@ -92,7 +92,8 @@ fun LocationDescScreen(
                 )
         ) {
 
-            Column {
+            Column (
+             ) {
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -111,6 +112,7 @@ fun LocationDescScreen(
                         Box(
                             modifier = Modifier.fillMaxSize().placeholder(
                                 visible = true ,
+                                color = MaterialTheme.colorScheme.primaryContainer,
                                 shape = RoundedCornerShape(4.dp)
                             ) ,
                         )
@@ -137,7 +139,7 @@ fun LocationDescScreen(
                         ) {
                             Column (
                                 modifier = Modifier.background(
-                                    color = Color.White.copy(alpha = 0.7f) ,
+                                    color = MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.4f) ,
                                     shape = RoundedCornerShape(50.dp) ,
                                 )
                             ) {
@@ -146,7 +148,7 @@ fun LocationDescScreen(
                                     onClick = {
                                     processor.sendAction(LocationDescAction.ClickOnLikeButton )
                                 }) {
-                                    Icon(imageVector = if(state.value.liked != null && state.value.liked!!) Icons.Outlined.Favorite else Icons.Outlined.FavoriteBorder , tint = Color.Gray,  contentDescription = null)
+                                    Icon(imageVector = if(state.value.liked != null && state.value.liked!!) Icons.Outlined.Favorite else Icons.Outlined.FavoriteBorder , tint = MaterialTheme.colorScheme.primary,  contentDescription = null)
                                 }
 
                                 IconButton(
@@ -154,7 +156,7 @@ fun LocationDescScreen(
                                     onClick = {
                                     processor.sendAction(LocationDescAction.ClickOnBookmarkButton )
                                 }) {
-                                    Icon(imageVector = if(state.value.bookmarked != null && state.value.bookmarked!!) Icons.Outlined.Bookmark  else Icons.Outlined.BookmarkBorder , tint = Color.Gray, contentDescription = "bookamrk")
+                                    Icon(imageVector = if(state.value.bookmarked != null && state.value.bookmarked!!) Icons.Outlined.Bookmark  else Icons.Outlined.BookmarkBorder , tint = MaterialTheme.colorScheme.primary, contentDescription = "bookamrk")
                                 }
 
                                 IconButton(
@@ -162,25 +164,25 @@ fun LocationDescScreen(
                                     onClick = {
                                     processor.sendAction(LocationDescAction.ClickOnCommentButton )
                                 }) {
-                                    Icon(imageVector = Icons.Outlined.Comment , tint = Color.Gray,contentDescription = "bookamrk")
+                                    Icon(imageVector = Icons.Outlined.Comment , tint = MaterialTheme.colorScheme.primary,contentDescription = "bookamrk")
                                 }
                             }
 
 
                             IconButton(
                                 modifier = Modifier.background(
-                                    color = Color.White.copy(alpha = 0.7f) ,
+                                    color = MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.4f) ,
                                     shape =  CircleShape
                                 ) ,
                                 onClick = { processor.sendAction(LocationDescAction.ClickOnBackButton ) }) {
-                                Icon(imageVector = Icons.Outlined.ChevronLeft , tint = Color.Gray ,  contentDescription = null)
+                                Icon(imageVector = Icons.Outlined.ChevronLeft , tint =  MaterialTheme.colorScheme.primary ,  contentDescription = null)
                             }
                         }
 
                         Row(
                             modifier = Modifier
                                 .background(
-                                    color = Color.White.copy(alpha = 0.3f),
+                                    color =  MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.4f),
                                     shape = RoundedCornerShape(2.dp)
                                 )
                                 .fillMaxWidth()
@@ -192,6 +194,7 @@ fun LocationDescScreen(
                                 Box(
                                     modifier = Modifier.padding(8.dp).placeholder(
                                         visible = true ,
+                                        color = MaterialTheme.colorScheme.primaryContainer,
                                         shape = RoundedCornerShape(4.dp)
                                     ).weight(1f)
                                 )
@@ -201,6 +204,7 @@ fun LocationDescScreen(
                                 Box(
                                     modifier = Modifier.padding(8.dp).placeholder(
                                         visible = true ,
+                                        color = MaterialTheme.colorScheme.primaryContainer,
                                         shape = RoundedCornerShape(4.dp)
                                     ).weight(1f)
                                 )
@@ -236,6 +240,7 @@ fun LocationDescScreen(
                         Box(
                             modifier = Modifier.size(120.dp , 16.dp).placeholder(
                                 visible = true ,
+                                color = MaterialTheme.colorScheme.primaryContainer,
                                 shape = RoundedCornerShape(4.dp)
                             ),
                         )
@@ -246,6 +251,7 @@ fun LocationDescScreen(
                         Box(
                             modifier = Modifier.fillMaxSize().placeholder(
                                 visible = true ,
+                                color = MaterialTheme.colorScheme.primaryContainer,
                                 shape = RoundedCornerShape(50.dp)
                             ) ,
                         )

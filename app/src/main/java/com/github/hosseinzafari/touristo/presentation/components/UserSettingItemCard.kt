@@ -30,7 +30,7 @@ fun UserSettingItemCard(
     Card (
         modifier = modifier ,
         onClick = onClick ,
-        colors = CardDefaults.cardColors(containerColor = Color.White)
+        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.primary)
     ) {
         Row(
             modifier = Modifier

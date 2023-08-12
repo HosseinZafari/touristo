@@ -38,7 +38,7 @@ fun BestDestinationCard(
     Card(
         modifier = modifier,
         onClick =  onClick,
-        colors = CardDefaults.cardColors(containerColor = Color(0xffefefef)) ,
+        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.primaryContainer , contentColor = MaterialTheme.colorScheme.onPrimaryContainer) ,
         shape = RoundedCornerShape(30.dp) ,
     ) {
         Row(

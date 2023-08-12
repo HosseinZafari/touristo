@@ -77,16 +77,7 @@ class MainActivity @Inject constructor(
     private fun isAuthVerification(intent: Intent?) =
         intent != null && intent.data != null && intent.data?.host == "touristo.auth" && intent.data?.scheme == "app"
 
-    suspend fun submitAuth(intent: Intent) {
 
-
-//            client.handleDeeplinks(intent) {
-//                Log.i("Test", "handleDeeplinks successfully " + it)
-//                runOnUiThread {
-//                    main.navController?.navigate(Route.Home.name)
-//                }
-//            }
-    }
 
     override fun onNewIntent(intent: Intent?) {
         super.onNewIntent(intent)

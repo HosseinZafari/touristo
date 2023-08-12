@@ -78,7 +78,6 @@ fun BookmarkScreen(
         snackbarHost = { SnackbarHost(snackbarHostState) }
     ) {
         TouristoFrame(
-            backgroundColor = Color.White,
             modifier = Modifier
                 .fillMaxSize()
                 .consumeWindowInsets(it)

@@ -22,6 +22,7 @@ fun TitleExtraBold(
 ) {
     Text(modifier = modifier ,
         text = text ,
+        color = MaterialTheme.colorScheme.primary ,
         style = MaterialTheme.typography.displaySmall ,
         fontWeight = FontWeight.ExtraBold
     )
@@ -32,8 +33,10 @@ fun TitleBold(
     modifier: Modifier = Modifier.padding(end = 4.dp),
     text: String
 ) {
-    Text(modifier = modifier ,
+    Text(
+        modifier = modifier ,
         text = text ,
+        color = MaterialTheme.colorScheme.primary ,
         style = MaterialTheme.typography.titleLarge ,
         fontWeight = FontWeight.Bold
     )

@@ -15,7 +15,7 @@
     android:name=".core.TouristApplication"
     android:label="@string/app_name"
     android:supportsRtl="true"
-    android:theme="@style/Theme.Touristo"
+    android:theme="@style/Theme.Touristo.Starting"
     tools:targetApi="31">
 
     <activity

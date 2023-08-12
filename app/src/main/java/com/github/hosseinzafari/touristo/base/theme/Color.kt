@@ -3,7 +3,7 @@ package com.github.hosseinzafari.touristo.base.theme
 import androidx.compose.ui.graphics.Color
 
 val md_theme_light_primary = Color(0xFFE7B171)
-val md_theme_light_onPrimary = Color(0xFFFFFFFF)
+val md_theme_light_onPrimary = Color(0xFFFDE8D0)
 val md_theme_light_primaryContainer = Color(0xFFFFDDB8)
 val md_theme_light_onPrimaryContainer = Color(0xFF2B1700)
 val md_theme_light_secondary = Color(0xFF1B3232)

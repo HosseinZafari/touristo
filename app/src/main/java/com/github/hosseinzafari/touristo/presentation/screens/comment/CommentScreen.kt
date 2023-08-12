@@ -75,7 +75,6 @@ fun CommentScreen(
         snackbarHost = { SnackbarHost(snackbarHostState) }
     ) {
         TouristoFrame(
-            backgroundColor = Color.White,
             modifier = Modifier
                 .fillMaxSize()
                 .padding(it)
@@ -89,7 +88,7 @@ fun CommentScreen(
                 modifier = Modifier.fillMaxSize()
             ) {
 
-                Spacer(modifier = Modifier.height(16.dp))
+                Spacer(modifier = Modifier.height(24.dp))
                 TitleBold(text = "نظرات")
                 Spacer(modifier = Modifier.height(8.dp))
                 LazyColumn(modifier = Modifier.weight(9f)) {
@@ -103,6 +102,7 @@ fun CommentScreen(
                                         .height(200.dp)
                                         .placeholder(
                                             visible = true,
+                                            color = MaterialTheme.colorScheme.primary,
                                             shape = RoundedCornerShape(16.dp)
                                         )
                                 )
@@ -115,7 +115,7 @@ fun CommentScreen(
                                 modifier = Modifier
                                     .padding(8.dp)
                                     .background(
-                                        color = Color.LightGray.copy(alpha = 0.5f),
+                                        color = MaterialTheme.colorScheme.primaryContainer,
                                         shape = RoundedCornerShape(16.dp)
                                     )
                             ) {
@@ -179,6 +179,7 @@ fun CommentScreen(
                 ) {
 
                     TextField(
+
                         modifier = Modifier.weight(8f),
                         value = state.value.comment,
                         onValueChange = {
@@ -189,6 +190,7 @@ fun CommentScreen(
                     Spacer(modifier = Modifier.width(8.dp))
                     IconButton(
                         modifier = Modifier.weight(2f),
+                        colors = IconButtonDefaults.iconButtonColors(contentColor = MaterialTheme.colorScheme.onPrimaryContainer) ,
                         onClick = {
                             processor.sendAction(CommentAction.Submit(locationItemId))
                         }) {

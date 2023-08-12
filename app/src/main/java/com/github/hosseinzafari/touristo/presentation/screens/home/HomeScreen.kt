@@ -112,7 +112,7 @@ fun HomeScreen(
                 )
         ) {
 
-            Column {
+            Column   {
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.SpaceBetween,
@@ -125,9 +125,11 @@ fun HomeScreen(
                         Box(
                             modifier = Modifier
                                 .padding(end = 16.dp)
-                                .background(color = Color(0xffeeeeee), shape = CircleShape),
+                                .background( color = MaterialTheme.colorScheme.primaryContainer , shape = CircleShape),
                         ) {
-                            IconButton(onClick = {
+                            IconButton(
+                                colors = IconButtonDefaults.iconButtonColors(contentColor = MaterialTheme.colorScheme.onPrimaryContainer) ,
+                                onClick = {
                                 processor.sendAction(HomeAction.ClickOnSearchButton(0))
                             }) {
                                 Icon(
@@ -142,9 +144,14 @@ fun HomeScreen(
                         Box(
                             modifier = Modifier
                                 .padding(end = 16.dp)
-                                .background(color = Color(0xffeeeeee), shape = CircleShape),
+                                .background(
+                                    color = MaterialTheme.colorScheme.primaryContainer,
+                                    shape = CircleShape
+                                ),
                         ) {
-                            IconButton(onClick = {
+                            IconButton(
+                                colors = IconButtonDefaults.iconButtonColors(contentColor = MaterialTheme.colorScheme.onPrimaryContainer) ,
+                                onClick = {
                                 processor.sendAction(HomeAction.ClickOnAccountButton)
                             }) {
                                 Icon(
@@ -166,6 +173,7 @@ fun HomeScreen(
                         }
                     ) {
                         val categories = state.value.categoryData
+                        val tabColor = MaterialTheme.colorScheme.primary
                         if (categories.size > 0) {
                             categories.forEachIndexed { index, value ->
                                 Tab(
@@ -173,7 +181,7 @@ fun HomeScreen(
                                         drawContent()
                                         if (state.value.currentCategory!!.id == value.id) {
                                             drawLine(
-                                                color = Color.DarkGray,
+                                                color = tabColor,
                                                 start = Offset(size.width, 0f),
                                                 end = Offset(size.width / 1.5f, 0f),
                                                 strokeWidth = 25f
@@ -187,6 +195,7 @@ fun HomeScreen(
                                     text = {
                                         Text(
                                             text = value.title,
+                                            color = tabColor,
                                             maxLines = 1,
                                             overflow = TextOverflow.Ellipsis,
                                             style = MaterialTheme.typography.titleLarge,

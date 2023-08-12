@@ -62,7 +62,7 @@ fun LocationCard(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(25.dp)
-                    .background(color = Color.White, shape = RoundedCornerShape(20.dp)),
+                    .background(color = MaterialTheme.colorScheme.primaryContainer, shape = RoundedCornerShape(20.dp)),
                 verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.Start,
             ) {
@@ -72,6 +72,7 @@ fun LocationCard(
                 ) {
                     Text(
                         text = name,
+                        color = MaterialTheme.colorScheme.onPrimaryContainer ,
                         style = MaterialTheme.typography.titleMedium,
                         fontWeight = FontWeight.Bold
                     )
@@ -82,6 +83,7 @@ fun LocationCard(
                     ) {
                         Text(
                             text = location,
+                            color = MaterialTheme.colorScheme.onPrimaryContainer ,
                             style = MaterialTheme.typography.titleSmall,
                             fontWeight = FontWeight.Light
                         )
@@ -91,14 +93,14 @@ fun LocationCard(
                         ) {
                             Icon(
                                 imageVector = Icons.Default.Favorite, contentDescription = null,
-                                tint = Color.LightGray ,
+                                tint =  MaterialTheme.colorScheme.onPrimaryContainer ,
                                 modifier = Modifier.size(14.dp) ,
                             )
                             Text(
                                 text = likeCount.toString(),
                                 style = MaterialTheme.typography.bodySmall,
                                 fontWeight = FontWeight.Bold ,
-                                color = Color.LightGray,
+                                color = MaterialTheme.colorScheme.onPrimaryContainer
                             )
                         }
                     }

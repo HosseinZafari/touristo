@@ -101,7 +101,6 @@ fun EditUserSettingScreen(
                 .windowInsetsPadding(
                     WindowInsets.safeDrawing.only(WindowInsetsSides.Horizontal)
                 ),
-            backgroundColor = Color.White
         ) {
 
             Column {

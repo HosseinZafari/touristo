@@ -1,10 +1,10 @@
 package com.github.hosseinzafari.touristo.presentation.screens
 
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.outlined.AccountBox
 import androidx.compose.material.icons.outlined.Email
 import androidx.compose.material.icons.outlined.Password
 import androidx.compose.material3.*
@@ -21,20 +21,17 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.github.hosseinzafari.touristo.L
 import com.github.hosseinzafari.touristo.ChangeSystemBarsColor
-import com.github.hosseinzafari.touristo.base.theme.MilkColor
-import com.github.hosseinzafari.touristo.base.theme.TouristoTheme
-import com.github.hosseinzafari.touristo.base.theme.md_theme_light_secondary
+import com.github.hosseinzafari.touristo.L
+import com.github.hosseinzafari.touristo.base.system.mvi.XStatus
+import com.github.hosseinzafari.touristo.base.theme.*
 import com.github.hosseinzafari.touristo.base.ui.RTL
 import com.github.hosseinzafari.touristo.presentation.components.AuthHeader
 import com.github.hosseinzafari.touristo.presentation.components.TouristoFrame
-import com.github.hosseinzafari.touristo.presentation.screens.signup.SignupViewModel
-import com.queezo.app.assets.signup_header
-import androidx.lifecycle.viewmodel.compose.viewModel
-import com.github.hosseinzafari.touristo.base.system.mvi.XStatus
 import com.github.hosseinzafari.touristo.presentation.screens.signup.SignupAction
 import com.github.hosseinzafari.touristo.presentation.screens.signup.SignupEffect
+import com.github.hosseinzafari.touristo.presentation.screens.signup.SignupViewModel
+import com.queezo.app.assets.signup_header
 
 /**
  * @author Hossein Zafari
@@ -99,7 +96,7 @@ fun SignupScreen(
         snackbarHost = { SnackbarHost(snackbarHostState) }
     ) {
         TouristoFrame(
-            backgroundColor = MilkColor,
+            backgroundColor = MaterialTheme.colorScheme.onPrimary,
             modifier = Modifier
                 .fillMaxSize()
                 .padding(it)
@@ -114,7 +111,7 @@ fun SignupScreen(
                 AuthHeader(
                     drawableRes = signup_header,
                     locationName = L.signup_header_pin,
-                    colorShadow = MilkColor,
+                    colorShadow = MaterialTheme.colorScheme.onPrimary,
                     start = 180.dp,
                     top = 40.dp,
                 )
@@ -128,7 +125,7 @@ fun SignupScreen(
                     Column {
                         Text(
                             text = L.signup_title,
-                            color = MaterialTheme.colorScheme.secondary,
+                            color = MaterialTheme.colorScheme.primary,
                             fontWeight = FontWeight.ExtraBold,
                             style = MaterialTheme.typography.titleLarge,
                         )

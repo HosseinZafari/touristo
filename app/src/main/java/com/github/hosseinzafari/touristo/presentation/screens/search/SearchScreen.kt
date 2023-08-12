@@ -95,7 +95,6 @@ fun SearchScreen(
         snackbarHost = { SnackbarHost(snackbarHostState) }
     ) {
         TouristoFrame(
-            backgroundColor = Color.White,
             modifier = Modifier
                 .fillMaxSize()
                 .padding(it)
