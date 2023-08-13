@@ -80,7 +80,7 @@ class SignupViewModel @Inject constructor(
     private suspend fun submit(state: SignupState) {
         try {
             signupUseCase(state.email, state.password )
-
+            processor.setState(state.copy(status = XStatus.Idle))
         } catch (exc: RestException) {
             Log.i("Test", "signupSubmit exception: $exc")
             processor.setState(state.copy(status = XStatus.Error(L.signup_submit_checking_email)))

@@ -36,7 +36,7 @@ import com.queezo.app.assets.card_1_1
 fun LocationCard(
     modifier: Modifier = Modifier
         .widthIn(min = 200.dp, max = 280.dp)
-        .heightIn(min = 300.dp, max = 400.dp),
+        .heightIn(min = 300.dp, max = 450.dp),
     likeCount: Int,
     name: String,
     location: String,

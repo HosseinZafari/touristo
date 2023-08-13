@@ -255,7 +255,7 @@ fun HomeScreen(
                                 LocationCard(
                                     modifier = Modifier
                                         .widthIn(min = 200.dp, max = 280.dp)
-                                        .heightIn(min = 300.dp, max = 400.dp)
+                                        .heightIn(min = 300.dp, max = 450.dp)
                                         .placeholder(
                                             visible = true,
                                             shape = RoundedCornerShape(50.dp)

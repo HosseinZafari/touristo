@@ -129,8 +129,6 @@ fun SearchScreen(
                         colors = TextFieldDefaults.textFieldColors(
                             focusedIndicatorColor = Color.Transparent,
                             unfocusedIndicatorColor = Color.Transparent,
-                            containerColor = Color(0xffefefef),
-                            textColor = Color.DarkGray,
                             placeholderColor = Color.Gray,
                         ),
                         onValueChange = { processor.sendAction(SearchAction.OnSearchChanged(it)) },
@@ -165,7 +163,7 @@ fun SearchScreen(
                                     onClick = {},
                                     modifier = Modifier
                                         .widthIn(min = 150.dp, max = 250.dp)
-                                        .heightIn(min = 250.dp, max = 550.dp)
+                                        .heightIn(min = 250.dp, max = 450.dp)
                                         .placeholder(
                                             visible = true,
                                             shape = RoundedCornerShape(50.dp)
@@ -188,7 +186,7 @@ fun SearchScreen(
                                     },
                                     modifier = Modifier
                                         .widthIn(min = 150.dp, max = 250.dp)
-                                        .heightIn(min = 250.dp, max = 550.dp)
+                                        .heightIn(min = 250.dp, max = 450.dp)
                                 )
                                 Spacer(modifier = Modifier.width(16.dp))
                             }

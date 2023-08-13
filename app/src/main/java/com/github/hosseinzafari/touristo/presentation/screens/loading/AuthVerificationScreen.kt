@@ -81,7 +81,6 @@ fun AuthVerificationScreen(
         snackbarHost = { SnackbarHost(snackbarHostState) }
     ) {
         TouristoFrame(
-            backgroundColor = Color.White,
             modifier = Modifier
                 .fillMaxSize()
                 .consumeWindowInsets(it)
@@ -91,7 +90,7 @@ fun AuthVerificationScreen(
         ) {
 
             Column(modifier = Modifier.fillMaxSize() , verticalArrangement = Arrangement.Center , horizontalAlignment = Alignment.CenterHorizontally) {
-                CircularProgressIndicator(color = Color.Gray)
+                CircularProgressIndicator( )
                 Spacer(modifier = Modifier.height(38.dp))
                 Text(text = "در حال بررسی صحت حساب کاربری..." , style = MaterialTheme.typography.titleMedium , fontWeight = FontWeight.ExtraLight)
             }

@@ -139,7 +139,7 @@ fun LocationDescScreen(
                         ) {
                             Column (
                                 modifier = Modifier.background(
-                                    color = MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.4f) ,
+                                    color = MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.7f) ,
                                     shape = RoundedCornerShape(50.dp) ,
                                 )
                             ) {
@@ -171,7 +171,7 @@ fun LocationDescScreen(
 
                             IconButton(
                                 modifier = Modifier.background(
-                                    color = MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.4f) ,
+                                    color = MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.7f) ,
                                     shape =  CircleShape
                                 ) ,
                                 onClick = { processor.sendAction(LocationDescAction.ClickOnBackButton ) }) {
@@ -182,7 +182,7 @@ fun LocationDescScreen(
                         Row(
                             modifier = Modifier
                                 .background(
-                                    color =  MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.4f),
+                                    color =  MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.7f),
                                     shape = RoundedCornerShape(2.dp)
                                 )
                                 .fillMaxWidth()

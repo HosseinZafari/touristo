@@ -60,14 +60,16 @@ class HomeViewModel @Inject constructor(
                     val categoriesAsync = async { getCategories().first() }
                     val destinationAsync = async { getBestDests().first() }
 
-                    val categories = categoriesAsync.await()
+                    val categories = categoriesAsync.await().sortedBy {
+                        it.id
+                    }
 
                     processor.setState(
                         oldState.copy(
                             locationData = locationsAsync.await(),
                             destinationData = destinationAsync.await(),
                             categoryData = categories,
-                            currentCategory = categories[0],
+                            currentCategory = categories.filter { it.id == 1 }[0],
                             status = XStatus.Idle,
                         )
                     )
