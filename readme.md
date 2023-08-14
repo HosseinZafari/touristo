@@ -17,7 +17,9 @@ and Used Jetpack Compose for Ui Layer
 - OpenSource , light and smooth 
 - Based on Material Design 3 
 - Dark and Light Theme 
-- Login / Signup 
+- Login / Signup
+- Email Verification Link
+- Deeplinks Handeling   
 - Upload Image 
 - Make Location (Based on Iran's Province For now)
 - Simple actions like Comment , Like , Bookmark on Locations 
@@ -57,7 +59,7 @@ and Used Jetpack Compose for Ui Layer
 
 
 ## 🔗 Links
-[![linkedin](https://img.shields.io/badge/linkedin-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/hossein-zafari)
+[![linkedin](https://img.shields.io/badge/linkedin-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/hossein-zafari)
  
 ## License 
 Touristo is released under the ** MIT License **, which can be found in the `LICENSE` file in the root of this project.
