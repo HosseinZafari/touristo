@@ -1,4 +1,4 @@
-
+![image](https://github.com/HosseinZafari/touristo/assets/54430190/3b156409-4166-4d27-95b5-a00fcc304840)
 # Touristo Screenshots
 - Banner
 ![App Screenshot](https://private-user-images.githubusercontent.com/54430190/260377187-45127689-bdea-4f6b-aa89-1e1abcddd2b2.jpg?jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTEiLCJleHAiOjE2OTE5OTYxMDIsIm5iZiI6MTY5MTk5NTgwMiwicGF0aCI6Ii81NDQzMDE5MC8yNjAzNzcxODctNDUxMjc2ODktYmRlYS00ZjZiLWFhODktMWUxYWJjZGRkMmIyLmpwZz9YLUFtei1BbGdvcml0aG09QVdTNC1ITUFDLVNIQTI1NiZYLUFtei1DcmVkZW50aWFsPUFLSUFJV05KWUFYNENTVkVINTNBJTJGMjAyMzA4MTQlMkZ1cy1lYXN0LTElMkZzMyUyRmF3czRfcmVxdWVzdCZYLUFtei1EYXRlPTIwMjMwODE0VDA2NTAwMlomWC1BbXotRXhwaXJlcz0zMDAmWC1BbXotU2lnbmF0dXJlPWIwNmU0ZTIzYmZlYzQ5NjY0ZjNhNmVmMDJkMzgxYzUyNDA2MGFjMDRkOTEwMWQ0YzYxNzJkN2I5MTA4NTFkZmYmWC1BbXotU2lnbmVkSGVhZGVycz1ob3N0JmFjdG9yX2lkPTAma2V5X2lkPTAmcmVwb19pZD0wIn0.FRrixBahEQH0rVoWPPTphsi22xacJFksZD7n6-yfjUc)
@@ -55,7 +55,7 @@ and Used Jetpack Compose for Ui Layer
 
 ## Authors
 
-- [@hosseinzafari](https://www.github.com/hosseinzafari)
+- [Profile](https://avatars.githubusercontent.com/u/54430190?v=4) [@hosseinzafari](https://www.github.com/hosseinzafari)
 
 
 ## 🔗 Links
