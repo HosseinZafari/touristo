@@ -33,7 +33,7 @@ import com.github.hosseinzafari.touristo.base.ui.RTL
 import com.github.hosseinzafari.touristo.presentation.components.TitleBold
 import com.github.hosseinzafari.touristo.presentation.components.TouristoFrame
 import com.google.accompanist.placeholder.material3.placeholder
-import com.queezo.app.assets.avatar
+
 
 /**
  * @author Hossein Zafari

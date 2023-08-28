@@ -29,7 +29,7 @@ import com.github.hosseinzafari.touristo.base.ui.RTL
 import com.github.hosseinzafari.touristo.core.data.dto.provinceData
 import com.github.hosseinzafari.touristo.presentation.components.*
 import com.google.accompanist.placeholder.material3.placeholder
-import com.queezo.app.assets.card_1_2
+import com.queezo.app.assets.card_1_1
 
 /**
  * @author Hossein Zafari
@@ -325,7 +325,7 @@ fun HomeScreen(
                                                 visible = true,
                                                 shape = RoundedCornerShape(50.dp)
                                             ),
-                                        resId = card_1_2,
+                                        resId = card_1_1,
                                         province = "",
                                         country = "",
                                         onClick = {}

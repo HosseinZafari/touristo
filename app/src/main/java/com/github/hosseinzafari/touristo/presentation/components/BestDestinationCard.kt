@@ -16,7 +16,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import coil.compose.rememberAsyncImagePainter
 import com.queezo.app.assets.card_1_1
-import com.queezo.app.assets.card_2_2
 
 /**
  * @author Hossein Zafari
